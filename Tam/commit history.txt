@@ -1,1 +1,16 @@
 Commit History
+
+system requirement specification (SRS)
+	Tam Tran contributed by creating product scope, diagrams, introduction and use cases
+
+System Design Document (SDD)
+	Tam took the lead on this document
+	Tam searched for the references, images, references, requirement matrix, decomposition description.
+
+User Interface Design (UI)
+	Tam uploaded the picture for section 2, image 3
+
+Testing Report (TR)
+	
+Code Inspection (CIR)
+	Tam wrote section 1.3
