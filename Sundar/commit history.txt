@@ -1,6 +1,6 @@
 Commit History
 
-I created all five of the docuemnts on google drive and emailed it to all my team members. For all the five docs, i created the cover pages, table of contents and Apendicex A, B, and C. I also reviewd all the documents and formated it including the creation og hyperlinks in table of contents page.. 
+I created all five of the documents on google drive and emailed it to all my team members. For all the five docs, i created the cover pages, table of contents and Apendicex A, B, and C. I also reviewd all the documents and formated it, including the creation of hyperlinks in table of contents page.. 
 
 
 System Design Document (SDD)
