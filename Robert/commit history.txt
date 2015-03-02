@@ -1,1 +1,2 @@
 Commit History
+I worked on all 5 documents. I mostly did the purposes and the appendices. I alos did some editing and removed all the template information. I wrote 4 use cases: Administrative User, Administraive Page, making planes, and making airports. Sundar and I worked on the presentation together. I wrote the brief description in 2.1 of the CIR. I created all the figures with the smiley faces on the SRS.
