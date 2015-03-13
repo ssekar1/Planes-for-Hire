@@ -1,12 +1,6 @@
 <?php
 /*
-Tam Tran
-Instructor: Mr. Lupoli
-Class: CMSC 331
-11/21/2014
-Project 1
-description: this is the confirm.php page, this page confirms all required field are entered accordingly and then userdata are compared and pulled
-required information primary database, and then pushed into secondary customer request database.
+ * populating user data into database
 */
 	include('common.php');
 	$debug = false;
