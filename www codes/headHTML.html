@@ -174,10 +174,10 @@
 				var img = "resources/images/tack.gif"
 				var markers = [];
 				markers.push(createMarker(45, -120, "porty-air-lol", img, map));
-				markers.push(createMarker(50, -101, "high-as-a-kite", img, map));
+				markers.push(createMarker(35, -101, "high-as-a-kite", img, map));
 
 				// Pans to it
-				map.panTo(markers[0].getPosition());
+				//map.panTo(markers[0].getPosition());
 			}
 
 			// Creates easy to use icon
@@ -193,6 +193,74 @@
 				return marker;
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);
+			
+			//this function performs a check to verify if all required fields are entered before submitting
+			function confirm ()
+			{
+				if (document.getElementById ('firstName').value != '')
+					if (document.getElementById ('lastName').value != '')
+						if ((document.getElementById ('street').value) != '')
+							if (document.getElementById ('city').value != '')
+								if (document.getElementById ('state').value != '')
+									if (document.getElementById ('zip').value != '')
+										if (document.getElementById ('phone').value != '')
+											if (document.getElementById ('email').value != '')
+												if (document.getElementById ('password').value != '')
+													if (document.getElementById ('password2').value == document.getElementById ('password').value)
+														document.form.submit();
+													else
+														alert ('the password doesn\'t match');
+												else
+													alert ('you need to enter your a password');
+											else
+												alert ('you need to enter your email');
+										else
+											alert ('you need to enter your phone number');
+									else
+										alert ('you need to enter your zip code');
+								else
+									alert ('you need to enter your state');
+							else
+								alert ('you need to enter your city');
+						else
+							alert ('you need to enter your street address');
+					else
+						alert ('You need to enter your last name'); 
+				else
+					alert ('You need to enter your first name');				
+			}
+		</script>
+		
+		<!--this java script function verifies the phone number entered are only digits, if the user enters a non digits character it will be remove-->
+		<script type='text/javascript'> 
+			function isValidChar (char, id)
+			{
+			        var txt = char;
+				var found = false;
+				var validChars = "0123456789"; //List of valid characters
+
+				for(j = 0; j < txt.length; j++) //Will look through the value of text
+				{
+					var c = txt.charAt (j);
+					found = false;
+					for (x = 0; x < validChars.length; x++)
+					{
+						if (c == validChars.charAt (x))
+						{
+							found = true;
+							break;
+						}
+					}
+					if (!found)
+					{
+						if (id == 'zip')
+							document.getElementById('zip').value = char.substring(0, char.length -1);
+						if (id == 'phone')
+							document.getElementById('phone').value = char.substring(0, char.length -1);
+						break;
+					}
+				}
+			}
 		</script>
 	</head>
 	<body>

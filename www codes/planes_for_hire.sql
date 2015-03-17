@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 17, 2015 at 02:45 AM
+-- Generation Time: Mar 17, 2015 at 02:34 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -50,8 +50,15 @@ CREATE TABLE IF NOT EXISTS `customer_profile` (
   `avatar` text,
   `email` varchar(30) NOT NULL,
   `phone` int(11) NOT NULL,
-  `regDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `regDate` date NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer_profile`
+--
+
+INSERT INTO `customer_profile` (`id`, `firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `regDate`) VALUES
+(7, 'Tam', 'Tran', '1234 abcd', 'abcde', 'Ma', 123456, 'None for now', 'abcd123@abcd.edu', 1234567890, '2015-03-17');
 
 -- --------------------------------------------------------
 
@@ -101,7 +108,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `travel_history`
 --

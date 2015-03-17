@@ -5,6 +5,7 @@
 	$debug = false;
 	include ('link.php');
 	$LINK = new Link($debug);
+	
 	include ("headHTML.html");
 	
 	print ("<label><strong><center><font size = \"6\" color = \"#676767\">Planes For Hire</font></center></strong><br>");
@@ -24,7 +25,7 @@
 	print ("<label>Greetings...</label><br>");
 	print ("<label>All planes are available and ready to go</label>");
 	print ("</font>");
-
+	
 	//include ("test.html");
 	include ("tailHTML.html");
 ?>
