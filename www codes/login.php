@@ -9,12 +9,12 @@
 	print ("</label>");
 	
 	print ("<div id = \"login\">");
-	print ("<label>Email ");
-			print ("<input name = \"name\" id = \"name\" type = \"text\" size = \"30\" maxlength = \"30\" class = \"input\"/><br><br>");
+	print ("<label>Login Email:");
+			print ("<input name = \"name\" id = \"name\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br><br>");
 		print ("</label>");
 	
-	print ("<label>Password ");
-			print ("<input name = \"name\" id = \"name\" type = \"password\" size = \"30\" maxlength = \"30\" class = \"input\"/><br><br>");
+	print ("<label>Password:");
+			print ("<input name = \"name\" id = \"name\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br><br>");
 		print ("</label>");
 	
 	print ("<button type = \"button\" id = \"submitButton\" onclick= \"confirm()\">Submit</button><br><br>");

@@ -24,8 +24,8 @@
 	$_SESSION ['regDate'] = date('Y-m-d'); //anonymously record user's registration date for time keeping
 	
 //===these are the composed description content that goes into the description box, date and time spamp goes in here !!!
-	$sql = "INSERT INTO `customer_profile`(`firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `regDate`)
-		VALUES ('".$_SESSION ['firstName']."', '".$_SESSION ['lastName']."', '".$_SESSION ['street']."', '".$_SESSION ['city']."', '".$_SESSION ['state']."','".$_SESSION ['zip']."', '".$_SESSION ['avatar']."', '".$_SESSION ['email']."', '".$_SESSION ['phone']."', '".$_SESSION ['regDate']."')";
+	$sql = "INSERT INTO `customer_profile`(`firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `regDate`)
+		VALUES ('".$_SESSION ['firstName']."', '".$_SESSION ['lastName']."', '".$_SESSION ['street']."', '".$_SESSION ['city']."', '".$_SESSION ['state']."','".$_SESSION ['zip']."', '".$_SESSION ['avatar']."', '".$_SESSION ['email']."', '".$_SESSION ['phone']."', '".$_SESSION ['password']."', '".$_SESSION ['regDate']."')";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
 	unset ($_SESSION);
@@ -35,7 +35,7 @@
 	include ("headHTML.html");
 		print ("<form action = \"debug.php\" method = \"post\" name = \"form\">");
 			print ("<label><center><strong><font size = \"5\">Registration Complete</font></strong></center></label><br>");
-			//print ("<META http-equiv = \"REFRESH\" content = \"3; debug.php\">"); //this line automatically redirects to a php page after three seconds
+			print ("<META http-equiv = \"REFRESH\" content = \"5; main.php\">"); //this line automatically redirects to a php page after three seconds
 			print ("<button type = \"button\" id = \"submitButton\" onclick= \"location.href = 'main.php'\">Continue</button><br><br>");
 		print ("</form>");
 //===html tail===

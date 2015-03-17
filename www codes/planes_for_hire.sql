@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 17, 2015 at 02:34 AM
+-- Generation Time: Mar 17, 2015 at 04:29 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -46,19 +46,20 @@ CREATE TABLE IF NOT EXISTS `customer_profile` (
   `street` varchar(60) NOT NULL,
   `city` varchar(30) NOT NULL,
   `state` char(2) NOT NULL,
-  `zip` int(5) unsigned NOT NULL,
+  `zip` varchar(5) NOT NULL,
   `avatar` text,
   `email` varchar(30) NOT NULL,
-  `phone` int(11) NOT NULL,
+  `phone` varchar(11) NOT NULL,
+  `password` varchar(30) NOT NULL,
   `regDate` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customer_profile`
 --
 
-INSERT INTO `customer_profile` (`id`, `firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `regDate`) VALUES
-(7, 'Tam', 'Tran', '1234 abcd', 'abcde', 'Ma', 123456, 'None for now', 'abcd123@abcd.edu', 1234567890, '2015-03-17');
+INSERT INTO `customer_profile` (`id`, `firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `regDate`) VALUES
+(37, 'Tam', 'Tran', '1234 Abcde', 'Abcde', 'MD', '98765', 'none specify', 'tamtran1@umbc.edu', '4109871234', 'test', '2015-03-17');
 
 -- --------------------------------------------------------
 
@@ -108,7 +109,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `travel_history`
 --
