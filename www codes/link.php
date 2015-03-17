@@ -8,7 +8,7 @@ class Link
 	function Link($debug)
 	{
 		$this->debug = $debug; 
-		$rs = $this->connect("tamtran1"); // db name really here
+		$rs = $this->connect("planes_for_hire"); // db name really here
 		return $rs;
 	}
 
@@ -16,7 +16,7 @@ class Link
 	
 	function connect($db)// connect to MySQL
 	{
-		$conn = @mysql_connect("studentdb.gl.umbc.edu", "tamtran1", "Abc12345") or die("Could not connect to MySQL");
+		$conn = @mysql_connect("localhost") or die("Could not connect to MySQL");
 		$rs = @mysql_select_db($db, $conn) or die("Could not connect select $db database");
 		$this->conn = $conn; 
 	}
