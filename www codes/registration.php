@@ -3,17 +3,15 @@
   comments goes here !!!
 */
 	$debug = false;
-	include ('link.php');
-	$LINK = new Link($debug);
 	include ("headHTML.html");
 	
 	//defining the form for the html document
 	print ("<form id = \"form\" name = \"form\" action = \"confirm.php\" method = \"post\">");
-	print ("<label><strong><center><font size = \"6\" color = \"#676767\">Create an account</font></center></strong><br>");
+	print ("<div id = \"registration\">");
+	print ("<h3><label><strong>Create an account</strong><br></h3>");
 	print ("</label>");
 	
-	print ("<div id = \"registration\">");
-	print ("<label>First Name ");
+	print ("<br><label>First Name ");
 			print ("<input name = \"firstName\" id = \"firstName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>");
 		print ("</label>");
 	
@@ -60,7 +58,6 @@
 	print ("<button type = \"button\" id = \"submitButton\" onclick= \"confirm()\">Submit</button><br><br>");
 	
 	print ("</div>");
-	
 	print ("</form>");
 	include ("tailHTML.html");
 ?>

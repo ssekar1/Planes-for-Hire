@@ -12,10 +12,16 @@
 		<meta charset="ISO-8859-1">
 		<title>Planes For Hire</title>
 		
+		<?php	
+			include ('link.php');
+			$link = new Link($debug);
+			$mapTbl = $link->executeQuery("select * from `airport_locations`", $_SERVER["SCRIPT_NAME"]);
+		?>
+		
 		<style>
 			/* removes underline from links */
 			a {text-decoration:none}
-
+			
 			body
 			{	
     			background-color: linen;
@@ -26,20 +32,59 @@
 				width: 1000px;
 			}
 			
-			#registration
+			pre
 			{
-				margin-left: auto;
-     			margin-right: auto;
-				width: 500px;
-				
+				font-family: Arial, Verdana;
 			}
 			
-			#login
+			#loginPage
 			{
+				background-color: #d1d1d1;
+				font-family: Arial, Verdana;
+				font-size: 16px;
+				margin-top: 70px;
+     			padding: 0px 30px;
 				margin-left: auto;
      			margin-right: auto;
+     			border-radius: 30px;
 				width: 309px;
-			}			
+			}
+			
+			h2
+			{
+				background-color:#A5A5A5;
+				text-align:center;
+				font-size: 35px;
+				color: #595959;
+				border-radius: 30px 30px 0 0;
+				width: 357px;
+				margin: 10px -30px;
+				padding: 6px
+			}
+			
+			#registration
+			{
+				background-color: #d1d1d1;
+				font-family: Arial, Verdana;
+				font-size: 16px;
+				padding: 0px 30px;
+				margin-left: auto;
+     			margin-right: auto;
+     			border-radius: 30px;
+				width: 500px;
+			}
+			
+			h3
+			{
+				background-color:#A5A5A5;
+				text-align:center;
+				font-size: 35px;
+				color: #595959;
+				border-radius: 30px 30px 0 0;
+				width: 548px;
+				margin: 10px -30px;
+				padding: 6px
+			}
 			
 			#textBox
 			{
@@ -99,6 +144,7 @@
 				outline: none;
 				float: center;
 				font-family: Arial, Verdana;
+				font-size: 15px;
 			}
 			#checkInButton:hover
 			{	
@@ -112,10 +158,11 @@
 				border-radius: 9px;
 				height: 30px;
 				width: 140px; 
-				border: none; //0px #a1a1a1 solid;
+				border: none;
 				outline: none;
 				float: center;
 				font-family: Arial, Verdana;
+				font-size: 15px;
 			}
 			#checkOutButton:hover
 			{	
@@ -133,6 +180,7 @@
 				border: none; //0px #a1a1a1 solid;
 				outline: none;
 				font-family: Arial, Verdana;
+				font-size: 16px;
 				margin-left:auto;
 				margin-right:auto;
 				display:block;
@@ -150,9 +198,9 @@
 				border-radius: 4px;
 				padding: 2px;
 				float:right;
-				height: 25px;
+				height: 20px;
 				width: 305px;
-				font-size: 18px;
+				font-size: 15px;
 			}
 			
 			span
@@ -167,9 +215,13 @@
 				border-radius: 10px;
 			}
 		</style>
+		
 		<script src="http://maps.googleapis.com/maps/api/js"></script>
+		
 		<script>
 			// --------------- Init function for map -------------------------------
+			var map; //need this variable as global to use in multiple functions
+			
 			function initialize()
 			{
 				// -------------------- Constructs and initializes sexy-assed map -------------------------
@@ -179,30 +231,47 @@
 					zoom:4,
 					mapTypeId:google.maps.MapTypeId.ROADMAP
 				};
-				var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+				map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
 				// -------------------------- Creates markers, and adds them to a list--------------------------------
-				var img = "resources/images/tack.gif"
-				var markers = [];
-				markers.push(createMarker(45, -120, "porty-air-lol", img, map));
-				markers.push(createMarker(35, -101, "high-as-a-kite", img, map));
-
-				// Pans to it
+				
+				//var markers = [];
+				
+				//markers.push(createMarker(45, -120, "porty-air-lol", map));
+				//markers.push(createMarker(35, -101, "high-as-a-kite", map));
+				
+				//createMarker(35, -101, "high-as-a-kite");
+				//createMarker();
+				//Pans to it
 				//map.panTo(markers[0].getPosition());
+				
+				<?php
+					if (isset($mapTbl))						
+						while ($row = mysql_fetch_array($mapTbl))
+							print("createMarker(\"".$row ['airport']."\", ".$row ['long'].", ".$row ['lat'].");");
+				?>
+				
 			}
-
-			// Creates easy to use icon
-			function createMarker(long, lat, name, img, map)
+			
+			function focusMarker(long, lat)
 			{
+				map.panTo(new google.maps.Marker({position: new google.maps.LatLng(long, lat, 0)}).getPosition());
+			}
+			
+			// Creates easy to use icon
+			function createMarker(name, long, lat)
+			{
+				var img = "resources/images/tack.gif";
 				var marker = new google.maps.Marker
 				({
-      					position: new google.maps.LatLng(long, lat, 0),
-     					map: map,
-     			 		title: name,
+      				position: new google.maps.LatLng(long, lat, 0),
+     				map: map,
+     			 	title: name,
 					icon: img
   				});
 				return marker;
 			}
+			
 			google.maps.event.addDomListener(window, 'load', initialize);
 			
 			//this function performs a check to verify if all required fields are entered before submitting
@@ -277,3 +346,4 @@
 	<body>
 		<div>
 		<font size = "4">
+		<pre>
