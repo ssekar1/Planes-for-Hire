@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 18, 2015 at 02:05 AM
+-- Generation Time: Mar 18, 2015 at 03:15 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -23,12 +23,31 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin_setting`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_setting` (
+`id` int(10) unsigned NOT NULL,
+  `password` varchar(30) DEFAULT NULL,
+  `lastLogon` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin_setting`
+--
+
+INSERT INTO `admin_setting` (`id`, `password`, `lastLogon`) VALUES
+(1, 'admin', '2015-03-18 18:05:11');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `airport_locations`
 --
 
 CREATE TABLE IF NOT EXISTS `airport_locations` (
 `id` int(10) unsigned NOT NULL,
-  `airport` varchar(30) NOT NULL,
+  `airport` text NOT NULL,
   `long` double NOT NULL,
   `lat` double NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
@@ -78,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `customer_profile` (
   `phone` varchar(11) NOT NULL,
   `password` varchar(30) NOT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customer_profile`
@@ -86,7 +105,9 @@ CREATE TABLE IF NOT EXISTS `customer_profile` (
 
 INSERT INTO `customer_profile` (`id`, `firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `regDate`) VALUES
 (41, 'Tam', 'Tran', '12345 Abc street', 'Abc-ville', 'MD', '99999', 'none specify', 'tamtran1@umbc.edu', '911', 'test', '2015-03-18 04:10:15'),
-(43, 'Test', 'User', 'test', 'test', 'te', '09876', 'none specify', 'testuser@umbc.edu', '1234567890', 'test', '2015-03-18 05:18:21');
+(43, 'Test', 'User', 'test', 'test', 'te', '09876', 'none specify', 'testuser@umbc.edu', '1234567890', 'test', '2015-03-18 05:18:21'),
+(44, 'Test', 'User', 'test', 'test', 'te', '12345', 'none specify', 'testUser@yahoo.com', '12345', 'test', '2015-03-18 11:30:51'),
+(46, 'test', 'user2', 'test', 'test', 'te', '12345', 'none specify', 'testUser2@hotmail.com', '93847290', 'test', '2015-03-18 11:50:03');
 
 -- --------------------------------------------------------
 
@@ -115,6 +136,23 @@ INSERT INTO `tamtran1@umbc.edu` (`id`, `origAirport`, `origLong`, `origLat`, `de
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `testUser2@hotmail.com`
+--
+
+CREATE TABLE IF NOT EXISTS `testUser2@hotmail.com` (
+`id` int(10) unsigned NOT NULL,
+  `origAirport` varchar(30) NOT NULL,
+  `origLong` double NOT NULL,
+  `origLat` double NOT NULL,
+  `destAirport` varchar(30) NOT NULL,
+  `destLong` double NOT NULL,
+  `destLat` double NOT NULL,
+  `dateTravel` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `testuser@umbc.edu`
 --
 
@@ -132,6 +170,12 @@ CREATE TABLE IF NOT EXISTS `testuser@umbc.edu` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin_setting`
+--
+ALTER TABLE `admin_setting`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `airport_locations`
@@ -152,6 +196,12 @@ ALTER TABLE `tamtran1@umbc.edu`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `testUser2@hotmail.com`
+--
+ALTER TABLE `testUser2@hotmail.com`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `testuser@umbc.edu`
 --
 ALTER TABLE `testuser@umbc.edu`
@@ -162,6 +212,11 @@ ALTER TABLE `testuser@umbc.edu`
 --
 
 --
+-- AUTO_INCREMENT for table `admin_setting`
+--
+ALTER TABLE `admin_setting`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `airport_locations`
 --
 ALTER TABLE `airport_locations`
@@ -170,12 +225,17 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=44;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `tamtran1@umbc.edu`
 --
 ALTER TABLE `tamtran1@umbc.edu`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `testUser2@hotmail.com`
+--
+ALTER TABLE `testUser2@hotmail.com`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `testuser@umbc.edu`
 --

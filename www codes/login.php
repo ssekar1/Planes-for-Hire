@@ -23,7 +23,10 @@
 			$password = mysql_real_escape_string($password);
 			
 			//lookup database for user
-			$query = $link->executeQuery("select * from `customer_profile` where `password` = '".$password."' AND email = '".$loginId."'", $_SERVER["SCRIPT_NAME"]);
+			if ($loginId == "admin")
+				$query = $link->executeQuery("select * from `admin_setting` where `password` = '".$password."'", $_SERVER["SCRIPT_NAME"]);
+			else
+				$query = $link->executeQuery("select * from `customer_profile` where `password` = '".$password."' AND email = '".$loginId."'", $_SERVER["SCRIPT_NAME"]);
 			$rows = mysql_num_rows($query);
 			
 			if ($rows == 1)
@@ -34,7 +37,9 @@
 			//mysql_close($connection); // Closing connection
 		}
 
-	if(isset($_SESSION['loginId'])) //redirect to main page if login successful
+	if(isset($_SESSION['loginId']) && $_SESSION['loginId'] == "admin") //redirect to main page if login successful
+		print ("<META http-equiv = \"REFRESH\" content = \"0; private/admin.php\">");
+	else if (isset($_SESSION['loginId']))
 		print ("<META http-equiv = \"REFRESH\" content = \"0; main.php\">");
 	
 	print ("<div id = \"loginPage\">");

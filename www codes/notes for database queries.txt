@@ -10,3 +10,7 @@ CREATE TABLE `tamtran1@umbc.edu` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT 
                                   `dateTravel` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);
                                                                     
 INSERT INTO `tamtran1@umbc.edu` (`id`, `origAirport`, `origLong`, `origLat`, `destAirport`, `destLong`, `destLat`, `dateTravel`) VALUES (NULL, 'test airport', '-45.678', '34.786', 'test airport 2', '78.123', '12.565', CURRENT_TIMESTAMP);
+
+CREATE TABLE `aminSetting` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                                  `someTable` varchar(30),
+                                  `lastLogon` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);

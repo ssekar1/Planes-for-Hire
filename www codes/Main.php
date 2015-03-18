@@ -17,6 +17,9 @@
 				$userEmail = $row['email'];
 			}
 		
+		if ($_SESSION['loginId'] == "admin")
+			$loginUser = $_SESSION['loginId'];
+		
 		if (isset ($userEmail))
 			$travelHist = $link->executeQuery("select * from `".$userEmail."`", $_SERVER["SCRIPT_NAME"]);
 	}
@@ -33,7 +36,7 @@
 	} else
 	{
 		print ("<font size = \"3\" style = \"float:left\">Hello you...</font>");
-		print ("<font size = \"3\" style = \"float:right\"><a href=\"registration.php\">Register</a><label>   </label><a href=\"login.php\">Login   </a></font><br>");
+		print ("<font size = \"3\" style = \"float:right\"><a href=\"registration.php\">Register   </a><a href=\"login.php\">Login   </a></font><br>");
 	}
 	
 	print("<center><div id=\"googleMap\"></div></center>");
