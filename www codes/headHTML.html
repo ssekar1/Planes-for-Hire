@@ -318,7 +318,6 @@
 				
 				if (document.getElementById('durationLabel').innerHTML !== '' && document.getElementById('startLabel').innerHTML !== '')
 				{
-					document.getElementById('returnLabel').innerHTML = 'test';
 					var msec = Date.parse(document.getElementById('startLabel').innerHTML);
 					var date = new Date(msec);
 					date.setDate(date.getDate() + parseInt(document.getElementById('durationLabel').innerHTML));
@@ -413,47 +412,48 @@
 			
 			function checkOut(checkOutStatus, user)
 			{
-				
-				if (parseInt(checkOutStatus) === 1)
-				{
-					alert ("Something's wrong. Did you already Checkout a Plane?");
-					return;
-				}
-				
 				var depart = document.getElementById('departLabel').innerHTML;
 				var arrive = document.getElementById('arrivalLabel').innerHTML;
 				var duration = document.getElementById('durationLabel').innerHTML;
 				var startDate = document.getElementById('startLabel').innerHTML;
 				var returnDate = document.getElementById('returnLabel').innerHTML;
 				var model = document.getElementById('planeLabel').innerHTML;
-				
-				
-				//if (depart === '' || arrive === '' || duration === '' || startDate === '' || returnDate === '' || model === '')
-				//{
-				//	alert("Plane Rental Form Incomplete");
-				//	return;
-				//}
-				
-				//for debugging purposes
-				//alert (checkOutStatus + " " + user + " " + depart + " " + arrive + " " + duration + " " + startDate + " " + returnDate + " " + model);
-				
-				if (window.XMLHttpRequest)
-					xmlhttp = new XMLHttpRequest();
-				else
-					xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
-					
-				xmlhttp.onreadystatechange = function()
+/*
+				if (parseInt(checkOutStatus) == 1)
 				{
-					if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-						;
-				}
+					if (depart !== '' || arrive !== '' || duration !== '' || startDate !== '' || returnDate !== '' || model !== '')
+					{
+						//for debugging purposes
+						//alert (checkOutStatus + " " + user + " " + depart + " " + arrive + " " + duration + " " + startDate + " " + returnDate + " " + model);
+	*/			
+						if (window.XMLHttpRequest)
+							xmlhttp = new XMLHttpRequest();
+						else
+							xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
+						
+						xmlhttp.onreadystatechange = function()
+						{
+							if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+								;
+						}
 					
-				xmlhttp.open ("post", "checkOut.php", "true");
-				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-				xmlhttp.send ("depart=" + depart + "&arrive=" + arrive + "&duration=" + duration + "&startDate=" + startDate + "&returnDate=" + returnDate + "&model=" + model + "&checkOutStatus=" + checkOutStatus + "&user=" + user);
+						xmlhttp.open ("post", "checkOut.php", "true");
+						xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+						xmlhttp.send ("depart=" + depart + "&arrive=" + arrive + "&duration=" + duration + "&startDate=" + startDate + "&returnDate=" + returnDate + "&model=" + model + "&user=" + user);
 				
-				window.location.reload();
-			}
+						window.location.reload();
+		/*			
+					} else
+					{
+						alert("Plane Rental Form Incomplete");
+						return;
+					}
+				} else
+				{
+					alert ("Something's wrong. Did you already Checkout a Plane?");
+					return;
+				}
+		*/	}
 			
 		</script>
 		

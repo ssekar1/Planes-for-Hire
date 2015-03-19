@@ -100,15 +100,17 @@
 					while ($row = mysql_fetch_array($planes))
 						print ("<option value = \"".$row['model']."\">".$row['model']."</option>");
 					print ("</select><br><br>");
-			
-				print("<label>Plane Rental Form<br>Depart from:  </label><label id = \"departLabel\"></label><br>");
-				print("<label>Arrive to:  </label><label id = \"arrivalLabel\"></label><br>");
-				print("<label>Rental duration:  </label><label id = \"durationLabel\"></label><br>");
-				print("<label>Start date:  </label><label id = \"startLabel\"></label><br>");
-				print("<label>Return date:  </label><label id = \"returnLabel\"></label><br>");
-				print("<label>Model:  </label><label id = \"planeLabel\"></label><br>");
-				print ("<br><center><button type = \"button\" id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."','".$userEmail."')\">Check In</button><label>   ");
-				print ("</label><button type = \"button\" id = \"checkOutButton\" onclick= \"checkOut('".$checkOutStatus."','".$userEmail."')\">Check Out</button></center><br>");
+				print ("<form id = \"rentalForm\" name = \"rentalForm\" action = \"checkOut.php\" method = \"post\">");
+					print("<label>Plane Rental Form<br>");
+					print("<label>Depart from:  </label><label name = \"departLabel\" id = \"departLabel\"></label><br>");
+					print("<label>Arrive to:  </label><label name = \"arrivalLabel\" id = \"arrivalLabel\"></label><br>");
+					print("<label>Rental duration:  </label><label name = \"durationLabel\" id = \"durationLabel\"></label><br>");
+					print("<label>Start date:  </label><label name = \"startLabel\" id = \"startLabel\"></label><br>");
+					print("<label>Return date:  </label><label name = \"returnLabel\" id = \"returnLabel\"></label><br>");
+					print("<label>Model:  </label><label name = \"planeLabel\" id = \"planeLabel\"></label><br>");
+					print ("<br><center><button type = \"button\" name = \"checkInButton\" id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."','".$userEmail."')\">Check In</button><label>   ");
+					print ("</label><button type = \"button\" name = \"checkOutButton\" id = \"checkOutButton\" onclick= \"checkOut('".$checkOutStatus."','".$userEmail."')\">Check Out</button></center><br>");
+				print ("</form>");
 			print("</div>");
 		print("</div>");	
 		print("</center>");

@@ -20,10 +20,11 @@
 		$_SESSION ['avatar'] = $_POST ['avatar'];
 	$_SESSION ['email'] = $_POST ['email'];
 	$_SESSION ['password'] = $_POST ['password'];
+	$_SESSION ['dateStamp'] = date('Y-m-d, H:i:s', time());
 	
 //===inserting new user into customer_profile table
-	$sql = "INSERT INTO `customer_profile`(`firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`)
-		VALUES ('".$_SESSION ['firstName']."', '".$_SESSION ['lastName']."', '".$_SESSION ['street']."', '".$_SESSION ['city']."', '".$_SESSION ['state']."','".$_SESSION ['zip']."', '".$_SESSION ['avatar']."', '".$_SESSION ['email']."', '".$_SESSION ['phone']."', '".$_SESSION ['password']."')";
+	$sql = "INSERT INTO `customer_profile`(`firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `regDate`)
+		VALUES ('".$_SESSION ['firstName']."', '".$_SESSION ['lastName']."', '".$_SESSION ['street']."', '".$_SESSION ['city']."', '".$_SESSION ['state']."','".$_SESSION ['zip']."', '".$_SESSION ['avatar']."', '".$_SESSION ['email']."', '".$_SESSION ['phone']."', '".$_SESSION ['password']."', '".$_SESSION ['dateStamp']."')";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 
 //===creating new travel history table for the new user, these tables are created dynamically for each new user
