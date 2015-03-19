@@ -3,6 +3,9 @@
 	//upload.php
 	
 	// let the user upload their own user avatar.
+	//  They will choose a picture of their choice 
+	// and upload Jpeg, gif, png tec. formats only
+
 	$target_dir = "picsUploads/";
 	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 	$uploadOk = 1;
