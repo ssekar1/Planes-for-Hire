@@ -40,7 +40,8 @@
 				print ("<td>Avatar			</td>");
 				print ("<td>Email				</td>");
 				print ("<td>Phone		</td>");
-				print ("<td>Password	</td>");
+				print ("<td>Password   </td>");
+				print ("<td>Checkout </td>");
 				print ("<td>Register Date		</td>");
 				print ("<td>Modify	</td>");
 				print ("</tr>");
@@ -60,7 +61,7 @@
 						print("</td><td><a href = \"javascript: edit('".$row ['email']."', 'password', '".$row ['password']."');\" style = \"color: black\">".$row ['password']."</a>");
 					else
 						print("</td><td><a href = \"javascript: edit('".$row ['email']."', 'password', '');\" style = \"color: black\">SUSPENDED</a>");
-					print("</td><td>".$row ['regDate']);
+					print("</td><td>".$row ['checkOutStatus']."</td><td>".$row ['regDate']);
 					if ($row ['password'] != NULL)
 						print("</td><td><a href = \"javascript: edit('".$row ['email']."', '', 'suspend');\" style = \"color: green\">Suspend	</a>");
 					else

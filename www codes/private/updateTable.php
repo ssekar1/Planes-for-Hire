@@ -10,8 +10,6 @@
 	$field = $_POST['field'];
 	$newVal = $_POST['newVal'];
 	
-	
-	
 	if ($newVal == "delete")
 	{
 		$sql = "DELETE FROM `customer_profile` WHERE `email` = '".$email."'";

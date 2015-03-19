@@ -15,6 +15,8 @@
 			{
 				$loginUser = $row['firstName']." ".$row['lastName'];
 				$userEmail = $row['email'];
+				$checkOutStatus = $row['checkOutStatus'];
+				
 			}
 		
 		if ($_SESSION['loginId'] == "admin")
@@ -41,10 +43,6 @@
 	
 	print("<center><div id=\"googleMap\"></div></center>");
 	
-	print ("<br><center><button type = \"button\" id = \"checkInButton\" onclick= \"confirm()\">Check In</button>");
-	print ("<label>    </label>");
-	print ("<button type = \"button\" id = \"checkOutButton\" onclick= \"confirm()\">Check Out</button></center><br>");
-	
 	print ("<font size = \"2\">");
 	if (isset($loginUser))
 	{
@@ -69,6 +67,52 @@
 		}
 		else
 			print ("Error loading travel history table");
+		
+		print("<center>");
+		print("<div class = \"basePanel\">");
+			print("<div class = \"leftPanel\">");
+				print ("<label>Departing Airport</label><br><br>");
+				mysql_data_seek($mapTbl, 0);
+				while ($row = mysql_fetch_array($mapTbl))
+					print ("<a href = \"javascript: focusMarker('".$row ['long']."', '".$row ['lat']."', 'departLabel', '".$row ['airport']."');\" style = \"color: black\">".$row ['airport']."</a><br><br>");
+			print("</div>");
+		
+			print("<div class = \"middlePanel\">");
+				print ("<label>Arival Airport</label><br><br>");
+				mysql_data_seek($mapTbl, 0);
+				while ($row = mysql_fetch_array($mapTbl))
+					print ("<a href = \"javascript: focusMarker('".$row ['long']."', '".$row ['lat']."', 'arrivalLabel', '".$row ['airport']."');\" style = \"color: black\">".$row ['airport']."</a><br><br>");
+			print("</div>");
+			
+			print("<div class = \"rightPanel\">");
+				print ("<label>Rental Duration  </label><select name = \"durationSelect\" id = \"durationSelect\" onchange = \"updateForm('durationLabel', this.value)\">");
+					print ("<option value = ''></option>");
+					for ($x = 1; $x < 6; $x++)
+						print ("<option value = \"".$x."\">".$x." day</option>");
+					print ("</select><br><br>");
+				
+				print ("<label>Start Date   </label><input type = \"text\" id = \"datePicker\" onchange = \"updateForm('startLabel', this.value)\"><br><br>");
+				
+				$sql = "select * from planes";
+				$planes = $link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+				print ("<label>Plane Model  </label><select name = \"planeSelect\" id = \"planeSelect\" style = \"width: 180px\"onchange = \"updateForm('planeLabel', this.value)\">");
+					print ("<option value = ''></option>");
+					while ($row = mysql_fetch_array($planes))
+						print ("<option value = \"".$row['model']."\">".$row['model']."</option>");
+					print ("</select><br><br>");
+			
+				print("<label>Plane Rental Form<br>Depart from:  </label><label id = \"departLabel\"></label><br>");
+				print("<label>Arrive to:  </label><label id = \"arrivalLabel\"></label><br>");
+				print("<label>Rental duration:  </label><label id = \"durationLabel\"></label><br>");
+				print("<label>Start date:  </label><label id = \"startLabel\"></label><br>");
+				print("<label>Return date:  </label><label id = \"returnLabel\"></label><br>");
+				print("<label>Model:  </label><label id = \"planeLabel\"></label><br>");
+				print ("<br><center><button type = \"button\" id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."','".$userEmail."')\">Check In</button><label>   ");
+				print ("</label><button type = \"button\" id = \"checkOutButton\" onclick= \"checkOut('".$checkOutStatus."','".$userEmail."')\">Check Out</button></center><br>");
+			print("</div>");
+		print("</div>");	
+		print("</center>");
+				
 	} else
 	{
 		//for debuging purposes
