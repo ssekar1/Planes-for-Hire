@@ -25,7 +25,7 @@
 		
 		if (isset($loginUser))
 		{
-			print ("<label> Member List <span>(click on member name to detele them)</span></label><br>");
+			print ("<label> Member List   <span>(Select any item to change their value)</span></label><br>");
 			if (isset($memList))
 			{
 				//prints the labels for the travel history table
@@ -42,21 +42,31 @@
 				print ("<td>Phone		</td>");
 				print ("<td>Password	</td>");
 				print ("<td>Register Date		</td>");
+				print ("<td>Modify	</td>");
 				print ("</tr>");
 				
 				while ($row = mysql_fetch_array($memList))
-					print ("<tr><td>".$row ['firstName'].
-							"</td><td>".$row ['lastName'].
-							"</td><td>".$row ['street'].
-							"</td><td>".$row ['city'].
-							"</td><td>".$row ['state'].
-							"</td><td>".$row ['zip'].
-							"</td><td>".$row ['avatar'].
-							"</td><td>".$row ['email'].
-							"</td><td>".$row ['phone'].
-							"</td><td>".$row ['password'].
-							"</td><td>".$row ['regDate'].
-							"</td><td>");
+				{
+					print ("<tr><td><a href = \"javascript: edit('".$row ['email']."', 'firstName', '".$row ['firstName']."');\" style = \"color: black\">".$row ['firstName']."</a>".
+							"</td><td><a href = \"javascript: edit('".$row ['email']."', 'lastName', '".$row ['lastName']."');\" style = \"color: black\">".$row ['lastName']."</a>".
+							"</td><td><a href = \"javascript: edit('".$row ['email']."', 'street', '".$row ['street']."');\" style = \"color: black\">".$row ['street']."</a>".
+							"</td><td><a href = \"javascript: edit('".$row ['email']."', 'city', '".$row ['city']."');\" style = \"color: black\">".$row ['city']."</a>".
+							"</td><td><a href = \"javascript: edit('".$row ['email']."', 'state', '".$row ['state']."');\" style = \"color: black\">".$row ['state']."</a>".
+							"</td><td><a href = \"javascript: edit('".$row ['email']."', 'zip', '".$row ['zip']."');\" style = \"color: black\">".$row ['zip']."</a>".
+							"</td><td><a href = \"javascript: edit('".$row ['email']."', 'avatar', '".$row ['avatar']."');\" style = \"color: black\">".$row ['avatar']."</a>".
+							"</td><td><a href = \"javascript: edit('".$row ['email']."', 'email', '".$row ['email']."');\" style = \"color: black\">".$row ['email']."</a>".
+							"</td><td><a href = \"javascript: edit('".$row ['email']."', 'phone', '".$row ['phone']."');\" style = \"color: black\">".$row ['phone']."</a>");
+					if ($row ['password'] != NULL)
+						print("</td><td><a href = \"javascript: edit('".$row ['email']."', 'password', '".$row ['password']."');\" style = \"color: black\">".$row ['password']."</a>");
+					else
+						print("</td><td><a href = \"javascript: edit('".$row ['email']."', 'password', '');\" style = \"color: black\">SUSPENDED</a>");
+					print("</td><td>".$row ['regDate']);
+					if ($row ['password'] != NULL)
+						print("</td><td><a href = \"javascript: edit('".$row ['email']."', '', 'suspend');\" style = \"color: green\">Suspend	</a>");
+					else
+						print("</td><td><a href = \"javascript: edit('".$row ['email']."', '', 'suspend');\" style = \"color: orange\">Suspend	</a>");
+					print("<a href = \"javascript: edit('".$row ['email']."', '', 'delete');\" style = \"color: red\">Delete</a>");
+				}
 				print ("</table><br><br>");
 			}
 			else
@@ -65,7 +75,7 @@
 		
 		print ("</font>");
 	} else
-		print ("<label> Login Error, Please Try Again</label><br>");
+		print ("<label> Login Error, Try Again</label><br>");
 	
 	include ("adminTailHTML.html");
 ?>

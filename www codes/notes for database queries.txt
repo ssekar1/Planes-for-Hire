@@ -14,3 +14,5 @@ INSERT INTO `tamtran1@umbc.edu` (`id`, `origAirport`, `origLong`, `origLat`, `de
 CREATE TABLE `aminSetting` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
                                   `someTable` varchar(30),
                                   `lastLogon` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);
+                                  
+UPDATE `customer_profile` SET `zip` = '0987654321' WHERE `email` = 'testUser@yahoo.com';

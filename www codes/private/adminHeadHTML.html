@@ -10,7 +10,7 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Planes For Hire</title>
+		<title>Planes For Hire - Administration</title>
 		
 		<?php	
 			include ('../link.php');
@@ -28,61 +28,12 @@
 				margin-top: 30px;
 				margin-left: auto;
      			margin-right: auto;
-				width: 1000px;
+				width: 1200px;
 			}
 			
 			pre
 			{
 				font-family: Arial, Verdana;
-			}
-			
-			#loginPage
-			{
-				background-color: #d1d1d1;
-				font-family: Arial, Verdana;
-				font-size: 16px;
-				margin-top: 70px;
-     			padding: 0px 30px;
-				margin-left: auto;
-     			margin-right: auto;
-     			border-radius: 30px;
-				width: 309px;
-			}
-			
-			h2
-			{
-				background-color:#A5A5A5;
-				text-align:center;
-				font-size: 35px;
-				color: #595959;
-				border-radius: 30px 30px 0 0;
-				width: 357px;
-				margin: 10px -30px;
-				padding: 6px
-			}
-			
-			#registration
-			{
-				background-color: #d1d1d1;
-				font-family: Arial, Verdana;
-				font-size: 16px;
-				padding: 0px 30px;
-				margin-left: auto;
-     			margin-right: auto;
-     			border-radius: 30px;
-				width: 500px;
-			}
-			
-			h3
-			{
-				background-color:#A5A5A5;
-				text-align:center;
-				font-size: 35px;
-				color: #595959;
-				border-radius: 30px 30px 0 0;
-				width: 548px;
-				margin: 10px -30px;
-				padding: 6px
 			}
 			
 			#textBox
@@ -130,76 +81,6 @@
 			#searchButton::-moz-focus-inner
 			{
 				border: 0;
-			}		
-			
-			#checkInButton
-			{	
-				background-color: #FF6666;
-				color: white;
-				border-radius: 9px;
-				height: 30px;
-				width: 140px; 
-				border: none; //0px #a1a1a1 solid;
-				outline: none;
-				float: center;
-				font-family: Arial, Verdana;
-				font-size: 15px;
-			}
-			#checkInButton:hover
-			{	
-				background-color: #FF9191;
-				color: white;
-			}
-			#checkOutButton
-			{	
-				background-color: #00CC66;
-				color: white;
-				border-radius: 9px;
-				height: 30px;
-				width: 140px; 
-				border: none;
-				outline: none;
-				float: center;
-				font-family: Arial, Verdana;
-				font-size: 15px;
-			}
-			#checkOutButton:hover
-			{	
-				background-color: #4DDB94;
-				color: white;
-			}
-
-			#submitButton
-			{	
-				background-color: #008AB8;
-				color: white;
-				border-radius: 9px;
-				height: 30px;
-				width: 140px; 
-				border: none; //0px #a1a1a1 solid;
-				outline: none;
-				font-family: Arial, Verdana;
-				font-size: 16px;
-				margin-left:auto;
-				margin-right:auto;
-				display:block;
-			}
-			#submitButton:hover
-			{	
-				background-color: #33A1C6;
-				color: white;
-			}
-
-			.input
-			{	
-				background-color: #ffffff;
-				border: 0px #a1a1a1 solid;
-				border-radius: 4px;
-				padding: 2px;
-				float:right;
-				height: 20px;
-				width: 305px;
-				font-size: 15px;
 			}
 			
 			span
@@ -207,15 +88,49 @@
 				color: red;
 			}
 			
-			#googleMap
-			{
-				width: 1000px;
-				height: 500px;
-				border-radius: 10px;
-			}
 		</style>
 		
 		<script>
+			function edit(email, field, value)
+			{
+				var msg = "Enter a new " + field + " value for member " + email + "\nThe current value is:";
+				var newVal;
+				
+				if (value == "delete")
+				{
+					if (confirm("Are you sure? This cannot be undone") !== true)
+						return;
+						newVal = "delete";
+				} else if (value == "suspend")
+					newVal = "suspend";
+				else
+				{
+					newVal = prompt(msg, value);
+					if (newVal === value)
+						return;
+				}
+				
+				if (newVal.length >= 1)
+				{					
+					if (window.XMLHttpRequest)
+						xmlhttp = new XMLHttpRequest();
+					else
+						xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
+					
+					xmlhttp.onreadystatechange = function()
+					{
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+							;
+					}
+					
+					xmlhttp.open ("post", "updateTable.php", "true");
+					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+					xmlhttp.send ("email=" + email + "&field=" + field + "&newVal=" + newVal);
+				} else
+					return;
+				
+				window.location.reload();
+			}
 			
 		</script>
 		
