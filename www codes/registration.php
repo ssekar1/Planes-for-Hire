@@ -55,7 +55,7 @@
 			print ("<input name = \"password2\" id = \"password2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>");
 		print ("</label>");
 	
-	print ("<button type = \"button\" id = \"submitButton\" onclick= \"confirm()\">Submit</button><br><br>");
+	print ("<button type = \"button\" id = \"submitButton\" onclick= \"confirmEntry ()\">Submit</button><br><br>");
 	
 	print ("</div>");
 	print ("</form>");

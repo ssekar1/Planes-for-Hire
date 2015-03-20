@@ -44,7 +44,7 @@
 	print("<center><div id=\"googleMap\"></div></center>");
 	
 	print ("<font size = \"2\">");
-	if (isset($loginUser))
+	if (isset($loginUser) && $loginUser !== "admin")
 	{
 		print ("<label> Travel History</label><br>");
 		if (isset($travelHist))
@@ -85,6 +85,10 @@
 			print("</div>");
 			
 			print("<div class = \"rightPanel\">");
+				print ("<center><button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."','".$userEmail."')\">Check In</button>");
+				print ("<label>   </label>");
+				print ("<button id = \"checkOutButton\" onclick= \"checkOut('".$checkOutStatus."','".$userEmail."')\">Check Out</button></center><br>");
+				
 				print ("<label>Rental Duration  </label><select name = \"durationSelect\" id = \"durationSelect\" onchange = \"updateForm('durationLabel', this.value)\">");
 					print ("<option value = ''></option>");
 					for ($x = 1; $x < 6; $x++)
@@ -100,7 +104,6 @@
 					while ($row = mysql_fetch_array($planes))
 						print ("<option value = \"".$row['model']."\">".$row['model']."</option>");
 					print ("</select><br><br>");
-				print ("<form id = \"rentalForm\" name = \"rentalForm\" action = \"checkOut.php\" method = \"post\">");
 					print("<label>Plane Rental Form<br>");
 					print("<label>Depart from:  </label><label name = \"departLabel\" id = \"departLabel\"></label><br>");
 					print("<label>Arrive to:  </label><label name = \"arrivalLabel\" id = \"arrivalLabel\"></label><br>");
@@ -108,9 +111,6 @@
 					print("<label>Start date:  </label><label name = \"startLabel\" id = \"startLabel\"></label><br>");
 					print("<label>Return date:  </label><label name = \"returnLabel\" id = \"returnLabel\"></label><br>");
 					print("<label>Model:  </label><label name = \"planeLabel\" id = \"planeLabel\"></label><br>");
-					print ("<br><center><button type = \"button\" name = \"checkInButton\" id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."','".$userEmail."')\">Check In</button><label>   ");
-					print ("</label><button type = \"button\" name = \"checkOutButton\" id = \"checkOutButton\" onclick= \"checkOut('".$checkOutStatus."','".$userEmail."')\">Check Out</button></center><br>");
-				print ("</form>");
 			print("</div>");
 		print("</div>");	
 		print("</center>");

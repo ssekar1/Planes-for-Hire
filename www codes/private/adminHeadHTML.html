@@ -90,7 +90,7 @@
 			
 		</style>
 		
-		<script>
+		<script>			
 			function edit(email, field, value)
 			{
 				var msg = "Enter a new " + field + " value for member " + email + "\nThe current value is:";
@@ -98,7 +98,7 @@
 				
 				if (value == "delete")
 				{
-					if (confirm("Are you sure? This cannot be undone") !== true)
+					if (!confirm("Are you sure? This cannot be undone"))
 						return;
 						newVal = "delete";
 				} else if (value == "suspend")

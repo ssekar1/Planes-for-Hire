@@ -140,7 +140,7 @@
 				border-radius: 9px;
 				height: 30px;
 				width: 140px; 
-				border: none; //0px #a1a1a1 solid;
+				border: none;
 				outline: none;
 				float: center;
 				font-family: Arial, Verdana;
@@ -343,7 +343,7 @@
 			google.maps.event.addDomListener(window, 'load', initialize);
 			
 			//this function performs a check to verify if all required fields are entered before submitting
-			function confirm ()
+			function confirmEntry ()
 			{
 				if (document.getElementById ('firstName').value != '')
 					if (document.getElementById ('lastName').value != '')
@@ -411,21 +411,24 @@
 			}
 			
 			function checkOut(checkOutStatus, user)
-			{
+			{				
 				var depart = document.getElementById('departLabel').innerHTML;
 				var arrive = document.getElementById('arrivalLabel').innerHTML;
 				var duration = document.getElementById('durationLabel').innerHTML;
 				var startDate = document.getElementById('startLabel').innerHTML;
 				var returnDate = document.getElementById('returnLabel').innerHTML;
 				var model = document.getElementById('planeLabel').innerHTML;
-/*
-				if (parseInt(checkOutStatus) == 1)
+				
+				if (parseInt(checkOutStatus) === 1)
 				{
-					if (depart !== '' || arrive !== '' || duration !== '' || startDate !== '' || returnDate !== '' || model !== '')
+					if (depart !== '' && arrive !== '' && duration !== '' && startDate !== '' && returnDate !== '' && model !== '')
 					{
-						//for debugging purposes
-						//alert (checkOutStatus + " " + user + " " + depart + " " + arrive + " " + duration + " " + startDate + " " + returnDate + " " + model);
-	*/			
+						var data = "depart="+depart+"&arrive="+arrive+"&duration="+duration+"&startDate="+startDate+"&returnDate="+returnDate+"&model="+model;
+						var confirmMsg = "Check Out Confirmation\nChecking out " + model + " on " + startDate + " for " + duration + " days.\nDeparting from " + depart + " to " + arrive + "\nCheck in by " + returnDate + ". Proceed with Rental?"; 
+						
+						if (!confirm(confirmMsg)) //don't remove this statement!!! for some reason the check out process works efficiently with it. there appear to be some latency issue 
+							return; //involve while the variables are populating, and without this statement, many of them didn't populate fast enough and nothing gets push into the database
+							
 						if (window.XMLHttpRequest)
 							xmlhttp = new XMLHttpRequest();
 						else
@@ -439,10 +442,9 @@
 					
 						xmlhttp.open ("post", "checkOut.php", "true");
 						xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-						xmlhttp.send ("depart=" + depart + "&arrive=" + arrive + "&duration=" + duration + "&startDate=" + startDate + "&returnDate=" + returnDate + "&model=" + model + "&user=" + user);
-				
+						xmlhttp.send (data);
 						window.location.reload();
-		/*			
+					
 					} else
 					{
 						alert("Plane Rental Form Incomplete");
@@ -450,10 +452,10 @@
 					}
 				} else
 				{
-					alert ("Something's wrong. Did you already Checkout a Plane?");
+					alert("Something's wrong. Did you already Checkout a Plane?");
 					return;
 				}
-		*/	}
+			}
 			
 		</script>
 		
