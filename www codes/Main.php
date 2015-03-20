@@ -59,10 +59,11 @@
 			print ("<td>Arival Longitude    </td>");
 			print ("<td>Arrival Latitude    </td>");
 			print ("<td>Date And Time Traveled    </td>");
+			print ("<td>Leased Model    </td>");
 			print ("</tr>");
 			
 			while ($row = mysql_fetch_array($travelHist))
-				print ("<tr><td>".$row ['origAirport']."</td><td>".$row ['origLong']."</td><td>".$row ['origLat']."</td><td>".$row ['destAirport']."</td><td>".$row ['destLong']."</td><td>".$row ['destLat']."</td><td>".$row ['dateTravel']."</td></tr>");
+				print ("<tr><td>".$row ['origAirport']."</td><td>".$row ['origLong']."</td><td>".$row ['origLat']."</td><td>".$row ['destAirport']."</td><td>".$row ['destLong']."</td><td>".$row ['destLat']."</td><td>".$row ['dateTravel']."</td><td>".$row ['leaseModel']."</td></tr>");
 			print ("</table><br><br>");
 		}
 		else
@@ -85,9 +86,9 @@
 			print("</div>");
 			
 			print("<div class = \"rightPanel\">");
-				print ("<center><button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."','".$userEmail."')\">Check In</button>");
+				print ("<center><button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."')\">Check In</button>");
 				print ("<label>   </label>");
-				print ("<button id = \"checkOutButton\" onclick= \"checkOut('".$checkOutStatus."','".$userEmail."')\">Check Out</button></center><br>");
+				print ("<button id = \"checkOutButton\" onclick= \"checkOut('".$checkOutStatus."')\">Check Out</button></center><br>");
 				
 				print ("<label>Rental Duration  </label><select name = \"durationSelect\" id = \"durationSelect\" onchange = \"updateForm('durationLabel', this.value)\">");
 					print ("<option value = ''></option>");

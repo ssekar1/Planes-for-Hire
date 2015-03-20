@@ -28,7 +28,7 @@
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 
 //===creating new travel history table for the new user, these tables are created dynamically for each new user
-	$sql = "CREATE TABLE `".$_SESSION ['email']."` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY, `origAirport` varchar(30) NOT NULL, `origLong` double signed NOT NULL, `origLat` double signed NOT NULL, `destAirport` varchar(30) NOT NULL, `destLong` double signed NOT NULL, `destLat` double signed NOT NULL, `dateTravel` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)";
+	$sql = "CREATE TABLE `".$_SESSION ['email']."` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY, `origAirport` varchar(30) NULL, `origLong` double signed NULL, `origLat` double signed NULL, `destAirport` varchar(30) NULL, `destLong` double signed NULL, `destLat` double signed NULL, `dateTravel` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `leaseModel` varchar(30) NULL, `lateFee` double NULL)";
     $link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
 	unset ($_SESSION);
