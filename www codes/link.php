@@ -16,7 +16,7 @@ class Link
 	
 	function connect($db)// connect to MySQL
 	{
-		$conn = @mysql_connect("localhost") or die("Could not connect to MySQL");
+		$conn = @mysql_connect("localhost", "root", "") or die("Could not connect to MySQL");
 		$rs = @mysql_select_db($db, $conn) or die("Could not connect select $db database");
 		$this->conn = $conn; 
 	}
