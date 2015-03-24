@@ -443,7 +443,7 @@
 						xmlhttp.open ("post", "checkOut.php", "true");
 						xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 						xmlhttp.send (data);
-						window.location.reload();
+						window.location.replace("index.html");
 					} else
 					{
 						alert("Plane Rental Form Incomplete");
@@ -477,7 +477,7 @@
 					xmlhttp.open ("post", "checkIn.php", "true");
 					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 					xmlhttp.send (null);
-					window.location.reload();
+					window.location.replace("index.html");
 				} else
 					alert ("You don't have any planes checked out");
 				return;

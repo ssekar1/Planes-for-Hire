@@ -40,7 +40,7 @@
 	if(isset($_SESSION['loginId']) && $_SESSION['loginId'] == "admin") //redirect to main page if login successful
 		print ("<META http-equiv = \"REFRESH\" content = \"0; private/admin.php\">");
 	else if (isset($_SESSION['loginId']))
-		print ("<META http-equiv = \"REFRESH\" content = \"0; main.php\">");
+		print ("<META http-equiv = \"REFRESH\" content = \"0; Main.php\">");
 	
 	print ("<div id = \"loginPage\">");
 	print ("<form id = \"form\" name = \"form\" action = \"\" method = \"post\">");

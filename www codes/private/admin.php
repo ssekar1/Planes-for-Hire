@@ -19,7 +19,7 @@
 		print ("<font size = \"3\" style = \"float:left\">Hello ".$loginUser."</font>");
 		print ("<font size = \"3\" style = \"float:right\"><a href=\"../main.php\">Main Page    </a><a href=\"../logout.php\">Logout    </a></font><br>");
 		
-		$memList = $link->executeQuery("select * from `customer_Profile`", $_SERVER["SCRIPT_NAME"]);
+		$memList = $link->executeQuery("select * from `customer_profile`", $_SERVER["SCRIPT_NAME"]);
 		
 		print ("<font size = \"2\">");
 		

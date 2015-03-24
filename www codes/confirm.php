@@ -36,8 +36,8 @@
 	
 		print ("<form action = \"debug.php\" method = \"post\" name = \"form\">");
 			print ("<label><center><strong><font size = \"5\">Registration Complete</font></strong></center></label><br>");
-			print ("<META http-equiv = \"REFRESH\" content = \"5; main.php\">"); //this line automatically redirects to a php page after three seconds
-			print ("<button type = \"button\" id = \"submitButton\" onclick= \"location.href = 'main.php'\">Continue</button><br><br>");
+			print ("<META http-equiv = \"REFRESH\" content = \"5; Main.php\">"); //this line automatically redirects to a php page after three seconds
+			print ("<button type = \"button\" id = \"submitButton\" onclick= \"location.href = 'Main.php'\">Continue</button><br><br>");
 		print ("</form>");
 //===html tail===
 	include ("tailHTML.html");
