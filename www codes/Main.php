@@ -25,14 +25,14 @@
 		if (isset ($userEmail))
 			$travelHist = $link->executeQuery("select * from `".$userEmail."`", $_SERVER["SCRIPT_NAME"]);
 	}
-
-	include("search.php");
 	
 	print ("<label><strong><center><font size = \"6\" color = \"#595959\">Planes For Hire</font></center></strong><br>");
 	print ("</label>");
 	
-	print ("<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
-	
+	print("<form action=\"search.php\">");
+		print ("<input type = \"submit\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" name=\"query\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
+	print("</form>");	
+
 	if(isset($loginUser))
 	{
 		print ("<font size = \"3\" style = \"float:left\">Hello ".$loginUser."</font>");
