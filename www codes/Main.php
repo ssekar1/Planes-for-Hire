@@ -25,6 +25,8 @@
 		if (isset ($userEmail))
 			$travelHist = $link->executeQuery("select * from `".$userEmail."`", $_SERVER["SCRIPT_NAME"]);
 	}
+
+	include("search.php");
 	
 	print ("<label><strong><center><font size = \"6\" color = \"#595959\">Planes For Hire</font></center></strong><br>");
 	print ("</label>");
