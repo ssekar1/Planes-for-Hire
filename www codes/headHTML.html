@@ -256,6 +256,12 @@
 			    float:left;
 			    text-align: left;
 			}
+			.checkOutResult
+			{        
+			    //background-color: #b2b2b2;
+			    width: 65%;
+			    text-align: left;
+			}
 			
 			span
 			{
@@ -320,7 +326,7 @@
 				{
 					var msec = Date.parse(document.getElementById('startLabel').innerHTML);
 					var date = new Date(msec);
-					date.setDate(date.getDate() + parseInt(document.getElementById('durationLabel').innerHTML));
+					date.setDate(date.getDate() + (parseInt(document.getElementById('durationLabel').innerHTML) - 1));
 					var formDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear(); 
 					document.getElementById('returnLabel').innerHTML = formDate;
 				}
@@ -424,6 +430,7 @@
 					if (depart !== '' && arrive !== '' && duration !== '' && startDate !== '' && returnDate !== '' && model !== '')
 					{
 						var data = "depart="+depart+"&arrive="+arrive+"&duration="+duration+"&startDate="+startDate+"&returnDate="+returnDate+"&model="+model;
+						
 						var confirmMsg = "Check Out Confirmation\nChecking out " + model + " on " + startDate + " for " + duration + " days.\nDeparting from " + depart + " to " + arrive + "\nCheck in by " + returnDate + ". Proceed with Rental?"; 
 						
 						if (!confirm(confirmMsg)) //don't remove this statement!!! for some reason the check out process works efficiently with it. there appear to be some latency issue 
@@ -443,7 +450,7 @@
 						xmlhttp.open ("post", "checkOut.php", "true");
 						xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 						xmlhttp.send (data);
-						window.location.replace("index.html");
+						window.location.replace("checkOutResult.php");
 					} else
 					{
 						alert("Plane Rental Form Incomplete");
@@ -456,13 +463,38 @@
 				}
 			}
 			
-			function checkIn(checkOutStatus)
-			{
+			function checkIn(checkOutStatus, dayVal, feeVal)
+			{	
 				if (parseInt(checkOutStatus) === 1)
 				{
-				//	if (!confirm("are you sure?"))
-				//		return;
-						
+					//creating a day value: hours * minutes * seconds * milliseconds
+					var oneDay = 24*60*60*1000;
+					//creating the return date object
+					var msec = Date.parse(dayVal);
+					var returnDate = new Date(msec);
+					returnDate.setDate(returnDate.getDate() + 1);
+					//creating the current date object
+					var currDate = new Date();
+					//getting the difference of the two dates
+					var diffDays = Math.round((currDate.getTime() - returnDate.getTime())/(oneDay));
+					//determining the late ammount
+					var feeOwe = diffDays * feeVal;
+					
+					/* for debugging purposes
+					var confirmMsg = "\nYou are late by " + diffDays + " days\nYou owe $" + feeOwe + " in late fee";
+					if (!confirm(confirmMsg))
+						return;
+					*/
+					
+					//ignoring negative values
+					if (diffDays < 0)
+					{
+						diffDays = 0;
+						feeOwe = 0;
+					}
+					
+					var data = "diffDays="+diffDays+"&feeOwe="+feeOwe;
+					
 					if (window.XMLHttpRequest)
 						xmlhttp = new XMLHttpRequest();
 					else
@@ -476,8 +508,8 @@
 					
 					xmlhttp.open ("post", "checkIn.php", "true");
 					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-					xmlhttp.send (null);
-					window.location.replace("index.html");
+					xmlhttp.send (data);
+					window.location.replace("checkInResult.php");
 				} else
 					alert ("You don't have any planes checked out");
 				return;

@@ -17,7 +17,19 @@
 				$userEmail = $row['email'];
 				$checkOutStatus = $row['checkOutStatus'];
 				
+				if ($checkOutStatus == 1)
+					$modelRented = $row['plane'];
 			}
+		
+		if (isset ($modelRented))
+		{
+			$query = $link->executeQuery("select * from `planes` where `model` = '".$modelRented."'", $_SERVER["SCRIPT_NAME"]);
+			while ($row = mysql_fetch_array($query))
+				$returnDate = $row ['returnDate'];
+			$query = $link->executeQuery("select * from `admin_setting`", $_SERVER["SCRIPT_NAME"]);
+			while ($row = mysql_fetch_array($query))
+				$lateFee = $row ['lateFee'];
+		}
 		
 		if ($_SESSION['loginId'] == "admin")
 			$loginUser = $_SESSION['loginId'];
@@ -88,7 +100,10 @@
 			print("</div>");
 			
 			print("<div class = \"rightPanel\">");
-				print ("<center><button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."')\">Check In</button>");
+				if ($checkOutStatus == 1)
+					print ("<center><button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."', '".$returnDate."', '".$lateFee."')\">Check In</button>");
+				else
+					print ("<center><button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."')\">Check In</button>");
 				print ("<label>   </label>");
 				print ("<button id = \"checkOutButton\" onclick= \"checkOut('".$checkOutStatus."')\">Check Out</button></center><br>");
 				
