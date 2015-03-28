@@ -2,8 +2,8 @@
 -- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Mar 20, 2015 at 03:24 AM
+-- Host: 127.0.0.1
+-- Generation Time: Mar 28, 2015 at 02:04 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `admin_setting` (
   `lateFee` double NOT NULL,
   `password` varchar(30) DEFAULT NULL,
   `lastLogon` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin_setting`
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `airport_locations` (
   `airport` text NOT NULL,
   `long` double NOT NULL,
   `lat` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `airport_locations`
@@ -77,7 +77,8 @@ INSERT INTO `airport_locations` (`id`, `airport`, `long`, `lat`) VALUES
 (17, 'San Jose, CA', 37.330774, -121.882693),
 (18, 'Minneapolis, MN', 44.977118, -93.262079),
 (19, 'Detroit, MI', 42.33355, -83.047693),
-(20, 'Albuquerque, NM', 35.117617, -106.607652);
+(20, 'Albuquerque, NM', 35.117617, -106.607652),
+(21, 'Hartsfield–Jackson Atlanta International Airport, GA', 33.63812, -84.42765);
 
 -- --------------------------------------------------------
 
@@ -126,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `planes` (
   `returnTo` varchar(30) DEFAULT NULL,
   `returnDate` date DEFAULT NULL,
   `lastCheckout` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `planes`
@@ -146,7 +147,23 @@ INSERT INTO `planes` (`id`, `model`, `status`, `client`, `leaseFrom`, `returnTo`
 (11, 'Cessna 414 Chancellor', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 05:21:39'),
 (12, 'Cessna 305 Bird Dog', 1, '', '', '', '0000-00-00', '2015-03-20 04:57:01'),
 (13, 'Cessna 510 Citation Mustang', 1, '', '', '', '0000-00-00', '2015-03-20 00:51:36'),
-(14, 'Cessna 303 Crusader', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 05:27:22');
+(14, 'Cessna 303 Crusader', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 05:27:22'),
+(15, 'Cessna Model CR-1', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(16, 'Cessna Model CR-2', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(17, 'Cessna Model CR-3', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(18, 'Cessna 172 Skyhawk', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(19, 'Cessna 182 SkyLane', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(20, 'Cessna 320 Skyknight', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(21, 'Bombardier Learjet 35', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(22, 'Bombardier Learjet 40 XR', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(23, 'Bombardier Learjet 60 XR', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(24, 'Bombardier Challenger 605', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(25, 'Bombardier Challenger 850', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(26, 'Bombardier Challenger 950', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(27, 'Bombardier Global 5000', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(28, 'Bombardier Global 6000', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(29, 'Dassault Falcon 10', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(30, 'Embraer Phenom 300', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00');
 
 -- --------------------------------------------------------
 
@@ -165,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `tamtran1@umbc.edu` (
   `dateTravel` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `leaseModel` varchar(30) DEFAULT NULL,
   `lateFee` double DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -242,12 +259,12 @@ ALTER TABLE `test`
 -- AUTO_INCREMENT for table `admin_setting`
 --
 ALTER TABLE `admin_setting`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `airport_locations`
 --
 ALTER TABLE `airport_locations`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `customer_profile`
 --
@@ -257,12 +274,12 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=52;
 -- AUTO_INCREMENT for table `planes`
 --
 ALTER TABLE `planes`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `tamtran1@umbc.edu`
 --
 ALTER TABLE `tamtran1@umbc.edu`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=162;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `test`
 --
