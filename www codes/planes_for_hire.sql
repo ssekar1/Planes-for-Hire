@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2015 at 02:04 AM
+-- Generation Time: Mar 28, 2015 at 03:09 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -51,34 +51,43 @@ CREATE TABLE IF NOT EXISTS `airport_locations` (
   `airport` text NOT NULL,
   `long` double NOT NULL,
   `lat` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `airport_locations`
 --
 
 INSERT INTO `airport_locations` (`id`, `airport`, `long`, `lat`) VALUES
-(1, 'Philadelphia, PA', 39.9532, -75.15),
-(2, 'Brooklyn, NY', 40.701231, -73.983114),
-(3, 'Baltimore, MD', 39.293209, -76.616237),
-(4, 'Miami, FL', 25.766924, -80.189667),
-(5, 'Nashville, TN', 36.166583, -86.778122),
-(6, 'Memphis, TN', 35.147435, -90.047005),
-(7, 'Dallas, TX', 32.775608, -96.796914),
-(8, 'San Antonio, TX', 29.424443, -98.493564),
-(9, 'Houston, TX', 29.75998, -95.370514),
-(10, 'Springfield, IL', 39.780452, -89.647856),
-(11, 'Tacoma, WA', 47.253024, -122.446145),
-(12, 'Chicago, IL', 41.877564, -87.62654),
-(13, 'Las Vegas, NV', 36.169842, -115.140058),
-(14, 'Phoenix, AZ', 33.448329, -112.073952),
-(15, 'Denver, CO', 39.737602, -104.991869),
-(16, 'Kansas City, MO', 39.107497, -94.574453),
-(17, 'San Jose, CA', 37.330774, -121.882693),
-(18, 'Minneapolis, MN', 44.977118, -93.262079),
-(19, 'Detroit, MI', 42.33355, -83.047693),
-(20, 'Albuquerque, NM', 35.117617, -106.607652),
-(21, 'Hartsfield–Jackson Atlanta International Airport, GA', 33.63812, -84.42765);
+(1, 'Los Angeles International Airport, Los Angeles, CA', 33.948852, -118.408873),
+(2, 'O''Hare International Airport, Chicago, IL', 41.988199, -87.907321),
+(3, 'Dallas/Fort Worth International Airport, Dallas/Fort Worth, TX', 32.916815, -97.041708),
+(4, 'Denver International Airport, Denver, CO', 39.85485, -104.674185),
+(5, 'John F. Kennedy International Airport, New York, NY', 40.643135, -73.779512),
+(6, 'San Francisco International Airport, San Francisco, CA', 37.623352, -122.379298),
+(7, 'Charlotte Douglas International Airport, Charlotte, NC', 35.214683, -80.945255),
+(8, 'McCarran International Airport, Las Vegas, NV', 36.084022, -115.153739),
+(9, 'Phoenix Sky Harbor International Airport, Phoenix, AZ', 33.437412, -112.008818),
+(10, 'Miami International Airport, Miami, FL', 25.79602, -80.287389),
+(11, 'George Bush Intercontinental Airport, Houston, TX', 29.991707, -95.338843),
+(12, 'Newark Liberty International Airport, Newark/New York, NJ', 40.691483, -74.174805),
+(13, 'Orlando International Airport, Orlando, FL', 28.431215, -81.308083),
+(14, 'Seattle Tacoma International Airport, Seattle, WA', 47.450134, -122.309159),
+(15, 'Minneapolis Saint Paul International Airport, Minneapolis, MIN', 44.884877, -93.222972),
+(16, 'Detroit Metropolitan Wayne County Airport, Detroit, MI', 42.217443, -83.357444),
+(17, 'Logan International Airport, Boston, MA', 42.36574, -71.009903),
+(18, 'Philadelphia International Airport, Philadelphia, PA', 39.874264, -75.242766),
+(19, 'LaGuardia Airport, New York, NY', 40.776277, -73.873623),
+(20, 'Fort Lauderdale Hollywood International Airport, Fort Lauderdale, FL', 26.074311, -80.150774),
+(21, 'Hartsfield Jackson Atlanta International Airport, Atlanta, GA', 33.63812, -84.42765),
+(22, 'Baltimore Washington International Airport, Baltimore, MD', 39.177271, -76.668735),
+(23, 'Washington Dulles International Airport, Washington D.C. , VA', 38.953917, -77.456539),
+(24, 'Salt Lake City International Airport, Salt Lake, UT	', 40.78916, -111.979071),
+(25, 'Honolulu International Airport, Honolulu, HI	', 21.324353, -157.925417),
+(26, 'Portland International Airport, Portland, OR', 45.589168, -122.595094),
+(27, 'Great Falls International Airport, Great Falls, MT', 47.48029, -111.363142),
+(28, 'Idaho Falls Regional Airport, Idaho, ID', 43.515098, -112.067869),
+(29, 'Bismarck Airport, Bismarck, ND', 46.773825, -100.755623),
+(30, 'Pierre Regional Airport, Pierre, SD', 44.377832, -100.280123);
 
 -- --------------------------------------------------------
 
@@ -264,7 +273,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `airport_locations`
 --
 ALTER TABLE `airport_locations`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `customer_profile`
 --
