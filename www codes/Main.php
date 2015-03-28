@@ -38,7 +38,7 @@
 			$travelHist = $link->executeQuery("select * from `".$userEmail."`", $_SERVER["SCRIPT_NAME"]);
 	}
 	
-	print ("<label><strong><center><font size = \"6\" color = \"#595959\">Planes For Hire</font></center></strong><br>");
+	print ("<label><strong><center><font size = \"8\" color = \"#595959\">Planes For Hire</font></center></strong><br>");
 	print ("</label>");
 	
 	print("<form action=\"search.php\">");
