@@ -141,7 +141,7 @@
 		{
 			print ("<table border='0px'>");
 			print ("<tr>");
-			print ("<td>Airport					</td>");	
+			print ("<td>Airports					</td>");	
 			print ("<td>Longitude    </td>");
 			print ("<td>Latitude    </td>");
 			print ("</tr>");
