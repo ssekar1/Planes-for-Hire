@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2015 at 03:09 AM
+-- Generation Time: Mar 28, 2015 at 05:31 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `airport_locations` (
   `airport` text NOT NULL,
   `long` double NOT NULL,
   `lat` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `airport_locations`
@@ -87,7 +87,12 @@ INSERT INTO `airport_locations` (`id`, `airport`, `long`, `lat`) VALUES
 (27, 'Great Falls International Airport, Great Falls, MT', 47.48029, -111.363142),
 (28, 'Idaho Falls Regional Airport, Idaho, ID', 43.515098, -112.067869),
 (29, 'Bismarck Airport, Bismarck, ND', 46.773825, -100.755623),
-(30, 'Pierre Regional Airport, Pierre, SD', 44.377832, -100.280123);
+(30, 'Pierre Regional Airport, Pierre, SD', 44.377832, -100.280123),
+(31, 'North Platte Regional Airport, North Platte, NE', 41.133451, -100.697834),
+(32, 'Hays Regional Airport, Hays, KS', 38.863272, -99.264902),
+(33, 'Rolla National Airport, Rolla, MO', 38.131859, -91.766052),
+(34, 'Golden Triangle Regional Airport, Columbus, MS', 33.454057, -88.589612),
+(35, 'Albuquerque International Sunport Airport, Albuquerque, NM', 35.043337, -106.612929);
 
 -- --------------------------------------------------------
 
@@ -273,7 +278,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `airport_locations`
 --
 ALTER TABLE `airport_locations`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `customer_profile`
 --
