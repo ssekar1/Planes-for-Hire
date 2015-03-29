@@ -1,5 +1,7 @@
 Commit History
 
+Spiral 1
+
 I created all five of the documents on google drive and emailed it to all my team members. For all the five docs, i created the cover pages, table of contents and Apendicex A, B, and C. I also reviewd all the documents and formated it, including the creation of hyperlinks in table of contents page.. 
 
 
@@ -29,4 +31,15 @@ I wrote the references and section 1.3
 System Requirements Document (SRS)
 	
 I along with Roberto wrote most of the use cases. I wrote the functional requirements, and introduction. 
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Sprial 2
+
+
+
 
