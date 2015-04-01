@@ -20,6 +20,17 @@ if (isset($_SESSION['loginId']) && $_SESSION['loginId'] == "user")
 		print ("<font size = \"3\" style = \"float:right\"><a href=\"../main.php\">Main Page    </a><a href=\"../logout.php\">Logout    </a></font><br>");
 	}
 	
+		print("<div class = \"userBasePanel\">");
+			print("<div class = \"userInfoPanel\">");
+				print("<div class = \"userAddrPanel\">");
+
+				print("</div>");
+			print("<div class = \"userExtenPanel\">");
+
+
+			print("</div>");
+		print("</div>");
 	include ("tailHTML.html");
 	
+
 ?>
