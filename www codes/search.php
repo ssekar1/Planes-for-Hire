@@ -150,10 +150,9 @@ function createAirportEntry($airport, $long, $lat)
 	// Otherwise, output error
 	else
 	{
-		print("Failed $arg query\n");
+		print("Failed query");
 	}
 	
-
 	// Increases numEntries by number of airports found
 	$numEntries += $numPorts;
 
