@@ -40,18 +40,43 @@ function listNavigablePages($dir)
 	// Returns generated list of files
 	return $files;
 }
+
+
+/*
+* Generates an HTML string that will display a search entry
+*/
+function createHtmlEntry($state, $city, $long, $lat)
+{
+	$entry = "$state, $city, ";
+	$entry .= "$long $lat\n";
+	return $entry;
+}
 ?>
 
 
 <?php
-//------------------------- Code designing webpage ---------------------------
-$debug = false;
-session_start();// Starting Session
-include("headHTML.html");
+	//------------------------- Header ---------------------------
+	$debug = false;
+	session_start();// Starting Session
+	include("headHTML.html");
 ?>
-
 <label><strong><center><font size = "6" color = "#595959">Search Results</font></center></strong><br>
 
 <?php
-include("tailHTML.html");
+	//------------------ List of entries found from search ------------------------
+	// Gets search parameters by splitting string by space character
+	$params = explode(" ", $_GET["query"]);
+
+	// Trims empty params
+	foreach($params as &$param)
+	{
+		if(strlen($param) == 0)
+			unset($param);
+	}
+	$params = array_values($params);
+
+	// Adds test entry
+	print(createHtmlEntry("Gaithersburg", "MD", 25, 42) . "\n");
+
+	include("tailHTML.html");
 ?>
