@@ -41,42 +41,154 @@ function listNavigablePages($dir)
 	return $files;
 }
 
-
 /*
 * Generates an HTML string that will display a search entry
 */
-function createHtmlEntry($state, $city, $long, $lat)
+function createAirportEntry($airport, $long, $lat)
 {
-	$entry = "$state, $city, ";
-	$entry .= "$long $lat\n";
+	// Starts with empty string
+	$entry = "";
+
+	// Adds div
+	$entry .= "<div style='float: left; width: 20%; margin: 0 auto'>";
+
+	// Adds link portion
+	$entry .= "<a href='Main.php?longlat=$long+$lat'>";
+	$entry .= $airport;
+
+	// Ends link at end of city and state
+	$entry .= "</a>";
+
+	// End of div
+	$entry .= "</div>";
+
+	// Adds longitude and latitude values
+	$entry .= "$long, $lat";
+
+	// Returns html string
 	return $entry;
 }
 ?>
 
 
+
+<!--------------------- Header code ------------------------>
 <?php
-	//------------------------- Header ---------------------------
+	// Includes Head.html
 	$debug = false;
 	session_start();// Starting Session
 	include("headHTML.html");
+
+	// Makes variable that keeps track
+	// of number of entries total found
+	$numEntries = 0;
 ?>
+
+<!--------- Title ----------->
 <label><strong><center><font size = "6" color = "#595959">Search Results</font></center></strong><br>
 
+
+
 <?php
-	//------------------ List of entries found from search ------------------------
-	// Gets search parameters by splitting string by space character
-	$params = explode(" ", $_GET["query"]);
+	//--------- Airport entries -------------
+	// Gets search args by splitting string by space character
+	$args = explode(" ", $_GET["query"]);
 
-	// Trims empty params
-	foreach($params as &$param)
+	// Trims array to remove empty strings
+	foreach($args as &$arg)
 	{
-		if(strlen($param) == 0)
-			unset($param);
+		if(strlen($arg) == 0)
+			unset($arg);
 	}
-	$params = array_values($params);
+	$args = array_values($args);
 
-	// Adds test entry
-	print(createHtmlEntry("Gaithersburg", "MD", 25, 42) . "\n");
+	// Stores all airports found from query into array
+	$airports = array();
+	$numPorts = 0;
 
+	// Queries all airport entries
+	$query = $link->executeQuery("select * from airport_locations", $_SERVER["SCRIPT_NAME"]);
+
+	// If valid query...
+	if($query)
+	{
+		// Searches query using arguments entered in search bar
+		foreach($args as &$arg)
+		{
+			// While there are more entries in query, fetch a row
+			while($row = mysql_fetch_array($query))
+			{
+				// Creates airport object
+				$port = (object) array
+				(
+					"id" => $row["id"],
+					"airport" => $row["airport"],
+					"long" => $row["long"],
+					"lat" => $row["lat"]				
+				);
+
+				// Store airport int array if either it's city or state matches param, and the airport is not already included
+				$split = explode(", ", $port->airport);
+				$city = $split[0];
+				$state = $split[1];
+				$res = strcmp($city, $arg);
+				if($res != 0)
+					$res = strcmp($state, $arg);
+				if($res == 0 && !array_key_exists($port->id, $airports))
+				{
+					$airports[$port->id] = $port;
+					$numPorts ++;
+				}
+			}
+
+			// Resets internal pointer
+			mysql_data_seek($query, 0);
+		}
+
+	}
+
+	// Otherwise, output error
+	else
+	{
+		print("Failed $arg query\n");
+	}
+	
+
+	// Increases numEntries by number of airports found
+	$numEntries += $numPorts;
+
+	// Outputs airport entries, if there were any
+	if($numPorts != 0)
+	{
+
+		// Prints titoe of div
+		print("Airports: $numPorts<br>");
+
+		// Div containing all airport entries
+		print('<div style="background: white">');
+			// Outputs all entries
+			foreach($airports as $port)
+			{
+				print(createAirportEntry($port->airport, $port->long, $port->lat) . "<br>");
+			}
+		print('</div>');
+	}
+
+	// Outputs error if there were no entries of any kind found
+	if($numEntries == 0)
+	{
+		print("<div style='font-size: 30px; text-align: center'>");
+			print("No entries found!");
+		print("</div>");
+	}
+
+	// Unsets variables no longer in use
+	unset($numPorts);
+	unset($numEntries);
+	unset($args);
+	unset($arg);
+?>
+<!-------------- Tail code -------------->
+<?php
 	include("tailHTML.html");
 ?>
