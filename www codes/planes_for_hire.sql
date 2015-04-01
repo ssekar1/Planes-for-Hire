@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2015 at 05:31 PM
+-- Generation Time: Apr 02, 2015 at 01:25 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -58,33 +58,33 @@ CREATE TABLE IF NOT EXISTS `airport_locations` (
 --
 
 INSERT INTO `airport_locations` (`id`, `airport`, `long`, `lat`) VALUES
-(1, 'Los Angeles International Airport, Los Angeles, CA', 33.948852, -118.408873),
-(2, 'O''Hare International Airport, Chicago, IL', 41.988199, -87.907321),
-(3, 'Dallas/Fort Worth International Airport, Dallas/Fort Worth, TX', 32.916815, -97.041708),
-(4, 'Denver International Airport, Denver, CO', 39.85485, -104.674185),
-(5, 'John F. Kennedy International Airport, New York, NY', 40.643135, -73.779512),
-(6, 'San Francisco International Airport, San Francisco, CA', 37.623352, -122.379298),
-(7, 'Charlotte Douglas International Airport, Charlotte, NC', 35.214683, -80.945255),
-(8, 'McCarran International Airport, Las Vegas, NV', 36.084022, -115.153739),
-(9, 'Phoenix Sky Harbor International Airport, Phoenix, AZ', 33.437412, -112.008818),
-(10, 'Miami International Airport, Miami, FL', 25.79602, -80.287389),
+(1, 'Los Angeles Airport, Los Angeles, CA', 33.948852, -118.408873),
+(2, 'O Hare Airport, Chicago, IL', 41.988199, -87.907321),
+(3, 'Dallas/Fort Worth Airport, Dallas/Fort Worth, TX', 32.916815, -97.041708),
+(4, 'Denver Airport, Denver, CO', 39.85485, -104.674185),
+(5, 'John F. Kennedy Airport, New York, NY', 40.643135, -73.779512),
+(6, 'San Francisco Airport, San Francisco, CA', 37.623352, -122.379298),
+(7, 'Charlotte Douglas Airport, Charlotte, NC', 35.214683, -80.945255),
+(8, 'McCarran Airport, Las Vegas, NV', 36.084022, -115.153739),
+(9, 'Phoenix Sky Harbor Airport, Phoenix, AZ', 33.437412, -112.008818),
+(10, 'Miami Airport, Miami, FL', 25.79602, -80.287389),
 (11, 'George Bush Intercontinental Airport, Houston, TX', 29.991707, -95.338843),
-(12, 'Newark Liberty International Airport, Newark/New York, NJ', 40.691483, -74.174805),
-(13, 'Orlando International Airport, Orlando, FL', 28.431215, -81.308083),
-(14, 'Seattle Tacoma International Airport, Seattle, WA', 47.450134, -122.309159),
-(15, 'Minneapolis Saint Paul International Airport, Minneapolis, MIN', 44.884877, -93.222972),
-(16, 'Detroit Metropolitan Wayne County Airport, Detroit, MI', 42.217443, -83.357444),
-(17, 'Logan International Airport, Boston, MA', 42.36574, -71.009903),
-(18, 'Philadelphia International Airport, Philadelphia, PA', 39.874264, -75.242766),
+(12, 'Newark Liberty Airport, Newark/New York, NJ', 40.691483, -74.174805),
+(13, 'Orlando Airport, Orlando, FL', 28.431215, -81.308083),
+(14, 'Seattle Tacoma Airport, Seattle, WA', 47.450134, -122.309159),
+(15, 'Minneapolis Saint Paul Airport, Minneapolis, MIN', 44.884877, -93.222972),
+(16, 'Detroit Metropolitan Airport, Detroit, MI', 42.217443, -83.357444),
+(17, 'Logan Continental Airport, Boston, MA', 42.36574, -71.009903),
+(18, 'Philadelphia Airport, Philadelphia, PA', 39.874264, -75.242766),
 (19, 'LaGuardia Airport, New York, NY', 40.776277, -73.873623),
-(20, 'Fort Lauderdale Hollywood International Airport, Fort Lauderdale, FL', 26.074311, -80.150774),
-(21, 'Hartsfield Jackson Atlanta International Airport, Atlanta, GA', 33.63812, -84.42765),
-(22, 'Baltimore Washington International Airport, Baltimore, MD', 39.177271, -76.668735),
-(23, 'Washington Dulles International Airport, Washington D.C. , VA', 38.953917, -77.456539),
-(24, 'Salt Lake City International Airport, Salt Lake, UT	', 40.78916, -111.979071),
-(25, 'Honolulu International Airport, Honolulu, HI	', 21.324353, -157.925417),
-(26, 'Portland International Airport, Portland, OR', 45.589168, -122.595094),
-(27, 'Great Falls International Airport, Great Falls, MT', 47.48029, -111.363142),
+(20, 'Fort Lauderdale Airport, Fort Lauderdale, FL', 26.074311, -80.150774),
+(21, 'Hartsfield Jackson Atlanta Airport, Atlanta, GA', 33.63812, -84.42765),
+(22, 'Baltimore Washington Airport, Baltimore, MD', 39.177271, -76.668735),
+(23, 'Washington Dulles Airport, Washington D.C. , VA', 38.953917, -77.456539),
+(24, 'Salt Lake City Airport, Salt Lake, UT	', 40.78916, -111.979071),
+(25, 'Honolulu Airport, Honolulu, HI	', 21.324353, -157.925417),
+(26, 'Portland Airport, Portland, OR', 45.589168, -122.595094),
+(27, 'Great Falls Airport, Great Falls, MT', 47.48029, -111.363142),
 (28, 'Idaho Falls Regional Airport, Idaho, ID', 43.515098, -112.067869),
 (29, 'Bismarck Airport, Bismarck, ND', 46.773825, -100.755623),
 (30, 'Pierre Regional Airport, Pierre, SD', 44.377832, -100.280123),
@@ -92,7 +92,7 @@ INSERT INTO `airport_locations` (`id`, `airport`, `long`, `lat`) VALUES
 (32, 'Hays Regional Airport, Hays, KS', 38.863272, -99.264902),
 (33, 'Rolla National Airport, Rolla, MO', 38.131859, -91.766052),
 (34, 'Golden Triangle Regional Airport, Columbus, MS', 33.454057, -88.589612),
-(35, 'Albuquerque International Sunport Airport, Albuquerque, NM', 35.043337, -106.612929);
+(35, 'Albuquerque Sunport Airport, Albuquerque, NM', 35.043337, -106.612929);
 
 -- --------------------------------------------------------
 
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `customer_profile` (
   `plane` varchar(30) DEFAULT NULL,
   `regDate` datetime NOT NULL,
   `balance` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customer_profile`
@@ -124,7 +124,8 @@ CREATE TABLE IF NOT EXISTS `customer_profile` (
 
 INSERT INTO `customer_profile` (`id`, `firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `checkOutStatus`, `plane`, `regDate`, `balance`) VALUES
 (41, 'Tam', 'Tran', '2', 'Farmville', 'AZ', '82323', 'none specify', 'tamtran1@umbc.edu', '911', 'test', 0, ' ', '2015-03-19 06:16:08', 0),
-(51, 'Test', 'test', 'test', 'test', 'te', '12345', 'none specify', 'test', '12345', 'test', 0, ' ', '2015-03-20 03:09:10', 0);
+(51, 'Test', 'test', 'test', 'test', 'te', '12345', 'none specify', 'test', '12345', 'test', 0, ' ', '2015-03-20 03:09:10', 0),
+(52, 'Sundar', 'Sekar', 'UMBC Hilltop', 'Baltimore', 'MD', '21526', 'none specify', 'ssekar1@umbc.edu', '1234567890', 'qwert12345', 0, '', '2015-03-28 17:37:50', 0);
 
 -- --------------------------------------------------------
 
@@ -150,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `planes` (
 INSERT INTO `planes` (`id`, `model`, `status`, `client`, `leaseFrom`, `returnTo`, `returnDate`, `lastCheckout`) VALUES
 (1, 'Cessna 165 Airmaster', 1, '', '', '', '0000-00-00', '2015-03-20 04:57:01'),
 (2, 'Cessna 175 Skylark', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 05:22:16'),
-(3, 'Cessna 177 Cardinal', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 05:38:11'),
+(3, 'Cessna 177 Cardinal', 1, '', '', '', '0000-00-00', '2015-03-28 16:40:15'),
 (4, 'Cessna 180 Skywagon', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 07:24:03'),
 (5, 'Cessna 162 Skycatcher', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 06:23:48'),
 (6, 'Cessna 205 Super Skywagon', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 07:01:16'),
@@ -164,7 +165,7 @@ INSERT INTO `planes` (`id`, `model`, `status`, `client`, `leaseFrom`, `returnTo`
 (14, 'Cessna 303 Crusader', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 05:27:22'),
 (15, 'Cessna Model CR-1', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
 (16, 'Cessna Model CR-2', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
-(17, 'Cessna Model CR-3', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
+(17, 'Cessna Model CR-3', 1, '', '', '', '0000-00-00', '2015-04-01 23:05:37'),
 (18, 'Cessna 172 Skyhawk', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
 (19, 'Cessna 182 SkyLane', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
 (20, 'Cessna 320 Skyknight', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
@@ -178,6 +179,33 @@ INSERT INTO `planes` (`id`, `model`, `status`, `client`, `leaseFrom`, `returnTo`
 (28, 'Bombardier Global 6000', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
 (29, 'Dassault Falcon 10', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00'),
 (30, 'Embraer Phenom 300', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 04:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ssekar1@umbc.edu`
+--
+
+CREATE TABLE IF NOT EXISTS `ssekar1@umbc.edu` (
+`id` int(10) unsigned NOT NULL,
+  `origAirport` varchar(30) DEFAULT NULL,
+  `origLong` double DEFAULT NULL,
+  `origLat` double DEFAULT NULL,
+  `destAirport` varchar(30) DEFAULT NULL,
+  `destLong` double DEFAULT NULL,
+  `destLat` double DEFAULT NULL,
+  `dateTravel` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `leaseModel` varchar(30) DEFAULT NULL,
+  `lateFee` double DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ssekar1@umbc.edu`
+--
+
+INSERT INTO `ssekar1@umbc.edu` (`id`, `origAirport`, `origLong`, `origLat`, `destAirport`, `destLong`, `destLat`, `dateTravel`, `leaseModel`, `lateFee`) VALUES
+(1, 'Los Angeles International Airp', 33.948852, -118.408873, 'McCarran International Airport', 36.084022, -115.153739, '2015-03-28 16:39:26', 'Cessna 177 Cardinal', NULL),
+(2, 'Los Angeles International Airp', 33.948852, -118.408873, 'Dallas/Fort Worth Internationa', 32.916815, -97.041708, '2015-03-29 17:02:42', 'Cessna Model CR-3', NULL);
 
 -- --------------------------------------------------------
 
@@ -254,6 +282,12 @@ ALTER TABLE `planes`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ssekar1@umbc.edu`
+--
+ALTER TABLE `ssekar1@umbc.edu`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tamtran1@umbc.edu`
 --
 ALTER TABLE `tamtran1@umbc.edu`
@@ -283,12 +317,17 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=52;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=53;
 --
 -- AUTO_INCREMENT for table `planes`
 --
 ALTER TABLE `planes`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+--
+-- AUTO_INCREMENT for table `ssekar1@umbc.edu`
+--
+ALTER TABLE `ssekar1@umbc.edu`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tamtran1@umbc.edu`
 --
