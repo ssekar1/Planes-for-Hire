@@ -47,11 +47,11 @@
 
 	if(isset($loginUser))
 	{
-		print ("<font size = \"3\" style = \"float:left\">Hello ".$loginUser."</font>");
+		print ("<font size = \"3\" style = \"float:left\"><a href=\"userprofile.php\">Hello ".$loginUser."</a></font>");
 		print ("<font size = \"3\" style = \"float:right\"><a href=\"logout.php\">Logout    </a></font><br>");
 	} else
 	{
-		print ("<font size = \"3\" style = \"float:left\"><a href=\"userprofile.php\">Hello you...</font>");
+		print ("<font size = \"3\" style = \"float:left\">Hello you...</font>");
 		print ("<font size = \"3\" style = \"float:right\"><a href=\"registration.php\">Register   </a><a href=\"login.php\">Login   </a></font><br>");
 	}
 	

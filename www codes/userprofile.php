@@ -4,7 +4,7 @@
 */
 	$debug = false;
 	session_start();// Starting Session
-	include ("userHeadHTML.html");
+	include ("headHTML.html");
 
 if (isset($_SESSION['loginId']) && $_SESSION['loginId'] == "user")
 				$loginUser = $_SESSION['loginId'];
@@ -18,3 +18,8 @@ if (isset($_SESSION['loginId']) && $_SESSION['loginId'] == "user")
 	{
 		print ("<font size = \"3\" style = \"float:left\">Hello ".$loginUser."</font>");
 		print ("<font size = \"3\" style = \"float:right\"><a href=\"../main.php\">Main Page    </a><a href=\"../logout.php\">Logout    </a></font><br>");
+	}
+	
+	include ("tailHTML.html");
+	
+?>
