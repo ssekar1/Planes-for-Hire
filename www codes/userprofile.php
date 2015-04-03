@@ -51,10 +51,10 @@
 			print ("</font>");
 		print ("</div>");
 			
-		print("<div class = \"userExtenPanel\">");
+		print("<div id = \"userExtenPanel\" class = \"userExtenPanel\">");
 			print ("<font size = \"3\">");
-			print ("<img id = \"userAvatar\" class = \"userAvatar\"src = \"/picsUploads/default.jpg\"><br>");
-			print ("<input type = \"file\" id = \"file\" name = \"file\"><br>");
+			print ("<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/default2.png\"><br>");
+			print ("<a href = \"javascript: changeAvatar('userExtenPanel');\">Edit</a><br>");
 			print ("</font>");
 		print ("</div>");
 	

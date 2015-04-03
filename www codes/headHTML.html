@@ -329,8 +329,8 @@
 		<script>
 			// --------------- Init function for map -------------------------------
 			var map; //need this variable as global to use in multiple functions
-			
 			var userTrvHist; //this is use to hold the original content of the user profile travel history inner html content
+			var avatarToggle = "false";
 			
 			function initialize()
 			{
@@ -383,6 +383,29 @@
 					icon: img
   				});
 				return marker;
+			}
+			
+			function changeAvatar (id)
+			{				
+				if (avatarToggle === "false")
+				{
+					var string = "<font size = \"3\">" +
+								 "<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/default2.png\"><br>" +
+								 "<a href = \"javascript: changeAvatar('userExtenPanel');\">Upload	</a>" +
+								 "<input type = \"file\" id = \"file\" value = \"Edit\" name = \"file\"><br>" +
+								 "</font>";
+					avatarToggle = "true";
+				} else
+				{
+					var string = "<font size = \"3\">" +
+								 "<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/default2.png\"><br>" +
+								 "<a href = \"javascript: changeAvatar('userExtenPanel');\">Edit</a>" +
+								 "</font>";
+					avatarToggle = "false";
+				}
+				
+				document.getElementById(id).innerHTML = string;
+				
 			}
 			
 			function updatePassword (id, error)
