@@ -419,6 +419,7 @@
      			 		title: name,
 					icon: img
   				});
+<<<<<<< HEAD
 
 				// Adds onclick code to marker
 				google.maps.event.addListener(marker, 'click', function()
@@ -429,6 +430,47 @@
 
 				// Returns generated marker
 				return marker;
+=======
+				return marker;
+			}
+			
+			function changeAvatar (id)
+			{
+				//complimentary of http://blog.teamtreehouse.com/uploading-files-ajax
+				if (avatarToggle === "false")
+				{
+					var string = "<font size = \"3\">" +
+					"<img id = \"userAvatar\" class = \"userAvatar\" src = 	\"/picsUploads/default2.png\"><br>" +
+								 "<a href = \"javascript: changeAvatar('userExtenPanel');\">Upload	</a>" +
+								 "<input type = \"file\" id = \"picFile\" value = \"Edit\" name = \"avartarPic\"><br>" +
+								 "</font>";
+					avatarToggle = "true";
+				} else
+				{
+					var string = "<font size = \"3\">" +
+								 "<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/default2.png\"><br>" +
+								 "<a href = \"javascript: changeAvatar('userExtenPanel');\">Edit</a>" +
+								 "</font>";
+					avatarToggle = "false";
+				}
+				
+				document.getElementById(id).innerHTML = string;
+				
+				var picFile = document.getElementById('picFile');
+				
+				var files = picFile.files;
+				var formData = new FormData();
+				var file = files;
+				if (file.type.match('*.jpg'))
+				{
+	    			alert ("testing");
+	    			formData.append('avatarPic', file, file.name);
+	    		
+	    		} else
+	    			alert ("Invalid file type, must be jpg");
+				
+				
+>>>>>>> origin/master
 			}
 			
 			function updatePassword (id, error)
