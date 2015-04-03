@@ -53,14 +53,8 @@
 			
 		print("<div id = \"userExtenPanel\" class = \"userExtenPanel\">");
 			print ("<font size = \"3\">");
-<<<<<<< HEAD
 			print ("<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/".$avatar."\"><br>");
 			print ("<a href = \"javascript: changeAvatar('userExtenPanel', '".$avatar."');\">Edit</a><br>");
-=======
-			print ("<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/default2.png\"><br>");
-			print ("<input type = \"file\" id = \"file\"><br>");
-			print ("<a href = \"javascript: changeAvatar('userExtenPanel');\">Edit</a><br>");
->>>>>>> origin/master
 			print ("</font>");
 		print ("</div>");
 	

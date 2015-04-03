@@ -398,11 +398,9 @@
 				//complimentary of http://blog.teamtreehouse.com/uploading-files-ajax
 				//http://codular.com/javascript-ajax-file-upload-with-progress
 				//http://www.w3schools.com/php/php_file_upload.asp
-
+				
 				if (avatarToggle === "false")
 				{
-					
-					
 					var string = "<font size = \"3\">" +
 								 "<img id = \"userAvatar\" class = \"userAvatar\" src = 	\"/picsUploads/" + avatar + "\"><br>" +
 								 "<form action = \"uploadFile.php\" method = \"post\" enctype = \"multipart/form-data\">" +
@@ -410,11 +408,6 @@
 								 "<input type = \"submit\" value = \"Apply\" name = \"submit\">" +
 								 "<input type = \"file\" name = \"fileToUpload\" id = \"fileToUpload\"><br>" +
 								 "</form></font>";
-								 "<img id = \"userAvatar\" class = \"userAvatar\" src = 	\"/picsUploads/default2.png\"><br>" +
-								 "<a href = \"javascript: changeAvatar('userExtenPanel');\">Upload	</a>" +
-								 "<input type = \"file\" id = \"picFile\" value = \"Edit\" name = \"avartarPic\"><br>" +
-								 "</font>";
-					
 					avatarToggle = "true";
 				} else
 				{
@@ -426,38 +419,8 @@
 					avatarToggle = "false";
 				}
 				
-				
 				document.getElementById(id).innerHTML = string;
-				*/
 				
-				var file = document.getElementById('file');
-				var data = new FormData();
-				
-				/*
-				if (file.files.length === 0)
-				{
-					alert ("no file selected, abording");
-					return;
-				}
-				*/
-				
-				data.append('avatar', file, file.files[0]);
-				
-				if (window.XMLHttpRequest)
-					xmlhttp = new XMLHttpRequest();
-				else
-					xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
-				
-				xmlhttp.onreadystatechange = function()
-				{
-					if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-						//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
-						document.getElementById('userExtenPanel').innerHTML = xmlhttp.responseText; //for debug
-				}
-					
-				xmlhttp.open ("post", "updateUserProfile.php", "true");
-				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-				xmlhttp.send (data);
 			}
 			
 			function updatePassword (id, error)

@@ -8,7 +8,6 @@
 	session_start();// Starting Session
 	
 	$target_dir = "picsUploads/";
-<<<<<<< HEAD
 	$target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
@@ -66,20 +65,4 @@
 	$link->executeQuery("UPDATE `customer_profile` SET `avatar` = '".basename( $_FILES["fileToUpload"]["name"])."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
 	
 	print ("<META http-equiv = \"REFRESH\" content = \"0; userprofile.php\">");
-=======
-	$target_file = $target_dir . basename($_FILES["avatar"]["name"]);
-	$uploadOk = 1;
-	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-	
-	$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-	
-	if($check !== false)
-	{
-		print ("test OK");
-	}
-	
-	print ("test not OK");
-	
-	print ("<META http-equiv = \"REFRESH\" content = \"3; userprofile.php\">");
->>>>>>> origin/master
 ?>
