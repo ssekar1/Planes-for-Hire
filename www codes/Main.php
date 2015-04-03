@@ -59,32 +59,7 @@
 	
 	print ("<font size = \"2\">");
 	if (isset($loginUser) && $loginUser !== "admin")
-	{
-		/* history table no more!!!
-		print ("<label> Travel History</label><br>");
-		if (isset($travelHist))
-		{
-			//prints the labels for the travel history table
-			print ("<table border='0px'>");
-			print ("<tr>");
-			print ("<td>Departing Airport    </td>");
-			print ("<td>Departing Longitude    </td>");
-			print ("<td>Departing Latitude    </td>");
-			print ("<td>Arrival Airport    </td>");
-			print ("<td>Arival Longitude    </td>");
-			print ("<td>Arrival Latitude    </td>");
-			print ("<td>Date And Time Traveled    </td>");
-			print ("<td>Leased Model    </td>");
-			print ("</tr>");
-			
-			while ($row = mysql_fetch_array($travelHist))
-				print ("<tr><td>".$row ['origAirport']."</td><td>".$row ['origLong']."</td><td>".$row ['origLat']."</td><td>".$row ['destAirport']."</td><td>".$row ['destLong']."</td><td>".$row ['destLat']."</td><td>".$row ['dateTravel']."</td><td>".$row ['leaseModel']."</td></tr>");
-			print ("</table><br><br>");
-		}
-		else
-			print ("Error loading travel history table");
-		*/
-		
+	{		
 		print("<br><center>");
 		print("<div class = \"basePanel\">");
 			print("<div class = \"leftPanel\">");
