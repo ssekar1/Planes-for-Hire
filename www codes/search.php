@@ -50,10 +50,10 @@ function createAirportEntry($airport, $long, $lat)
 	$entry = "";
 
 	// Adds div
-	$entry .= "<div style='float: left; width: 50%; margin: 0 auto'>";
+	$entry .= "<div style='float: left; width: 50%; 0 auto'>";
 
 	// Adds link portion
-	$entry .= "<a href='Main.php?longlat=$long+$lat'>";
+	$entry .= "<a href='Main.php?long=$long&lat=$lat'>";
 	$entry .= $airport;
 
 	// Ends link at end of city and state
@@ -61,9 +61,6 @@ function createAirportEntry($airport, $long, $lat)
 
 	// End of div
 	$entry .= "</div>";
-
-	// Adds longitude and latitude values
-	$entry .= "$long, $lat";
 
 	// Returns html string
 	return $entry;
@@ -85,14 +82,15 @@ function createAirportEntry($airport, $long, $lat)
 ?>
 
 <!--------- Title ----------->
-<label><strong><center><font size = "6" color = "#595959">Search Results</font></center></strong><br>
-
-
-
+<div class="searchBasePanel" style="background-color:#b2b2b2">
+<label><strong><center><font size = "6" color = "#595959">Search Results</font></center></strong>
 <?php
 	//--------- Airport entries -------------
 	// Gets search args by splitting string by space character
-	$input = $_GET["query"];
+	if(isset($_GET["query"]))
+		$input = $_GET["query"];
+	else
+		$input = "";
 	$args = explode(" ", $input);
 
 	// Trims array to remove empty strings
@@ -111,7 +109,7 @@ function createAirportEntry($airport, $long, $lat)
 	$query = $link->executeQuery("select * from airport_locations", $_SERVER["SCRIPT_NAME"]);
 
 	// If valid query...
-	if($query)
+	if($query && $input != "")
 	{
 		// Searches query using arguments entered in search bar
 		foreach($args as &$arg)
@@ -144,7 +142,6 @@ function createAirportEntry($airport, $long, $lat)
 				}
 				if($res !== false && !array_key_exists($port->id, $airports))
 				{
-					print("Added becase res was $res\n");
 					$airports[$port->id] = $port;
 					$numPorts ++;
 				}
@@ -153,13 +150,6 @@ function createAirportEntry($airport, $long, $lat)
 			// Resets internal pointer
 			mysql_data_seek($query, 0);
 		}
-
-	}
-
-	// Otherwise, output error
-	else
-	{
-		print("Failed query");
 	}
 	
 	// Increases numEntries by number of airports found
@@ -168,12 +158,13 @@ function createAirportEntry($airport, $long, $lat)
 	// Outputs airport entries, if there were any
 	if($numPorts != 0)
 	{
-
-		// Prints titoe of div
-		print("Airports: $numPorts<br>");
-
 		// Div containing all airport entries
-		print('<div style="background: white">');
+		print('<div style="background: #dddddd; padding-bottom: 30px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px">');
+			// Prints title of div
+			print('<div style="color: #595959; font-weight: bold">');
+				print("Airports: $numPorts<br>");
+			print('</div>');
+
 			// Outputs all entries
 			foreach($airports as $port)
 			{
@@ -196,6 +187,8 @@ function createAirportEntry($airport, $long, $lat)
 	unset($args);
 	unset($arg);
 ?>
+</div>
+
 <!-------------- Tail code -------------->
 <?php
 	include("tailHTML.html");
