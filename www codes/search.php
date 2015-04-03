@@ -5,6 +5,8 @@
 * Function I found here: http://stackoverflow.com/questions/80646/how-do-the-php-equality-double-equals-and-identity-triple-equals-comp
 * Checks if $haystack string ends with $needle string
 * I use this for checking for php file extensions
+* @param haystack String to look for extension
+* @param needle Extension we are looking for in haystack
 * @copy-and-paster William Andrew Cahill
 */
 function endsWith($haystack, $needle)
@@ -20,6 +22,7 @@ function endsWith($haystack, $needle)
 
 /*
 * Lists all navigable pages in a given directory
+* @param dir Directory to search for navigable pages
 */
 function listNavigablePages($dir)
 {	
@@ -43,6 +46,9 @@ function listNavigablePages($dir)
 
 /*
 * Generates an HTML string that will display a search entry
+* @param airport Name of airport
+* @param long Longitude of airport. Not yet used.
+* @param lat Latitude of airport.  Not yet used.
 */
 function createAirportEntry($airport, $long, $lat)
 {
@@ -86,11 +92,13 @@ function createAirportEntry($airport, $long, $lat)
 <label><strong><center><font size = "6" color = "#595959">Search Results</font></center></strong>
 <?php
 	//--------- Airport entries -------------
-	// Gets search args by splitting string by space character
+	// Gets query string
 	if(isset($_GET["query"]))
 		$input = $_GET["query"];
 	else
 		$input = "";
+
+	// Splits query string to get list of args
 	$args = explode(" ", $input);
 
 	// Trims array to remove empty strings
@@ -101,7 +109,7 @@ function createAirportEntry($airport, $long, $lat)
 	}
 	$args = array_values($args);
 
-	// Stores all airports found from query into array
+	// Creates array that will store all relevant airports found
 	$airports = array();
 	$numPorts = 0;
 
@@ -126,7 +134,8 @@ function createAirportEntry($airport, $long, $lat)
 					"lat" => $row["lat"]				
 				);
 
-				// Store airport into array if either it's city or state matches param, and the airport is not already included
+				// Store airport into array if either its name, city or state matches param,
+				// and the airport is not already included in $airports
 				$split = explode(", ", $port->airport);
 				$name = $split[0];
 				$city = $split[1];
@@ -147,7 +156,7 @@ function createAirportEntry($airport, $long, $lat)
 				}
 			}
 
-			// Resets internal pointer
+			// Resets query's internal pointer for next iteration
 			mysql_data_seek($query, 0);
 		}
 	}
@@ -155,31 +164,22 @@ function createAirportEntry($airport, $long, $lat)
 	// Increases numEntries by number of airports found
 	$numEntries += $numPorts;
 
-	// Outputs airport entries, if there were any
-	if($numPorts != 0)
-	{
-		// Div containing all airport entries
-		print('<div style="background: #dddddd; padding-bottom: 30px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px">');
-			// Prints title of div
-			print('<div style="color: #595959; font-weight: bold">');
-				print("Airports: $numPorts<br>");
-			print('</div>');
+	// Div containing all airport entries
+	print('<div style="background: #dddddd; padding: 30px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px">');
 
-			// Outputs all entries
-			foreach($airports as $port)
-			{
-				print(createAirportEntry($port->airport, $port->long, $port->lat) . "<br>");
-			}
-		print('</div>');
+	// Prints title of div
+	print('<div style="color: #595959; font-weight: bold">');
+		print("Airports: $numPorts<br>");
+	print('</div>');
+	
+	// Outputs all entries
+	foreach($airports as $port)
+	{
+		print(createAirportEntry($port->airport, $port->long, $port->lat) . "<br>");
 	}
 
-	// Outputs error if there were no entries of any kind found
-	if($numEntries == 0)
-	{
-		print("<div style='font-size: 30px; text-align: center'>");
-			print("No entries found!");
-		print("</div>");
-	}
+	// End of div containing airport entries
+	print('</div>');
 
 	// Unsets variables no longer in use
 	unset($numPorts);

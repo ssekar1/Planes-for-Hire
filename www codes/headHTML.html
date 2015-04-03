@@ -336,9 +336,10 @@
 		
 		<script>
 			// --------------- Init function for map -------------------------------
-			var map; //need this variable as global to use in multiple functions
+			var map;		//need this variable as global to use in multiple functions
+			var srcOrDest=-1;	// Flag that determines if clickable pin is a source or destination pin
+			
 			var userTrvHist; //this is use to hold the original content of the user profile travel history inner html content
-			var avatarToggle = "false";
 			
 			function initialize()
 			{
@@ -378,42 +379,56 @@
 					document.getElementById('returnLabel').innerHTML = formDate;
 				}
 			}
+
+			// ------------------- Pin state functions ------------------------------
+			/*
+			* @return True if clicking on a ping will change the source airport
+			*/
+			function isPinSource()
+			{
+				return srcOrDest == -1;
+			}
+
+			/*
+			* @return True if clicking on a ping will change the destination airport
+			*/
+			function isPinDest()
+			{
+				return srcOrDest == 1;
+			}
+
+			/*
+			* @return Switches src/dest airport state
+			*/
+			function switchPinState()
+			{
+				return srcOrDest *= -1;
+			}
 			
+
+			// ----------------------------------------------------------------
 			// Creates easy to use icon
 			function createMarker(name, long, lat)
 			{
+				// Creates base marker
 				var img = "resources/images/tack.gif";
 				var marker = new google.maps.Marker
 				({
-      				position: new google.maps.LatLng(long, lat, 0),
-     				map: map,
-     			 	title: name,
+      					position: new google.maps.LatLng(long, lat, 0),
+     					map: map,
+     			 		title: name,
 					icon: img
   				});
+
+				// Adds onclick code to marker
+				google.maps.event.addListener(marker, 'click', function()
+				{
+					window.alert("Lolololol!");
+				});
+
+
+				// Returns generated marker
 				return marker;
-			}
-			
-			function changeAvatar (id)
-			{				
-				if (avatarToggle === "false")
-				{
-					var string = "<font size = \"3\">" +
-								 "<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/default2.png\"><br>" +
-								 "<a href = \"javascript: changeAvatar('userExtenPanel');\">Upload	</a>" +
-								 "<input type = \"file\" id = \"file\" value = \"Edit\" name = \"file\"><br>" +
-								 "</font>";
-					avatarToggle = "true";
-				} else
-				{
-					var string = "<font size = \"3\">" +
-								 "<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/default2.png\"><br>" +
-								 "<a href = \"javascript: changeAvatar('userExtenPanel');\">Edit</a>" +
-								 "</font>";
-					avatarToggle = "false";
-				}
-				
-				document.getElementById(id).innerHTML = string;
-				
 			}
 			
 			function updatePassword (id, error)
