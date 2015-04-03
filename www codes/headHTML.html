@@ -38,6 +38,7 @@
 			#loginPage
 			{
 				background-color: #d1d1d1;
+				box-shadow: 20px 20px 30px #b2b2b2;
 				font-family: Arial, Verdana;
 				font-size: 16px;
 				margin-top: 70px;
@@ -63,6 +64,7 @@
 			#registration
 			{
 				background-color: #d1d1d1;
+				box-shadow: 20px 20px 30px #b2b2b2;
 				font-family: Arial, Verdana;
 				font-size: 16px;
 				padding: 0px 30px;
@@ -74,7 +76,7 @@
 			
 			h3
 			{
-				background-color:#A5A5A5;
+				background-color: #A5A5A5;
 				text-align:center;
 				font-size: 35px;
 				color: #595959;
@@ -264,35 +266,52 @@
 			
 			.userBasePanel
 			{
-				//background-color: #47476B;
+				//background-color: #E88CD1;
+				box-shadow: 20px 20px 30px #b2b2b2;
+				border-radius: 30px;
 				width: 100%;
-				height:900px;
 				float:left;
 			}
 			.userInfoPanel
 			{
-				//background-color: #007AA3;
-				width: 40%;
-				height:250px;
+				//background-color: #E6F3FF;
+				background-color: #A5A5A5;
+				border-top-left-radius: 30px 30px;
+				border-width: 0px;
+				padding: 15px;
+				width: 38%;
+				height:200px;
 				float:left;
 			}
 			.userExtenPanel
 			{
-				//background-color: #3D5C00;
-				width: 60%;
-				height:250px;
+				//background-color: #FFF5FF;
+				background-color: #A5A5A5;
+				border-top-right-radius: 30px 30px;
+				border-width: 0px;
+				padding: 15px;
+				width: 57%;
+				height:200px;
 				float:left;
 			}
 			.userTrvHistPanel
 			{
-				//background-color: #4747B2;
-				width: 100%;
-				height:700px;
+				//background-color: #EBFFEB;
+				background-color: #d1d1d1;
+				border-width: 0px;
+				border-bottom-left-radius: 30px 30px;
+				border-bottom-right-radius: 30px 30px;
+				padding: 15px;
+				width: 97.5%;
+				min-height:300px;
 				float:left;
 			}
+			.userAvatar
+			{
+				height: 50%;
+				border-radius: 20px;
+			}
 			
-			
-
 			span
 			{
 				color: red;
@@ -311,6 +330,8 @@
 			// --------------- Init function for map -------------------------------
 			var map; //need this variable as global to use in multiple functions
 			
+			var userTrvHist; //this is use to hold the original content of the user profile travel history inner html content
+			
 			function initialize()
 			{
 				// -------------------- Constructs and initializes sexy-assed map -------------------------
@@ -321,17 +342,6 @@
 					mapTypeId:google.maps.MapTypeId.ROADMAP
 				};
 				map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-
-				// -------------------------- Creates markers, and adds them to a list--------------------------------
-				/*
-				var markers = [];
-				
-				markers.push(createMarker(45, -120, "porty-air-lol", map));
-				markers.push(createMarker(35, -101, "high-as-a-kite", map));
-				
-				//Pans to it
-				map.panTo(markers[0].getPosition());
-				*/
 				
 				<?php
 					if (isset($mapTbl))						
@@ -373,6 +383,154 @@
 					icon: img
   				});
 				return marker;
+			}
+			
+			function updatePassword (id, error)
+			{
+				var string = "<div style = \"width:43%\"><font size = \"3\">" +
+						 "<label>Enter new password   </label>" +
+						 "<input id = \"changePassword\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
+						 "<label>Retype password   </label>" +
+						 "<input id = \"changePassword2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
+						 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>";
+						 if (error === 'error')
+						 	string = string + "<br><span style = \"float:right\">Password invalid</span>";
+						string = string + "</div></font>";
+
+				document.getElementById(id).innerHTML = string;
+			}
+			
+			function payBalance (id)
+			{
+				var string = "<div style = \"width:47%\"><font size = \"3\">" +
+						 "<label>Enter exact amount in dollars   </label>" +
+						 "<input id = \"payBalance\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>" +
+						 "<a style = \"float:right\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+						 "</font></div>";
+				document.getElementById(id).innerHTML = string;
+			}
+			
+			function changeUserInfo (id)
+			{				
+				var string = "<div style = \"width:37%\"><font size = \"3\">" +
+						 "<label>First Name   <input name = \"firstName\" id = \"firstName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+						 "<label>Last Name   <input name = \"lastName\" id = \"lastName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+						 "<label>Street Address   <input name = \"street\" id = \"street\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+						 "<label>City   <input name = \"city\" id = \"city\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+						 "<label>State <input name = \"state\" id = \"state\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+						 "<label>Zip Code <input name = \"zip\" id = \"zip\" type = \"text\" maxlength = \"5\" class = \"input\" onKeyup = \"isValidChar (this.value, 'zip')\"/><br><br></label>" +
+						 "<label>Phone Number <input name = \"phone\" id = \"phone\" type = \"text\" maxlength = \"10\" class = \"input\" onKeyup = \"isValidChar (this.value, 'phone')\"/><br><br></label>" +
+						 "<label>Email <input name = \"email\" id = \"email\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+						 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+						 "</font></div>";
+												
+				document.getElementById(id).innerHTML = string;
+			}
+			
+			function saveTrvHist ()
+			{
+				userTrvHist = document.getElementById('userTrvHistPanel').innerHTML;
+			}
+			
+			function showTrvHist ()
+			{				
+				document.getElementById('userTrvHistPanel').innerHTML = userTrvHist;
+			}
+			
+			function updateUserInfo(intent)
+			{
+				var data = "";				
+				
+				if (intent === 'clearHist')
+					data = "clearHist=\"clearHist\"";
+				
+				if (intent === 'updatePassword')
+				{
+					if (document.getElementById('changePassword').value === document.getElementById('changePassword2').value && document.getElementById('changePassword').value !== '')
+						data = data+"password="+document.getElementById('changePassword').value;
+					else
+					{
+						updatePassword ('userTrvHistPanel', 'error');
+						return;
+					}
+				}
+				
+				if (intent === 'payBalance')
+					data = data+"payBalance="+document.getElementById('payBalance').value;
+				
+				if (intent === 'updateUser')
+				{
+					if (document.getElementById('firstName').value !== '')
+						data = data+"firstName="+document.getElementById('firstName').value;
+					if (document.getElementById('lastName').value !== '')
+					{	
+						if(data !== "")
+							data = data+"&";
+						data = data+"lastName="+document.getElementById('lastName').value;
+					}
+					if (document.getElementById('street').value !== '')
+					{
+						if(data !== "")
+							data = data+"&";
+						data = data+"street="+document.getElementById('street').value;
+					}
+					if (document.getElementById('city').value !== '')
+					{
+						if(data !== "")
+							data = data+"&";
+						data = data+"city="+document.getElementById('city').value;
+					}
+						if (document.getElementById('state').value !== '')
+					{
+						if(data !== "")
+							data = data+"&";
+						data = data+"state="+document.getElementById('state').value;
+					}
+					if (document.getElementById('zip').value !== '')
+					{
+						if(data !== "")
+							data = data+"&";
+						data = data+"zip="+document.getElementById('zip').value;
+					}
+					if (document.getElementById('phone').value !== '')
+					{
+						if(data !== "")
+							data = data+"&";
+						data = data+"phone="+document.getElementById('phone').value;
+					}
+					if (document.getElementById('email').value !== '')
+					{
+						if(data !== "")
+							data = data+"&";
+						data = data+"email="+document.getElementById('email').value;
+					}
+				}
+				
+				if (data === "")
+				{
+					alert ("All fields were empty, no changes were made");
+					showTrvHist();
+					return;
+				}
+				
+				//document.getElementById('userTrvHistPanel').innerHTML = data;
+						
+				if (window.XMLHttpRequest)
+					xmlhttp = new XMLHttpRequest();
+				else
+					xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
+				
+				xmlhttp.onreadystatechange = function()
+				{
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+						//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
+						document.getElementById('userTrvHistPanel').innerHTML = xmlhttp.responseText; //for debug
+				}
+					
+				xmlhttp.open ("post", "updateUserProfile.php", "true");
+				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xmlhttp.send (data);
+				
 			}
 			
 			google.maps.event.addDomListener(window, 'load', initialize);
@@ -460,11 +618,6 @@
 					{
 						var data = "depart="+depart+"&arrive="+arrive+"&duration="+duration+"&startDate="+startDate+"&returnDate="+returnDate+"&model="+model;
 						
-						var confirmMsg = "Check Out Confirmation\nChecking out " + model + " on " + startDate + " for " + duration + " days.\nDeparting from " + depart + " to " + arrive + "\nCheck in by " + returnDate + ". Proceed with Rental?"; 
-						
-						if (!confirm(confirmMsg)) //don't remove this statement!!! for some reason the check out process works efficiently with it. there appear to be some latency issue 
-							return; //involve while the variables are populating, and without this statement, many of them didn't populate fast enough and nothing gets push into the database
-							
 						if (window.XMLHttpRequest)
 							xmlhttp = new XMLHttpRequest();
 						else
@@ -473,13 +626,12 @@
 						xmlhttp.onreadystatechange = function()
 						{
 							if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-								;
+								document.getElementById('rightPanel').innerHTML = xmlhttp.responseText;
 						}
 					
 						xmlhttp.open ("post", "checkOut.php", "true");
 						xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 						xmlhttp.send (data);
-						window.location.replace("checkOutResult.php");
 					} else
 					{
 						alert("Plane Rental Form Incomplete");
@@ -509,12 +661,6 @@
 					//determining the late ammount
 					var feeOwe = diffDays * feeVal;
 					
-					/* for debugging purposes
-					var confirmMsg = "\nYou are late by " + diffDays + " days\nYou owe $" + feeOwe + " in late fee";
-					if (!confirm(confirmMsg))
-						return;
-					*/
-					
 					//ignoring negative values
 					if (diffDays < 0)
 					{
@@ -532,13 +678,12 @@
 					xmlhttp.onreadystatechange = function()
 					{
 						if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-							;
+							document.getElementById('rightPanel').innerHTML = xmlhttp.responseText;
 					}
 					
 					xmlhttp.open ("post", "checkIn.php", "true");
 					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 					xmlhttp.send (data);
-					window.location.replace("checkInResult.php");
 				} else
 					alert ("You don't have any planes checked out");
 				return;

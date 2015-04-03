@@ -30,6 +30,8 @@
 	$sql = "UPDATE `planes` SET `status` = '1', `client` = '', `leaseFrom` = '', `returnTo` = '', `returnDate` = '0000-00-00' WHERE `model` = '".$_SESSION['model']."'";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);	
 	
+	print ("<META http-equiv = \"REFRESH\" content = \"0; checkInResult.php\">");
+	
 ?>
 
 

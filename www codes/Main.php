@@ -60,6 +60,7 @@
 	print ("<font size = \"2\">");
 	if (isset($loginUser) && $loginUser !== "admin")
 	{
+		/* history table no more!!!
 		print ("<label> Travel History</label><br>");
 		if (isset($travelHist))
 		{
@@ -82,8 +83,9 @@
 		}
 		else
 			print ("Error loading travel history table");
+		*/
 		
-		print("<center>");
+		print("<br><center>");
 		print("<div class = \"basePanel\">");
 			print("<div class = \"leftPanel\">");
 				print ("<label>Departing Airport</label><br><br>");
@@ -99,7 +101,7 @@
 					print ("<a href = \"javascript: focusMarker('".$row ['long']."', '".$row ['lat']."', 'arrivalLabel', '".$row ['airport']."');\" style = \"color: black\">".$row ['airport']."</a><br><br>");
 			print("</div>");
 			
-			print("<div class = \"rightPanel\">");
+			print("<div id = \"rightPanel\" class = \"rightPanel\">");
 				if ($checkOutStatus == 1)
 					print ("<center><button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."', '".$returnDate."', '".$lateFee."')\">Check In</button>");
 				else

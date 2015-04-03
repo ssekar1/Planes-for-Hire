@@ -32,11 +32,11 @@
 		print ("</label>");
 	
 	print ("<label>Zip Code ");
-			print ("<input name = \"zip\" id = \"zip\" type = \"text\" maxlength = \"30\" class = \"input\" onKeyup = \"isValidChar (this.value, 'zip')\"/><br><br>");
+			print ("<input name = \"zip\" id = \"zip\" type = \"text\" maxlength = \"5\" class = \"input\" onKeyup = \"isValidChar (this.value, 'zip')\"/><br><br>");
 		print ("</label>");
 
 	print ("<label>Phone Number ");
-			print ("<input name = \"phone\" id = \"phone\" type = \"text\" maxlength = \"30\" class = \"input\" onKeyup = \"isValidChar (this.value, 'phone')\"/><br><br>");
+			print ("<input name = \"phone\" id = \"phone\" type = \"text\" maxlength = \"10\" class = \"input\" onKeyup = \"isValidChar (this.value, 'phone')\"/><br><br>");
 		print ("</label>");
 
 	print ("<label>Email ");

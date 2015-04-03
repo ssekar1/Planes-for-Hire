@@ -44,6 +44,7 @@
 	$sql = "INSERT INTO `".$email."` (`origAirport`, `origLong`, `origLat`, `destAirport`, `destLong`, `destLat`, `dateTravel`, `leaseModel`) VALUES ('".$_SESSION['depart']."', '".$origLong."', '".$origLat."', '".$_SESSION['arrive']."', '".$destLong."', '".$destLat."', CURRENT_TIMESTAMP,  '".$_SESSION['model']."')";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 
+	print ("<META http-equiv = \"REFRESH\" content = \"0; Main.php\">");
 /*
 	//this is use to reset the plane checkout table, uncomment to use, but comment codes above. for debugging purposes only
 	for ($x = 0; $x < 15; $x++)
