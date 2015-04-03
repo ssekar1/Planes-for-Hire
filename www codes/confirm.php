@@ -15,7 +15,7 @@
 	$_SESSION ['zip'] = $_POST ['zip'];
 	$_SESSION ['phone'] = $_POST ['phone'];
 	if (empty($_POST ['avatar']))
-		$_SESSION ['avatar'] = "none specify";
+		$_SESSION ['avatar'] = "default.jpg";
 	else
 		$_SESSION ['avatar'] = $_POST ['avatar'];
 	$_SESSION ['email'] = $_POST ['email'];
@@ -30,9 +30,8 @@
 //===creating new travel history table for the new user, these tables are created dynamically for each new user
 	$sql = "CREATE TABLE `".$_SESSION ['email']."` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY, `origAirport` varchar(30) NULL, `origLong` double signed NULL, `origLat` double signed NULL, `destAirport` varchar(30) NULL, `destLong` double signed NULL, `destLat` double signed NULL, `dateTravel` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `leaseModel` varchar(30) NULL, `lateFee` double NULL)";
     $link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-	
-	unset ($_SESSION);
-	session_destroy();
+    
+    $_SESSION['loginId'] = $_SESSION ['email'];
 	
 		print ("<form action = \"debug.php\" method = \"post\" name = \"form\">");
 			print ("<label><center><strong><font size = \"5\">Registration Complete</font></strong></center></label><br>");
