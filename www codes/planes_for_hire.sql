@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2015 at 01:25 AM
+-- Generation Time: Apr 03, 2015 at 05:51 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -153,7 +153,7 @@ INSERT INTO `planes` (`id`, `model`, `status`, `client`, `leaseFrom`, `returnTo`
 (2, 'Cessna 175 Skylark', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 05:22:16'),
 (3, 'Cessna 177 Cardinal', 1, '', '', '', '0000-00-00', '2015-03-28 16:40:15'),
 (4, 'Cessna 180 Skywagon', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 07:24:03'),
-(5, 'Cessna 162 Skycatcher', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 06:23:48'),
+(5, 'Cessna 162 Skycatcher', 1, '', '', '', '0000-00-00', '2015-04-02 15:13:31'),
 (6, 'Cessna 205 Super Skywagon', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 07:01:16'),
 (7, 'Cessna 210 Centurion', 1, ' ', ' ', ' ', '0000-00-00', '2015-03-20 06:52:29'),
 (8, 'Cessna T-50 Bobcat', 1, '', '', '', '0000-00-00', '2015-03-20 05:37:57'),
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `ssekar1@umbc.edu` (
   `dateTravel` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `leaseModel` varchar(30) DEFAULT NULL,
   `lateFee` double DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ssekar1@umbc.edu`
@@ -205,7 +205,8 @@ CREATE TABLE IF NOT EXISTS `ssekar1@umbc.edu` (
 
 INSERT INTO `ssekar1@umbc.edu` (`id`, `origAirport`, `origLong`, `origLat`, `destAirport`, `destLong`, `destLat`, `dateTravel`, `leaseModel`, `lateFee`) VALUES
 (1, 'Los Angeles International Airp', 33.948852, -118.408873, 'McCarran International Airport', 36.084022, -115.153739, '2015-03-28 16:39:26', 'Cessna 177 Cardinal', NULL),
-(2, 'Los Angeles International Airp', 33.948852, -118.408873, 'Dallas/Fort Worth Internationa', 32.916815, -97.041708, '2015-03-29 17:02:42', 'Cessna Model CR-3', NULL);
+(2, 'Los Angeles International Airp', 33.948852, -118.408873, 'Dallas/Fort Worth Internationa', 32.916815, -97.041708, '2015-03-29 17:02:42', 'Cessna Model CR-3', NULL),
+(3, 'Los Angeles Airport, Los Angel', 33.948852, -118.408873, 'Los Angeles Airport, Los Angel', 33.948852, -118.408873, '2015-04-02 15:13:13', 'Cessna 162 Skycatcher', NULL);
 
 -- --------------------------------------------------------
 
@@ -327,7 +328,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 -- AUTO_INCREMENT for table `ssekar1@umbc.edu`
 --
 ALTER TABLE `ssekar1@umbc.edu`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tamtran1@umbc.edu`
 --
