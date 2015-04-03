@@ -50,7 +50,7 @@ function createAirportEntry($airport, $long, $lat)
 	$entry = "";
 
 	// Adds div
-	$entry .= "<div style='float: left; width: 20%; margin: 0 auto'>";
+	$entry .= "<div style='float: left; width: 50%; margin: 0 auto'>";
 
 	// Adds link portion
 	$entry .= "<a href='Main.php?longlat=$long+$lat'>";
@@ -92,7 +92,8 @@ function createAirportEntry($airport, $long, $lat)
 <?php
 	//--------- Airport entries -------------
 	// Gets search args by splitting string by space character
-	$args = explode(" ", $_GET["query"]);
+	$input = $_GET["query"];
+	$args = explode(" ", $input);
 
 	// Trims array to remove empty strings
 	foreach($args as &$arg)
@@ -127,15 +128,23 @@ function createAirportEntry($airport, $long, $lat)
 					"lat" => $row["lat"]				
 				);
 
-				// Store airport int array if either it's city or state matches param, and the airport is not already included
+				// Store airport into array if either it's city or state matches param, and the airport is not already included
 				$split = explode(", ", $port->airport);
-				$city = $split[0];
-				$state = $split[1];
-				$res = strcmp($city, $arg);
-				if($res != 0)
-					$res = strcmp($state, $arg);
-				if($res == 0 && !array_key_exists($port->id, $airports))
+				$name = $split[0];
+				$city = $split[1];
+				$state = $split[2];
+				$res = strpos($name, $input);
+				if($res === false)
 				{
+					$res = strpos($city, $arg);
+					if($res === false)
+					{
+						$res = strpos($state, $arg);
+					}
+				}
+				if($res !== false && !array_key_exists($port->id, $airports))
+				{
+					print("Added becase res was $res\n");
 					$airports[$port->id] = $port;
 					$numPorts ++;
 				}
