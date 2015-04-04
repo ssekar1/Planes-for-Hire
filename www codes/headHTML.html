@@ -340,6 +340,8 @@
 			var userTrvHist; 		// This is use to hold the original content of the user profile travel history inner html content
 			var avatarToggle = "false";
 			var srcDestToggle = -1;		// Toggle that alternates between -1 and 1.  -1 meaning src, 1 meaning destination.
+			var src = dest = null;		// Two points storing long and lat coords
+			var flightPath = null;		// Object representing a Google Maps path graphics object
 			
 			// --------------- Init function for map -------------------------------
 			function initialize()
@@ -363,16 +365,62 @@
 			
 			function focusMarker(long, lat, id, value)
 			{
+				// Pans to spot on map, and updates forum
 				map.panTo(new google.maps.Marker({position: new google.maps.LatLng(long, lat, 0)}).getPosition());
 				updateForm(id, value);
+
+				// Assigns either src or dest to point in space
+				if(id == "departLabel")
+					src = new google.maps.LatLng(long, lat);
+				else
+					dest = new google.maps.LatLng(long, lat);
+
+				// If both source and destination points are defined...
+				if(src && dest)
+				{
+					// Draw a path!
+					drawPath([src, dest]);
+				}
+
+				// If both source and depart and arrival variables are set,
+				// draw a line between them
+			}
+
+			/*
+			* Draws a path on the map consisting of the points given
+			*/
+			function drawPath(lngLatPath)
+			{
+				// Removes path from map, if it exists
+				if(flightPath)
+				{
+					flightPath.setMap(null);
+				}
+
+
+				// Creates path object
+				flightPath = new google.maps.Polyline
+				({
+   					path: lngLatPath,
+    					geodesic: true,
+    					strokeColor: '#FF0000',
+    					strokeOpacity: 1.0,
+    					strokeWeight: 2
+ 				});
+
+				// Applies path to map
+  				flightPath.setMap(map);
 			}
 			
 			function updateForm (id, value)
 			{
+				// Gets element from forum
 				document.getElementById(id).innerHTML = value;
-				
+
+				// If both duration label and start label are filled out...
 				if (document.getElementById('durationLabel').innerHTML !== '' && document.getElementById('startLabel').innerHTML !== '')
 				{
+					// Set time information
 					var msec = Date.parse(document.getElementById('startLabel').innerHTML);
 					var date = new Date(msec);
 					date.setDate(date.getDate() + (parseInt(document.getElementById('durationLabel').innerHTML) - 1));
