@@ -335,11 +335,13 @@
 		<script src="http://maps.googleapis.com/maps/api/js"></script>
 		
 		<script>
-			// --------------- Init function for map -------------------------------
-			var map; //need this variable as global to use in multiple functions
-			var userTrvHist; //this is use to hold the original content of the user profile travel history inner html content
+			// --------------------- Global Javascript variables ---------------------------
+			var map; 			// Need this variable as global to use in multiple functions
+			var userTrvHist; 		// This is use to hold the original content of the user profile travel history inner html content
 			var avatarToggle = "false";
+			var srcDestToggle = -1;		// Toggle that alternates between -1 and 1.  -1 meaning src, 1 meaning destination.
 			
+			// --------------- Init function for map -------------------------------
 			function initialize()
 			{
 				// -------------------- Constructs and initializes sexy-assed map -------------------------
@@ -382,14 +384,37 @@
 			// Creates easy to use icon
 			function createMarker(name, long, lat)
 			{
+				// Generates marker object
 				var img = "resources/images/tack.gif";
 				var marker = new google.maps.Marker
 				({
-      				position: new google.maps.LatLng(long, lat, 0),
-     				map: map,
-     			 	title: name,
+      					position: new google.maps.LatLng(long, lat, 0),
+     					map: map,
+     			 		title: name,
 					icon: img
   				});
+
+				// Gives marker onclick ocde
+				google.maps.event.addListener(marker, 'click', function()
+				{
+					// If in src state, alter src
+					if(srcDestToggle == -1)
+					{
+						focusMarker(long, lat, "departLabel", name);
+					}
+
+					// Otherwise, alter dest
+					else
+					{
+						focusMarker(long, lat, "arrivalLabel", name);
+					}
+					
+
+					// Toggles between src and dest state
+					srcDestToggle *= -1;
+				});
+
+				// Returns generated marker
 				return marker;
 			}
 			
