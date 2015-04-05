@@ -1,0 +1,40 @@
+
+<!--description: This is the head.html, this is a standardize page with cascading style sheet, layout, and scripts-->
+<!--predefined for all pages in this directory-->
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Planes For Hire</title>
+		<!--<img src="resources\images\plane001.gif" alt="HTML5 Icon" style="position:absolute; left:80px; top:10px; width:200px; height:120px;border:none;">-->
+		
+		<?php	
+			include ('link.php');
+			$link = new Link($debug);
+			$mapTbl = $link->executeQuery("select * from `airport_locations`", $_SERVER["SCRIPT_NAME"]);
+		?>
+		
+		<link rel="stylesheet" href="planesForHire.css">
+		<link rel="stylesheet" href="/resources/demos/style.css">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		
+		<script src="http://maps.googleapis.com/maps/api/js"></script>
+  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  		<script src="planesForHire.js"></script>
+		
+		<script>
+			//this is a javascript/php function to populate the airport pins on the map
+			function populatePins ()
+			{
+				<?php
+					if (isset($mapTbl))						
+						while ($row = mysql_fetch_array($mapTbl))
+							print("createMarker(\"".$row ['airport']."\", ".$row ['long'].", ".$row ['lat'].");");
+				?>
+			}
+		</script>
+	</head>
+	<body>
+	<pre>
