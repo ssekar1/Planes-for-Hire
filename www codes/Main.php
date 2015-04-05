@@ -67,9 +67,7 @@
 						print ("<option value = ''></option>");
 						while ($row = mysql_fetch_array($mapTbl))
 						{
-							$subject = $row ['airport'];
-							$pattern = '/[^,]*,[^,]*$/';
-							preg_match($pattern, $subject, $matches);
+							preg_match('/[^,]*,[^,]*$/', $row ['airport'], $matches); //(patern, subject, matchesFound)
 							print ("<option value = '".$row ['long']."|".$row ['lat']."|departLabel|".$row ['airport']."'>".$matches[0]."</option>");
 						}
 						print ("</select>");
@@ -82,9 +80,7 @@
 						print ("<option value = ''></option>");
 						while ($row = mysql_fetch_array($mapTbl))
 						{
-							$subject = $row ['airport'];
-							$pattern = '/[^,]*,[^,]*$/';
-							preg_match($pattern, $subject, $matches);
+							preg_match('/[^,]*,[^,]*$/', $row ['airport'], $matches); //(patern, subject, matchesFound)
 							print ("<option value = '".$row ['long']."|".$row ['lat']."|arrivalLabel|".$row ['airport']."'>".$matches[0]."</option>");
 						}
 						print ("</select>");
@@ -103,9 +99,9 @@
 						//this is the plane model selection menu
 						$planes = $link->executeQuery("select * from planes", $_SERVER["SCRIPT_NAME"]);
 						print ("Plane Model   <select id = \"planeSelect\" style = \"width: 180px\" onchange = \"updateForm('planeLabel', this.value)\">");
-						print ("<option value = ''></option>");
-						while ($row = mysql_fetch_array($planes))
-							print ("<option value = \"".$row['model']."\">".$row['model']."</option>");
+						print ("<option value = ''>Select A Departing Airport</option>");
+			//			while ($row = mysql_fetch_array($planes))
+			//				print ("<option value = \"".$row['model']."\">".$row['model']."</option>");
 						print ("</select>");
 					print ("</div>");
 					
@@ -139,9 +135,7 @@
 					print ("<font size =\"4\"> Where would you like to fly today?</font><br>");
 					while ($row = mysql_fetch_array($mapTbl))
 					{
-						$subject = $row ['airport'];
-						$pattern = '/[^,]*,[^,]*$/';
-						preg_match($pattern, $subject, $matches);
+						preg_match('/[^,]*,[^,]*$/', $row ['airport'], $matches); //(patern, subject, matchesFound)
 						print ("<a href = \"javascript: focusMarker('".$row ['long']."|".$row ['lat']."');\">".$matches[0]."</a><br>");
 					}
 				} else

@@ -12,6 +12,7 @@
 	$_SESSION['duration'] = $_POST['duration']; 
 	$_SESSION['startDate'] = $_POST['startDate'];
 	$_SESSION['returnDate'] = $_POST['returnDate'];
+	$originalReturnDate = $_SESSION['returnDate'];
 	$_SESSION['returnDate'] = date('Y-m-d', strtotime($_SESSION['returnDate']));
 	$_SESSION['model'] = $_POST['model'];
 	$email = $_SESSION['loginId'];
@@ -21,7 +22,7 @@
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
 	//update the planes table to mark the specific model as checked out
-	$sql = "UPDATE `planes` SET `status` = '0', `client` = '".$email."', `leaseFrom` = '".$_SESSION['depart']."', `returnTo` = '".$_SESSION['arrive']."', `returnDate` = '".$_SESSION['returnDate']."'  WHERE `model` = '".$_SESSION['model']."'";
+	$sql = "UPDATE `planes` SET `status` = '0', `currentLocation` = '', `client` = '".$email."', `leaseFrom` = '".$_SESSION['depart']."', `returnTo` = '".$_SESSION['arrive']."', `returnDate` = '".$_SESSION['returnDate']."'  WHERE `model` = '".$_SESSION['model']."'";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
 	//pull the airport_location table to get departure and arrival coordinates to push into member's travel history table  
@@ -48,42 +49,13 @@
 	while ($row = mysql_fetch_array($result))
 		$custName = $row ['firstName'];
 	
-	print ("Hi ".$custName.", here are your check out result<br>".
-		   "Leaving From ".$_SESSION['depart']."<br>".
-		   "Arriving to ".$_SESSION['arrive']."<br>".
+	preg_match('/[^,]*/', $_SESSION['depart'], $depart); //(patern, subject, matchResult)
+	preg_match('/[^,]*/', $_SESSION['arrive'], $arrive); //(patern, subject, matchResult)
+	
+	print ("Hi ".$custName.", here are your check out results<br>".
+		   "Leaving From ".$depart[0]."<br>".
+		   "Arriving to ".$arrive[0]."<br>".
 		   "Leasing the ".$_SESSION['model']." for ".$_SESSION['duration']." days<br>".
-		   "Beginning on ".$_SESSION['startDate']." to ".$_SESSION['returnDate']."<br><br>".
-		   "<a style = \"float:right\" href = \"Main.php\">Continue		</a>");	
+		   "Beginning on ".$_SESSION['startDate']." to ".$originalReturnDate."<br><br>".
+		   "<a style = \"float:right;color:black\" href = \"Main.php\">Continue		</a>");	
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

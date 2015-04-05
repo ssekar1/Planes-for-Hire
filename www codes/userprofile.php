@@ -49,7 +49,7 @@
 			
 			print("<div id = \"userExtenPanel\" class = \"userExtenPanel\">");
 				print ("<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
-				print ("<a style = \"float:right; color:black\"href=\"logout.php\">Logout    </a><br>");
+				print ("<a style = \"float:right; color:black\" href=\"logout.php\">Logout    </a><br>");
 				print ("<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/".$avatar."\"><br>");
 				print ("<a style = \"color:black\"href = \"javascript: changeAvatar('userExtenPanel', '".$avatar."');\">Edit</a><br>");
 			print ("</div>");
