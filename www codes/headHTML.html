@@ -383,17 +383,24 @@
 		<script src="http://maps.googleapis.com/maps/api/js"></script>
 		
 		<script>
-			// --------------- Init function for map -------------------------------
-			var map; //need this variable as global to use in multiple functions
-			var userTrvHist; //this is use to hold the original content of the user profile travel history inner html content
+			// --------------------- Global Javascript variables ---------------------------
+			var map; 			// Need this variable as global to use in multiple functions
+			var userTrvHist; 		// This is use to hold the original content of the user profile travel history inner html content
 			var avatarToggle = "false";
+<<<<<<< HEAD
 			var mainFormPanel; //this variable is use to back up the content of the form panel
 			
 			function mainFormPanelBak ()
 			{
 				mainFormPanel = document.getElementById('mainFormPanel').innerHTML;
 			}
+=======
+			var srcDestToggle = -1;		// Toggle that alternates between -1 and 1.  -1 meaning src, 1 meaning destination.
+			var src = dest = null;		// Two points storing long and lat coords
+			var flightPath = null;		// Object representing a Google Maps path graphics object
+>>>>>>> origin/master
 			
+			// --------------- Init function for map -------------------------------
 			function initialize()
 			{
 				// -------------------- Constructs and initializes sexy-assed map -------------------------
@@ -415,6 +422,7 @@
 			
 			function focusMarker(value)
 			{
+<<<<<<< HEAD
 				var dataArr = value.split("|");
 				if (dataArr[0] === '')
 					return;
@@ -424,18 +432,71 @@
 					return;
 					
 				updateForm(dataArr[2], dataArr[3]);
+=======
+				// Pans to spot on map, and updates forum
+				map.panTo(new google.maps.Marker({position: new google.maps.LatLng(long, lat, 0)}).getPosition());
+				updateForm(id, value);
+
+				// Assigns either src or dest to point in space
+				if(id == "departLabel")
+					src = new google.maps.LatLng(long, lat);
+				else
+					dest = new google.maps.LatLng(long, lat);
+
+				// If both source and destination points are defined...
+				if(src && dest)
+				{
+					// Draw a path!
+					drawPath([src, dest]);
+				}
+
+				// If both source and depart and arrival variables are set,
+				// draw a line between them
+			}
+
+			/*
+			* Draws a path on the map consisting of the points given
+			*/
+			function drawPath(lngLatPath)
+			{
+				// Removes path from map, if it exists
+				if(flightPath)
+				{
+					flightPath.setMap(null);
+				}
+
+
+				// Creates path object
+				flightPath = new google.maps.Polyline
+				({
+   					path: lngLatPath,
+    					geodesic: true,
+    					strokeColor: '#FF0000',
+    					strokeOpacity: 1.0,
+    					strokeWeight: 2
+ 				});
+
+				// Applies path to map
+  				flightPath.setMap(map);
+>>>>>>> origin/master
 			}
 			
 			function updateForm (id, value)
 			{
+<<<<<<< HEAD
 				if (value === '')
 					return;
 				
 				document.getElementById('mainFormPanel').innerHTML = mainFormPanel;
+=======
+				// Gets element from forum
+>>>>>>> origin/master
 				document.getElementById(id).innerHTML = value;
-				
+
+				// If both duration label and start label are filled out...
 				if (document.getElementById('durationLabel').innerHTML !== '' && document.getElementById('startLabel').innerHTML !== '')
 				{
+					// Set time information
 					var msec = Date.parse(document.getElementById('startLabel').innerHTML);
 					var date = new Date(msec);
 					date.setDate(date.getDate() + (parseInt(document.getElementById('durationLabel').innerHTML) - 1));
@@ -449,14 +510,37 @@
 			// Creates easy to use icon
 			function createMarker(name, long, lat)
 			{
+				// Generates marker object
 				var img = "resources/images/tack.gif";
 				var marker = new google.maps.Marker
 				({
-      				position: new google.maps.LatLng(long, lat, 0),
-     				map: map,
-     			 	title: name,
+      					position: new google.maps.LatLng(long, lat, 0),
+     					map: map,
+     			 		title: name,
 					icon: img
   				});
+
+				// Gives marker onclick ocde
+				google.maps.event.addListener(marker, 'click', function()
+				{
+					// If in src state, alter src
+					if(srcDestToggle == -1)
+					{
+						focusMarker(long, lat, "departLabel", name);
+					}
+
+					// Otherwise, alter dest
+					else
+					{
+						focusMarker(long, lat, "arrivalLabel", name);
+					}
+					
+
+					// Toggles between src and dest state
+					srcDestToggle *= -1;
+				});
+
+				// Returns generated marker
 				return marker;
 			}
 			
