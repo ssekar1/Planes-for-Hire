@@ -13,7 +13,7 @@
 		if ($query !== false)
 			while ($row = mysql_fetch_array($query))
 			{
-				$loginUser = $row['firstName']." ".$row['lastName'];
+				$loginUser = $row['firstName'];
 				$userEmail = $row['email'];
 				$checkOutStatus = $row['checkOutStatus'];
 				
@@ -38,99 +38,124 @@
 			$travelHist = $link->executeQuery("select * from `".$userEmail."`", $_SERVER["SCRIPT_NAME"]);
 	}
 	
-	print ("<label><strong><center><font size = \"8\" color = \"#C80000\">PLANES FOR HIRE</font></center></strong><br>");
-	print ("</label>");
-	
-	print("<form action=\"search.php\">");
-		print ("<input type = \"submit\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" name=\"query\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
-	print("</form>");	
-
-	if(isset($loginUser))
-	{
-		print ("<font size = \"3\" style = \"float:left\"><a href=\"userprofile.php\">Hello ".$loginUser."</a></font>");
-		print ("<font size = \"3\" style = \"float:right\"><a href=\"logout.php\">Logout    </a></font><br>");
-	} else
-	{
-		print ("<font size = \"3\" style = \"float:left\">Hello you...</font>");
-		print ("<font size = \"3\" style = \"float:right\"><a href=\"registration.php\">Register   </a><a href=\"login.php\">Login   </a></font><br>");
-	}
-	
-	print("<center><div id=\"googleMap\"></div></center>");
-	
-	print ("<font size = \"3\">");
-	if (isset($loginUser) && $loginUser !== "admin")
-	{		
-		print("<br><center>");
-		print("<div class = \"basePanel\">");
-			print("<div class = \"leftPanel\">");
-				print ("<label>Departing Airport</label><br><br>");
-				mysql_data_seek($mapTbl, 0);
-				while ($row = mysql_fetch_array($mapTbl))
-					print ("<a href = \"javascript: focusMarker('".$row ['long']."', '".$row ['lat']."', 'departLabel', '".$row ['airport']."');\" style = \"color: black\">".$row ['airport']."</a><br><br>");
-			print("</div>");
+	print ("<div class = \"mainBasePanel\">");
+		print ("<font size = \"3\">");
 		
-			print("<div class = \"middlePanel\">");
-				print ("<label>Arival Airport</label><br><br>");
-				mysql_data_seek($mapTbl, 0);
-				while ($row = mysql_fetch_array($mapTbl))
-					print ("<a href = \"javascript: focusMarker('".$row ['long']."', '".$row ['lat']."', 'arrivalLabel', '".$row ['airport']."');\" style = \"color: black\">".$row ['airport']."</a><br><br>");
-			print("</div>");
-			
-			print("<div id = \"rightPanel\" class = \"rightPanel\">");
-				if ($checkOutStatus == 1)
-					print ("<center><button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."', '".$returnDate."', '".$lateFee."')\">Check In</button>");
-				else
-					print ("<center><button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."')\">Check In</button>");
-				print ("<label>   </label>");
-				print ("<button id = \"checkOutButton\" onclick= \"checkOut('".$checkOutStatus."')\">Check Out</button></center><br>");
-				
-				print ("<label>Rental Duration  </label><select name = \"durationSelect\" id = \"durationSelect\" onchange = \"updateForm('durationLabel', this.value)\">");
-					print ("<option value = ''></option>");
-					for ($x = 1; $x < 6; $x++)
-						print ("<option value = \"".$x."\">".$x." day</option>");
-					print ("</select><br><br>");
-				
-				print ("<label>Start Date   </label><input type = \"text\" id = \"datePicker\" onchange = \"updateForm('startLabel', this.value)\"><br><br>");
-				
-				$sql = "select * from planes";
-				$planes = $link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-				print ("<label>Plane Model  </label><select name = \"planeSelect\" id = \"planeSelect\" style = \"width: 180px\"onchange = \"updateForm('planeLabel', this.value)\">");
-					print ("<option value = ''></option>");
-					while ($row = mysql_fetch_array($planes))
-						print ("<option value = \"".$row['model']."\">".$row['model']."</option>");
-					print ("</select><br><br>");
-					print("<label>Plane Rental Form<br>");
-					print("<label>Depart from:  </label><label name = \"departLabel\" id = \"departLabel\"></label><br>");
-					print("<label>Arrive to:  </label><label name = \"arrivalLabel\" id = \"arrivalLabel\"></label><br>");
-					print("<label>Rental duration:  </label><label name = \"durationLabel\" id = \"durationLabel\"></label><br>");
-					print("<label>Start date:  </label><label name = \"startLabel\" id = \"startLabel\"></label><br>");
-					print("<label>Return date:  </label><label name = \"returnLabel\" id = \"returnLabel\"></label><br>");
-					print("<label>Model:  </label><label name = \"planeLabel\" id = \"planeLabel\"></label><br>");
-			print("</div>");
-		print("</div>");	
-		print("</center>");
-				
-	} else
-	{
-		//for debuging purposes
-		print ("<label>Greetings, here are the available airports<br></label>");
-		if (isset($mapTbl))
-		{
-			print ("<table border='0px'>");
-			print ("<tr>");
-			print ("<td>Airports					</td>");	
-			print ("<td>Longitude    </td>");
-			print ("<td>Latitude    </td>");
-			print ("</tr>");
-			
-			mysql_data_seek($mapTbl, 0);
-			while ($row = mysql_fetch_array($mapTbl))
-				print ("<tr><td><a href = \"javascript: focusMarker('".$row ['long']."', '".$row ['lat']."');\">".$row ['airport']."</a></td><td>".$row ['long']."</td><td>".$row ['lat']."</td></tr>");
-			print ("</table><br><br>");
-		}
-	}
+		print ("<div class = \"mainHeaderPanel\">");
+			print ("<b><font style = \"float:left\" size = \"6\" color = \"#CC3300\">PLANES FOR HIRE</font></b><br>");
+			print("<form action=\"search.php\">");
+				print ("<input type = \"submit\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" name=\"query\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
+			print("</form>");
 	
-	print ("</font>");
-	//include ("test.html");
+			if(isset($loginUser))
+			{
+				print ("<a style = \"float:right; color:black\" href=\"logout.php\">Logout    </a>");
+				print ("<a style = \"float:right; color:black\" href=\"userprofile.php\">Hello ".$loginUser.".   </a>");		
+			} else
+				print ("<a style = \"float:right; color: black\" href=\"registration.php\">Register   </a><a style = \"float:right; color:black\" href=\"login.php\">Login   </a>");
+		print ("</div>");
+		
+		print ("<div class = \"mainMapPanel\" id=\"googleMap\"></div>");
+		
+		print ("<div class = \"mainSelectPanel\">");	
+			if (isset($loginUser) && $loginUser !== "admin")
+			{
+					//this is the departing airport selection menu
+					print ("<div class = \"mainDepartPanel\">");
+						mysql_data_seek($mapTbl, 0);
+						print ("Departing Airport   <br><select id = \"departingAirport\" style = \"width:150px\" onchange = \"focusMarker(this.value)\">");
+						print ("<option value = ''></option>");
+						while ($row = mysql_fetch_array($mapTbl))
+						{
+							$subject = $row ['airport'];
+							$pattern = '/[^,]*,[^,]*$/';
+							preg_match($pattern, $subject, $matches);
+							print ("<option value = '".$row ['long']."|".$row ['lat']."|departLabel|".$row ['airport']."'>".$matches[0]."</option>");
+						}
+						print ("</select>");
+					print ("</div>");
+					
+					//this is the arrival airport selection menu
+					print ("<div class = \"mainArrivalPanel\">");
+						mysql_data_seek($mapTbl, 0);
+						print ("Arival Airport   <br><select id = \"arivalAirport\" style = \"width:150px\" onchange = \"focusMarker(this.value)\">");
+						print ("<option value = ''></option>");
+						while ($row = mysql_fetch_array($mapTbl))
+						{
+							$subject = $row ['airport'];
+							$pattern = '/[^,]*,[^,]*$/';
+							preg_match($pattern, $subject, $matches);
+							print ("<option value = '".$row ['long']."|".$row ['lat']."|arrivalLabel|".$row ['airport']."'>".$matches[0]."</option>");
+						}
+						print ("</select>");
+					print ("</div>");
+					
+					//these are the rental dates and plane model select panel
+					print ("<div class = \"mainDateModelPanel\">");
+						print ("Start Date   <input type = \"text\" id = \"datePicker\" onchange = \"updateForm('startLabel', this.value)\"><br>");
+						
+						print ("Rental Duration   <select id = \"durationSelect\" onchange = \"updateForm('durationLabel', this.value)\">");
+						print ("<option value = ''></option>");
+						for ($x = 1; $x < 6; $x++)
+							print ("<option value = \"".$x."\">".$x." day</option>");
+						print ("</select><br>");
+						
+						//this is the plane model selection menu
+						$planes = $link->executeQuery("select * from planes", $_SERVER["SCRIPT_NAME"]);
+						print ("Plane Model   <select id = \"planeSelect\" style = \"width: 180px\" onchange = \"updateForm('planeLabel', this.value)\">");
+						print ("<option value = ''></option>");
+						while ($row = mysql_fetch_array($planes))
+							print ("<option value = \"".$row['model']."\">".$row['model']."</option>");
+						print ("</select>");
+					print ("</div>");
+					
+					//this is the checkin and check out button panel
+					print ("<div class = \"mainButtonPanel\">");
+						print ("<center>");
+						if ($checkOutStatus == 1)
+							print ("<button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."', '".$returnDate."', '".$lateFee."')\">Check In</button>");
+						else
+							print ("<button id = \"checkInButton\" onclick= \"checkIn('".$checkOutStatus."')\">Check In</button>");
+						print ("<label>   </label>");
+						print ("<button id = \"checkOutButton\" onclick= \"checkOut('".$checkOutStatus."')\">Check Out</button></center>");
+						print ("</center>");
+					print ("</div>");
+					
+					//this is the rental form
+					print ("<div id = \"mainFormPanel\"class = \"mainFormPanel\">");
+						print("Plane Rental Form<br>");
+						print("<label>Depart from:  </label><label id = \"departLabel\"></label><br>");
+						print("<label>Arrive to:  </label><label id = \"arrivalLabel\"></label><br>");
+						print("<label>Rental duration:  </label><label id = \"durationLabel\"></label><br>");
+						print("<label>Start date:  </label><label id = \"startLabel\"></label><br>");
+						print("<label>Return date:  </label><label id = \"returnLabel\"></label><br>");
+						print("<label>Model:  </label><label id = \"planeLabel\"></label><br>");	
+					print ("</div>");
+			} else
+			{
+				if (isset($mapTbl))
+				{	
+					mysql_data_seek($mapTbl, 0);
+					print ("<font size =\"4\"> Where would you like to fly today?</font><br>");
+					while ($row = mysql_fetch_array($mapTbl))
+					{
+						$subject = $row ['airport'];
+						$pattern = '/[^,]*,[^,]*$/';
+						preg_match($pattern, $subject, $matches);
+						print ("<a href = \"javascript: focusMarker('".$row ['long']."|".$row ['lat']."');\">".$matches[0]."</a><br>");
+					}
+				} else
+					print ("<font size =\"4\">Error Loading Airports<br>Please Reflesh Your Browser</font><br>");
+			}
+		print ("</div>");
+		print ("</font>");
+	print ("</div>");
+	print ("<script> mainFormPanelBak(); </script>");
 	include ("tailHTML.html");
 ?>
+
+
+
+
+
+

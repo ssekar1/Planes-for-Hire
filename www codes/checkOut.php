@@ -43,17 +43,17 @@
 	
 	$sql = "INSERT INTO `".$email."` (`origAirport`, `origLong`, `origLat`, `destAirport`, `destLong`, `destLat`, `dateTravel`, `leaseModel`) VALUES ('".$_SESSION['depart']."', '".$origLong."', '".$origLat."', '".$_SESSION['arrive']."', '".$destLong."', '".$destLat."', CURRENT_TIMESTAMP,  '".$_SESSION['model']."')";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-
-	print ("<META http-equiv = \"REFRESH\" content = \"0; Main.php\">");
-/*
-	//this is use to reset the plane checkout table, uncomment to use, but comment codes above. for debugging purposes only
-	for ($x = 0; $x < 15; $x++)
-	{
-		$sql = "UPDATE `planes` SET `status` = '1', `client` = '', `leaseFrom` = '', `returnTo` = '', `returnDate` = ''  WHERE `id` = '".$x."'";
-		$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-	}
-*/	
 	
+	$result = $link->executeQuery("select * from `customer_profile` WHERE `email` = '".$email."'", $_SERVER["SCRIPT_NAME"]);
+	while ($row = mysql_fetch_array($result))
+		$custName = $row ['firstName'];
+	
+	print ("Hi ".$custName.", here are your check out result<br>".
+		   "Leaving From ".$_SESSION['depart']."<br>".
+		   "Arriving to ".$_SESSION['arrive']."<br>".
+		   "Leasing the ".$_SESSION['model']." for ".$_SESSION['duration']." days<br>".
+		   "Beginning on ".$_SESSION['startDate']." to ".$_SESSION['returnDate']."<br><br>".
+		   "<a style = \"float:right\" href = \"Main.php\">Continue		</a>");	
 ?>
 
 

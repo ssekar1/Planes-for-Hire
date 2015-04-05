@@ -20,19 +20,93 @@
 			/* removes underline from links */
 			a {text-decoration:none}
 			
+			pre {font-family: Arial, Verdana;}
+			span {color: red;}
+			
 			body
 			{	
     			background-color: linen;
 				font-family: Arial, Verdana;
-				margin-top: 30px;
+				
+			}
+			.mainBasePanel
+			{
+				//background-color: #F3C1FF;
 				margin-left: auto;
      			margin-right: auto;
-				width: 1200px;
+				width: 1300px;
 			}
-			
-			pre
+			.mainHeaderPanel
 			{
-				font-family: Arial, Verdana;
+				background-color: #A5A5A5;
+				width: 94.4%;
+				height: 50px;
+				border-style: solid;
+				border-left-width: 0px;
+				border-top-width: 0px;
+				border-bottom-width: 0px;
+				border-color:#E6E6E6;
+				padding: 10px 50px 0px 20px; /*top right bottom left*/
+				border-top-right-radius: 30px;
+				border-top-left-radius: 30px;
+				box-shadow: 50px 30px 70px 10px #b2b2b2;
+			}
+			.mainMapPanel
+			{
+				//background-color: #FFADEB;
+				width: 70%;
+				height: 600px;
+				border-bottom-left-radius: 30px;
+				float: left;
+			}
+			.mainSelectPanel
+			{
+				//background-color: #BAE3C8;
+				border-style: solid;
+				border-left-width: 0px;
+				border-top-width: 0px;
+				border-bottom-width: 0px;
+				border-color:#E6E6E6;
+				border-bottom-right-radius: 30px;
+				padding: 10px 10px 40px 10px; /*top right bottom left*/
+				width: 28.23%;
+				min-height:550px;
+				float:right;
+			}
+			.mainDepartPanel
+			{
+				//background-color: #D8D8FF;
+				width: 50%;
+				float:left;
+				padding: 0px 0px 5px 0px; /*top right bottom left*/
+			}
+			.mainArrivalPanel
+			{
+				//background-color: #DBFFC9;
+				width: 50%;
+				float:right;
+				padding: 0px 0px 5px 0px; /*top right bottom left*/
+			}
+			.mainDateModelPanel
+			{
+				//background-color: #C2D6FF;
+				width: 100%;
+				float:right;
+				padding: 0px 0px 0px 0px; /*top right bottom left*/
+			}
+			.mainButtonPanel
+			{
+				//background-color: #FFADD6;
+				width: 100%;
+				float:right;
+				padding: 15px 0px 5px 0px; /*top right bottom left*/
+			}
+			.mainFormPanel
+			{
+				//background-color: #99C2FF;
+				width: 100%;
+				float:right;
+				padding: 25px 0px 5px 0px; /*top right bottom left*/
 			}
 			
 			#loginPage
@@ -152,11 +226,13 @@
 				float: center;
 				font-family: Arial, Verdana;
 				font-size: 15px;
+				box-shadow:10px 20px 50px 20px #D1D1D1;
 			}
 			#checkInButton:hover
 			{	
 				background-color: #FF9191;
 				color: white;
+				box-shadow: 10px 20px 50px 20px #D1D1D1;
 			}
 			#checkOutButton
 			{	
@@ -170,11 +246,13 @@
 				float: center;
 				font-family: Arial, Verdana;
 				font-size: 15px;
+				box-shadow: 10px 20px 50px 20px #D1D1D1;
 			}
 			#checkOutButton:hover
 			{	
 				background-color: #4DDB94;
 				color: white;
+				box-shadow: 10px 20px 50px 20px #D1D1D1;
 			}
 
 			#submitButton
@@ -237,33 +315,6 @@
 				width: 305px;
 				font-size: 15px;
 			}
-			
-			.basePanel
-			{        
-			    width:85%;
-			    background-color:#b2b2b2;    
-			}
-			.leftPanel
-			{        
-			    //background-color:#b2b2b2;
-			    width:33.33%;
-			    float:left;
-			    text-align: left;
-			}
-			.middlePanel
-			{        
-			    //background-color:#8e8e8e;
-			    width:33.33%;
-			    float:left;
-			    text-align: left;
-			}
-			.rightPanel
-			{        
-			    //background-color:#b2b2b2;
-			    width:33.33%;
-			    float:left;
-			    text-align: left;
-			}
 			.checkOutResult
 			{        
 			    //background-color: #b2b2b2;
@@ -271,12 +322,19 @@
 			    text-align: left;
 			}
 			
-			
+			.userBaseFramePanel
+			{
+				width: 1200px;
+				margin-left: auto;
+				margin-right: auto;
+			}
 			.userBasePanel
 			{
 				//background-color: #E88CD1;
 				box-shadow: 20px 20px 30px #b2b2b2;
 				border-radius: 30px;
+				margin-left: auto;
+				margin-right: auto;
 				width: 100%;
 				float:left;
 			}
@@ -286,10 +344,10 @@
 				background-color: #A5A5A5;
 				border-top-left-radius: 30px 30px;
 				border-width: 0px;
-				padding: 15px;
-				width: 38%;
-				height:200px;
+				width: 35.05%;
+				height:215px;
 				float:left;
+				padding: 15px 50px 0px 15px; /*top right bottom left*/
 			}
 			.userExtenPanel
 			{
@@ -298,7 +356,7 @@
 				border-top-right-radius: 30px 30px;
 				border-width: 0px;
 				padding: 15px;
-				width: 57%;
+				width: 57.03%;
 				height:200px;
 				float:left;
 			}
@@ -309,7 +367,7 @@
 				border-width: 0px;
 				border-bottom-left-radius: 30px 30px;
 				border-bottom-right-radius: 30px 30px;
-				padding: 15px;
+				padding: 15px 15px 15px 15px; /*top right bottom left*/
 				width: 97.5%;
 				min-height:300px;
 				float:left;
@@ -320,17 +378,7 @@
 				border-radius: 20px;
 			}
 			
-			span
-			{
-				color: red;
-			}
 			
-			#googleMap
-			{
-				width: 1100px;
-				height: 500px;
-				border-radius: 10px;
-			}
 		</style>
 		<script src="http://maps.googleapis.com/maps/api/js"></script>
 		
@@ -339,6 +387,12 @@
 			var map; //need this variable as global to use in multiple functions
 			var userTrvHist; //this is use to hold the original content of the user profile travel history inner html content
 			var avatarToggle = "false";
+			var mainFormPanel; //this variable is use to back up the content of the form panel
+			
+			function mainFormPanelBak ()
+			{
+				mainFormPanel = document.getElementById('mainFormPanel').innerHTML;
+			}
 			
 			function initialize()
 			{
@@ -359,14 +413,25 @@
 				
 			}
 			
-			function focusMarker(long, lat, id, value)
+			function focusMarker(value)
 			{
-				map.panTo(new google.maps.Marker({position: new google.maps.LatLng(long, lat, 0)}).getPosition());
-				updateForm(id, value);
+				var dataArr = value.split("|");
+				if (dataArr[0] === '')
+					return;
+				map.panTo(new google.maps.Marker({position: new google.maps.LatLng(dataArr[0], dataArr[1], 0)}).getPosition());
+								
+				if (dataArr[2] === undefined && dataArr[3] === undefined)
+					return;
+					
+				updateForm(dataArr[2], dataArr[3]);
 			}
 			
 			function updateForm (id, value)
 			{
+				if (value === '')
+					return;
+				
+				document.getElementById('mainFormPanel').innerHTML = mainFormPanel;
 				document.getElementById(id).innerHTML = value;
 				
 				if (document.getElementById('durationLabel').innerHTML !== '' && document.getElementById('startLabel').innerHTML !== '')
@@ -377,6 +442,8 @@
 					var formDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear(); 
 					document.getElementById('returnLabel').innerHTML = formDate;
 				}
+				
+				mainFormPanel = document.getElementById('mainFormPanel').innerHTML;
 			}
 			
 			// Creates easy to use icon
@@ -402,6 +469,8 @@
 				if (avatarToggle === "false")
 				{
 					var string = "<font size = \"3\">" +
+								 "<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
+								 "<a style = \"float:right; color:black\"href=\"logout.php\">Logout    </a><br>" +
 								 "<img id = \"userAvatar\" class = \"userAvatar\" src = 	\"/picsUploads/" + avatar + "\"><br>" +
 								 "<form action = \"uploadFile.php\" method = \"post\" enctype = \"multipart/form-data\">" +
 								 "<input type = \"button\" value = \"Cancel\" onclick = \"changeAvatar('userExtenPanel', '" + avatar + "')\">" +
@@ -413,8 +482,10 @@
 				{
 					
 					var string = "<font size = \"3\">" +
+								 "<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
+								 "<a style = \"float:right; color:black\"href=\"logout.php\">Logout    </a><br>" +
 								 "<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/" + avatar + "\"><br>" +
-								 "<a href = \"javascript: changeAvatar('userExtenPanel', '" + avatar + "');\">Edit</a>" +
+								 "<a style = \"color:black\"href = \"javascript: changeAvatar('userExtenPanel', '" + avatar + "');\">Edit</a>" +
 								 "</font>";
 					avatarToggle = "false";
 				}
@@ -430,7 +501,7 @@
 						 "<input id = \"changePassword\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
 						 "<label>Retype password   </label>" +
 						 "<input id = \"changePassword2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
-						 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>";
+						 "<a style = \"float:right;color:black\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a><a style = \"float:right;color:black\" href = \"javascript: showTrvHist();\">Cancel   </a>";
 						 if (error === 'error')
 						 	string = string + "<br><span style = \"float:right\">Password invalid</span>";
 						string = string + "</div></font>";
@@ -443,7 +514,7 @@
 				var string = "<div style = \"width:47%\"><font size = \"3\">" +
 						 "<label>Enter exact amount in dollars   </label>" +
 						 "<input id = \"payBalance\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>" +
-						 "<a style = \"float:right\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+						 "<a style = \"float:right;color:black\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a><a style = \"float:right;color:black\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
 						 "</font></div>";
 				document.getElementById(id).innerHTML = string;
 			}
@@ -459,7 +530,7 @@
 						 "<label>Zip Code <input name = \"zip\" id = \"zip\" type = \"text\" maxlength = \"5\" class = \"input\" onKeyup = \"isValidChar (this.value, 'zip')\"/><br><br></label>" +
 						 "<label>Phone Number <input name = \"phone\" id = \"phone\" type = \"text\" maxlength = \"10\" class = \"input\" onKeyup = \"isValidChar (this.value, 'phone')\"/><br><br></label>" +
 						 "<label>Email <input name = \"email\" id = \"email\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-						 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+						 "<a style = \"float:right;color:black\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right;color:black\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
 						 "</font></div>";
 												
 				document.getElementById(id).innerHTML = string;
@@ -642,7 +713,9 @@
 			}
 			
 			function checkOut(checkOutStatus)
-			{				
+			{								
+				document.getElementById('mainFormPanel').innerHTML = mainFormPanel;
+				
 				var depart = document.getElementById('departLabel').innerHTML;
 				var arrive = document.getElementById('arrivalLabel').innerHTML;
 				var duration = document.getElementById('durationLabel').innerHTML;
@@ -664,7 +737,7 @@
 						xmlhttp.onreadystatechange = function()
 						{
 							if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-								document.getElementById('rightPanel').innerHTML = xmlhttp.responseText;
+								document.getElementById('mainFormPanel').innerHTML = xmlhttp.responseText;
 						}
 					
 						xmlhttp.open ("post", "checkOut.php", "true");
@@ -672,18 +745,18 @@
 						xmlhttp.send (data);
 					} else
 					{
-						alert("Plane Rental Form Incomplete");
+						document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>Rental form incomplete</span></center>";
 						return;
 					}
 				} else
 				{
-					alert("Something's wrong. Did you already Checkout a Plane?");
+					document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>You already checkout a plane</span></center>";
 					return;
 				}
 			}
 			
 			function checkIn(checkOutStatus, dayVal, feeVal)
-			{	
+			{
 				if (parseInt(checkOutStatus) === 1)
 				{
 					//creating a day value: hours * minutes * seconds * milliseconds
@@ -716,14 +789,14 @@
 					xmlhttp.onreadystatechange = function()
 					{
 						if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-							document.getElementById('rightPanel').innerHTML = xmlhttp.responseText;
+							document.getElementById('mainFormPanel').innerHTML = xmlhttp.responseText;
 					}
 					
 					xmlhttp.open ("post", "checkIn.php", "true");
 					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 					xmlhttp.send (data);
 				} else
-					alert ("You don't have any planes checked out");
+					document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>You currently dont have any planes checked out</span></center>";
 				return;
 			}
 			
@@ -741,6 +814,4 @@
   		</script>
 	</head>
 	<body>
-		<div>
-		<font size = "4">
-		<pre>
+	<pre>
