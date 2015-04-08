@@ -26,8 +26,15 @@
 	$sql = "UPDATE `customer_profile` SET `checkOutStatus` = '0', `plane` = '', `balance` = ".$_SESSION['balance']." WHERE `email` = '".$email."'";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
+	$sql = "select * from `planes` WHERE `model` = '".$_SESSION['model']."'";
+	$result = $link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);	
+	while ($row = mysql_fetch_array($result))
+	{
+		$_SESSION['currentLocation'] = $row ['returnTo'];
+	}
+	
 	//mark the plane as check in, and remove the them from the plane record
-	$sql = "UPDATE `planes` SET `status` = '1', `client` = '', `leaseFrom` = '', `returnTo` = '', `returnDate` = '0000-00-00' WHERE `model` = '".$_SESSION['model']."'";
+	$sql = "UPDATE `planes` SET `status` = '1', `client` = '', `leaseFrom` = '', `currentLocation` = '".$_SESSION['currentLocation']."', `returnTo` = '', `returnDate` = '0000-00-00' WHERE `model` = '".$_SESSION['model']."'";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);	
 	
 	print ("<META http-equiv = \"REFRESH\" content = \"0; checkInResult.php\">");
