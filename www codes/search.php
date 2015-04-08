@@ -88,7 +88,7 @@ function createAirportEntry($airport, $long, $lat)
 	//--------- Airport entries -------------
 	// Gets search args by splitting string by space character
 	if(isset($_GET["query"]))
-		$input = $_GET["query"];
+		$input = strtoupper($_GET["query"]);
 	else
 		$input = "";
 	$args = explode(" ", $input);
@@ -128,9 +128,9 @@ function createAirportEntry($airport, $long, $lat)
 
 				// Store airport into array if either it's city or state matches param, and the airport is not already included
 				$split = explode(", ", $port->airport);
-				$name = $split[0];
-				$city = $split[1];
-				$state = $split[2];
+				$name = strtoupper($split[0]);
+				$city = strtoupper($split[1]);
+				$state = strtoupper($split[2]);
 				$res = strpos($name, $input);
 				if($res === false)
 				{
