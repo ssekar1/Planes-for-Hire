@@ -1,7 +1,11 @@
-var map; //need this variable as global to use in multiple functions
-var userTrvHist; //this is use to hold the original content of the user profile travel history inner html content
-var avatarToggle = "false";
-var mainFormPanel; //this variable is use to back up the content of the form panel
+// Global variables
+var map; 						//need this variable as global to use in multiple functions
+var userTrvHist; 				//this is use to hold the original content of the user profile travel history inner html content
+var avatarToggle = "false";		// ???
+var mainFormPanel; 				//this variable is use to back up the content of the form panel
+var srcDestToggle = -1;			// Toggle that alternates between -1 and 1.  -1 meaning src, 1 meaning destination.
+var src = dest = null;			// Two points storing long and lat coords
+var flightPath = null;			// Object representing a Google Maps path graphics object
 
 function saveTrvHist () {userTrvHist = document.getElementById('userTrvHistPanel').innerHTML;}
 function showTrvHist () {document.getElementById('userTrvHistPanel').innerHTML = userTrvHist;}
@@ -12,18 +16,13 @@ function checkIn(checkOutStatus, dayVal, feeVal)
 {
 	if (parseInt(checkOutStatus) === 1)
 	{
-		//creating a day value: hours * minutes * seconds * milliseconds
-		var oneDay = 24*60*60*1000;
-		//creating the return date object
-		var msec = Date.parse(dayVal);
+		var oneDay = 24*60*60*1000;															// creating a day value: hours * minutes * seconds * milliseconds
+		var msec = Date.parse(dayVal);														// creating the return date object
 		var returnDate = new Date(msec);
 		returnDate.setDate(returnDate.getDate() + 1);
-		//creating the current date object
-		var currDate = new Date();
-		//getting the difference of the two dates
-		var diffDays = Math.round((currDate.getTime() - returnDate.getTime())/(oneDay));
-		//determining the late ammount
-		var feeOwe = diffDays * feeVal;
+		var currDate = new Date();															// creating the current date object
+		var diffDays = Math.round((currDate.getTime() - returnDate.getTime())/(oneDay));	// getting the difference of the two dates
+		var feeOwe = diffDays * feeVal;														// determining the late ammount
 					
 		//ignoring negative values
 		if (diffDays < 0)
@@ -335,15 +334,42 @@ function changeAvatar (id, avatar)
 // Creates easy to use icon
 function createMarker(name, long, lat)
 {
+	// Generates marker
 	var img = "resources/images/pin.png";
-				var marker = new google.maps.Marker
-				({
-      				position: new google.maps.LatLng(long, lat, 0),
-     				map: map,
-     			 	title: name,
-					icon: img
-  				});
-				return marker;
+	var marker = new google.maps.Marker
+	({
+      	position: new google.maps.LatLng(long, lat, 0),
+     	map: map,
+     	title: name,
+		icon: img
+  	});
+	
+	// Gives marker onclick ocde
+	google.maps.event.addListener(marker, 'click', function()
+	{		
+		// If in src state, alter src
+		if(srcDestToggle == -1)
+		{
+			// Inputs data into select field
+			var elem = document.getElementById("departingAirport");
+			elem.value = "" + long + "|" + lat + "|departLabel|" + name;
+			elem.onchange();
+			//focusMarker("" + long + "|" + lat + "|departLabel|" + name);
+		}
+
+		// Otherwise, alter dest
+		else
+		{
+			elem = document.getElementById("arivalAirport");
+			elem.value = "" + long + "|" + lat + "|arrivalLabel|" + name;
+			elem.onchange();
+			//focusMarker("" + long + "|" + lat + "|arrivalLabel|" + name);
+		}
+
+		// Toggles between src and dest state
+		srcDestToggle *= -1;
+	});
+	return marker;
 }
 			
 function updateForm (id, value)
@@ -376,25 +402,15 @@ function updateForm (id, value)
 		xmlhttp.onreadystatechange = function()
 		{
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			{
 				//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
 				document.getElementById('planeSelect').innerHTML = xmlhttp.responseText; //for debug
+			}
 		}
 		
 		xmlhttp.open ("post", "populatePlaneOption.php", "true");
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send ("airport=" + value);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	}
 	/*====================//=========================*/
 	
@@ -402,15 +418,65 @@ function updateForm (id, value)
 
 function focusMarker(value)
 {
+	// Splits data into array
 	var dataArr = value.split("|");
 	if (dataArr[0] === '')
 		return;
-	map.panTo(new google.maps.Marker({position: new google.maps.LatLng(dataArr[0], dataArr[1], 0)}).getPosition());
+	
+	// Extracts values from delimited string
+	var lat = Number(dataArr[0]);
+	var lng = Number(dataArr[1]);
+	var latlng = new google.maps.Marker({position: new google.maps.LatLng(lat, lng, 0)});
+	var label = dataArr[2];
+	var airport = dataArr[3];
 					
-	if (dataArr[2] === undefined && dataArr[3] === undefined)
+	// Breaks out of function early if input was bad
+	if (label === undefined && airport === undefined)
 		return;
-		
+	
+	// Pans to location specified
+	map.panTo(latlng.getPosition());
+	
+	// Assigns either src or dest global position objects
+	if(label == "departLabel")
+		src = new google.maps.LatLng(lat, lng);
+	else
+		dest = new google.maps.LatLng(lat, lng);
+	
+	// If both source and destination points are defined...
+	if(src && dest)
+	{
+		// Draw a line between them!
+		drawPath([src, dest]);
+	}
+	
+	// Update the form
 	updateForm(dataArr[2], dataArr[3]);
+}
+
+/*
+* Draws a path on the map consisting of the points given
+*/
+function drawPath(lngLatPath)
+{
+	// Removes path from map, if it exists
+	if(flightPath)
+	{
+		flightPath.setMap(null);
+	}
+
+	// Creates path object
+	flightPath = new google.maps.Polyline
+	({
+		path: lngLatPath,
+			geodesic: true,
+			strokeColor: '#FF0000',
+			strokeOpacity: 1.0,
+			strokeWeight: 2
+	});
+
+	// Applies path to map
+	flightPath.setMap(map);
 }
 
 function mainFormPanelBak ()
