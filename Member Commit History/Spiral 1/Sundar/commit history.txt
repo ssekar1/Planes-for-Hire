@@ -34,11 +34,7 @@ I along with Roberto wrote most of the use cases. I wrote the functional require
 
 
 
-----------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-Sprial 2
 
 
 
