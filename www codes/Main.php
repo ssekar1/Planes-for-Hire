@@ -1,34 +1,45 @@
 <?php
 /*
-  This is the main page
-*/
+ * This is the Main.php page. This is the main action page that directs to other subpages within the webapp.
+ * It is also here that the user can login to fill out a plane rental form to check out a plane
+ */
 	$debug = false;
-	session_start();// Starting Session
-	include ("headHTML.html");
+	/* Starting Session, when the user logs in, the login.php creates a session for them
+	 * startng a session here will carry over whatever session was created for them from the login.php
+	 */
+	session_start();
+	include ("headHTML.html"); //the headHTML is invoke here, because planesforHire.js and planesForHire.css was invoke in the headHTML, it is included here as well
 	
+	/*
+	 * checks if the user is loged in by checking the session variable. if they're login, populate the local variable for use
+	 */
 	if (isset($_SESSION['loginId']))
 	{
+		/*		 
+		 * this query retrieves the user information to determine their name when they're loged in,
+		 * and whether they checkout a plane, and if they're late and how money they owe
+		 */
 		$query = $link->executeQuery("select * from `customer_profile` where `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
 		
 		if ($query !== false)
 			while ($row = mysql_fetch_array($query))
 			{
-				$loginUser = $row['firstName'];
-				$userEmail = $row['email'];
-				$checkOutStatus = $row['checkOutStatus'];
+				$loginUser = $row['firstName']; //in the main, the $loginUser variable is use for greeting the user by their name
+				$userEmail = $row['email']; //this variable is use for pulling their travel history record
+				$checkOutStatus = $row['checkOutStatus']; //this variable is use to determine if they'd check out a plane, and if they do, we don't let them check out another one
 				
-				if ($checkOutStatus == 1)
+				if ($checkOutStatus == 1) //if they did check out a plane, then get the model they're currently holding
 					$modelRented = $row['plane'];
 			}
 		
-		if (isset ($modelRented))
+		if (isset ($modelRented)) //if they did check out a plane, then we check in the plane record to see when it was suppose to be return
 		{
-			$query = $link->executeQuery("select * from `planes` where `model` = '".$modelRented."'", $_SERVER["SCRIPT_NAME"]);
+			$query = $link->executeQuery("select * from `planes` where `model` = '".$modelRented."'", $_SERVER["SCRIPT_NAME"]); //perform query to retrieve the particular plane record 
 			while ($row = mysql_fetch_array($query))
-				$returnDate = $row ['returnDate'];
-			$query = $link->executeQuery("select * from `admin_setting`", $_SERVER["SCRIPT_NAME"]);
+				$returnDate = $row ['returnDate']; //we are particularly interested only in the return date of this plane
+			$query = $link->executeQuery("select * from `admin_setting`", $_SERVER["SCRIPT_NAME"]); //perform query get the per-day-late-fee that is defined from the 
 			while ($row = mysql_fetch_array($query))
-				$lateFee = $row ['lateFee'];
+				$lateFee = $row ['lateFee']; //initialize the late fee variable
 		}
 		
 		if ($_SESSION['loginId'] == "admin")
