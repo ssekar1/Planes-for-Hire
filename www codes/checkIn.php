@@ -38,7 +38,6 @@
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);	
 	
 	print ("<META http-equiv = \"REFRESH\" content = \"0; checkInResult.php\">");
-	
 ?>
 
 

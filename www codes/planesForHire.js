@@ -1,37 +1,40 @@
 // Global variables
 var map; 						//need this variable as global to use in multiple functions
 var userTrvHist; 				//this is use to hold the original content of the user profile travel history inner html content
-var avatarToggle = "false";		// ???
+var avatarToggle = "false";		//toggle between the link and the upload buttons, when the user clink on link to change avatar, upload buttons appear, when they click cancel button, link appear
 var mainFormPanel; 				//this variable is use to back up the content of the form panel
-var srcDestToggle = -1;			// Toggle that alternates between -1 and 1.  -1 meaning src, 1 meaning destination.
-var src = dest = null;			// Two points storing long and lat coords
-var flightPath = null;			// Object representing a Google Maps path graphics object
+var srcDestToggle = -1;			//Toggle that alternates between -1 and 1.  -1 meaning src, 1 meaning destination.
+var src = dest = null;			//Two points storing long and lat coords
+var flightPath = null;			//Object representing a Google Maps path graphics object
 
 function saveTrvHist () {userTrvHist = document.getElementById('userTrvHistPanel').innerHTML;}
 function showTrvHist () {document.getElementById('userTrvHistPanel').innerHTML = userTrvHist;}
 
-$(function() {$("#datePicker").datepicker();});
+$(function() {$("#datePicker").datepicker();}); //this is the jQuery function to perform the date picker selection for the checkout date, makes inputing date much faster 
 
+/*
+ *this checkin function performs any late fees calculation and then asynchronously calls the backend server to perform the any
+ *database functions for the checkin process, method of asynchronous calls uses traditional javascript ajax with post  
+ */
 function checkIn(checkOutStatus, dayVal, feeVal)
 {
 	if (parseInt(checkOutStatus) === 1)
 	{
-		var oneDay = 24*60*60*1000;															// creating a day value: hours * minutes * seconds * milliseconds
-		var msec = Date.parse(dayVal);														// creating the return date object
-		var returnDate = new Date(msec);
-		returnDate.setDate(returnDate.getDate() + 1);
-		var currDate = new Date();															// creating the current date object
-		var diffDays = Math.round((currDate.getTime() - returnDate.getTime())/(oneDay));	// getting the difference of the two dates
-		var feeOwe = diffDays * feeVal;														// determining the late ammount
+		var oneDay = 24*60*60*1000;															//creating a day value: hours * minutes * seconds * milliseconds
+		var msec = Date.parse(dayVal);														//creating the return date object
+		var returnDate = new Date(msec);													//creating new return date object using the created time object 
+		returnDate.setDate(returnDate.getDate() + 1);										//not sure what I did here, but it worked, so leave it alone  
+		var currDate = new Date();															//creating the current date object
+		var diffDays = Math.round((currDate.getTime() - returnDate.getTime())/(oneDay));	//getting the difference of the two dates
+		var feeOwe = diffDays * feeVal;														//determining the late ammount
 					
-		//ignoring negative values
-		if (diffDays < 0)
+		if (diffDays < 0) //we ignore any negative values
 		{
 			diffDays = 0;
 			feeOwe = 0;
 		}
 					
-		var data = "diffDays="+diffDays+"&feeOwe="+feeOwe;
+		var data = "diffDays="+diffDays+"&feeOwe="+feeOwe; //the data to pass to the backend server are the days late and how much it cost per day
 		
 		if (window.XMLHttpRequest)
 			xmlhttp = new XMLHttpRequest();
@@ -41,32 +44,37 @@ function checkIn(checkOutStatus, dayVal, feeVal)
 		xmlhttp.onreadystatechange = function()
 		{
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-				document.getElementById('mainFormPanel').innerHTML = xmlhttp.responseText;
+				document.getElementById('mainFormPanel').innerHTML = xmlhttp.responseText; //the return content here is simply a redirect to the checkinResult.php, check last line of checkIn.php
 		}
 		
-		xmlhttp.open ("post", "checkIn.php", "true");
+		xmlhttp.open ("post", "checkIn.php", "true"); //ajax communicates with checkIn.php server script to perform database operation for checkin process
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.send (data);
 	} else
-		document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>You currently dont have any planes checked out</span></center>";
+		document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>You currently dont have any planes checked out</span></center>"; //if they don't have any planes checked out
+		//change the content of the plane rental form and display a message telling them that they don't have any planes checked out
 	return;
 }
-			
+
+/*
+ *this checkOut function retrieves all values collected from the plane rental forms and assigns it to local variable for checkout processing
+ *this function uses asynchronous communication with backend server to perform all necessary check out routine functions
+ */
 function checkOut(checkOutStatus)
 {								
-	document.getElementById('mainFormPanel').innerHTML = mainFormPanel;
+	document.getElementById('mainFormPanel').innerHTML = mainFormPanel; //first, restore whatever content that was originally belong to the plane rental form panel
 	
-	var depart = document.getElementById('departLabel').innerHTML;
-	var arrive = document.getElementById('arrivalLabel').innerHTML;
-	var duration = document.getElementById('durationLabel').innerHTML;
+	var depart = document.getElementById('departLabel').innerHTML; //collect all necessary checkout data from the plane rental form
+	var arrive = document.getElementById('arrivalLabel').innerHTML; //if the data content is insufficient for checkout, we will display an error message
+	var duration = document.getElementById('durationLabel').innerHTML; //indicating the chck out form is incomplete
 	var startDate = document.getElementById('startLabel').innerHTML;
 	var returnDate = document.getElementById('returnLabel').innerHTML;
 	var model = document.getElementById('planeLabel').innerHTML;
 	
-	if (parseInt(checkOutStatus) === 0)
-	{
-		if (depart !== '' && arrive !== '' && duration !== '' && startDate !== '' && returnDate !== '' && model !== '')
-		{
+	if (parseInt(checkOutStatus) === 0) //second, we want to determine is they had already checkout a plane, and if so 
+	{//change the content of the plane rental form and display a message telling them that they had already checked out a plane
+		if (depart !== '' && arrive !== '' && duration !== '' && startDate !== '' && returnDate !== '' && model !== '') //verify all the collected data are not empty 
+		{	//combine all collected data into a single string of data
 			var data = "depart="+depart+"&arrive="+arrive+"&duration="+duration+"&startDate="+startDate+"&returnDate="+returnDate+"&model="+model;
 			
 			if (window.XMLHttpRequest)
@@ -77,25 +85,30 @@ function checkOut(checkOutStatus)
 			xmlhttp.onreadystatechange = function()
 			{
 				if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-					document.getElementById('mainFormPanel').innerHTML = xmlhttp.responseText;
+					document.getElementById('mainFormPanel').innerHTML = xmlhttp.responseText; //the content of this response is the data that was selected by the user,
+					//and was just pushed into the database, it changes the content of the plane rental form to show this result. its content are render from the
+					//checkOut.php server script 
 			}
 		
-			xmlhttp.open ("post", "checkOut.php", "true");
+			xmlhttp.open ("post", "checkOut.php", "true"); //ajax communicates with checkOut.php server script to perform database operation for checkout process 
 			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 			xmlhttp.send (data);
 		} else
-		{
+		{	//error message telling user that rental form is incomplete
 			document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>Rental form incomplete</span></center>";
 			return;
 		}
 	} else
-	{
+	{	//error message telling user that they currently have a lane checkout
 		document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>You already checkout a plane</span></center>";
 		return;
 	}
 }
 
-/*this java script function verifies the phone number entered are only digits, if the user enters a non digits character it will be remove*/
+/*
+ *this function verifies if any digit field content entered are suppose to be digits, if the user enters a non digit character it will be remove
+ *the parameters for this function are the content of the text field and the location id of where that text was entered
+ */
 function isValidChar (char, id)
 {
 		var txt = char;
@@ -116,16 +129,16 @@ function isValidChar (char, id)
 		}
 		if (!found)
 		{
-			if (id == 'zip')
-				document.getElementById('zip').value = char.substring(0, char.length -1);
-			if (id == 'phone')
-				document.getElementById('phone').value = char.substring(0, char.length -1);
+			document.getElementById(id).value = char.substring(0, char.length -1);
 			break;
 		}
 	}
 }
 			
-//this function performs a check to verify if all required fields are entered before submitting
+/*
+ *this function is used by the registration process to check if all required fields are entered before submitting
+ *if a field is not entered, then we will alert a message to indicate the required content 
+ */
 function confirmEntry ()
 {
 	if (document.getElementById ('firstName').value != '')
