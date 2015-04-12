@@ -83,6 +83,4 @@
 	print ("</div>");
 	print ("<script>saveTrvHist();</script>");
 	include ("tailHTML.html");
-	
-
 ?>

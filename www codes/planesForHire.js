@@ -173,15 +173,21 @@ function confirmEntry ()
 	else
 		alert ('You need to enter your first name');				
 }
-			
+
+/*
+ *this function is use to update user info, it is a subroutine call to provide functionality for user profile page for the user edit link, pay link, 
+ *and clear history link each of the link passes an intended condition that is required to perform the specific task. these intent task are match with 
+ *the condition set in the function's logic that initialize the necessary data values to be sent over to the server script where it will be process accordingly
+ *though, not every link in the user profile page invoke this function directly   
+ */
 function updateUserInfo(intent)
 {
-	var data = "";				
+	var data = ""; //initializes the data string
 	
-	if (intent === 'clearHist')
-		data = "clearHist=\"clearHist\"";
+	if (intent === 'clearHist') //if clear hist link was chosen, it will sent over a clearHist intent, the data parameter for the ajax are initialize here
+		data = "clearHist=\"clearHist\""; //this function is invoke directly from the link
 	
-	if (intent === 'updatePassword')
+	if (intent === 'updatePassword') //use to update the password
 	{
 		if (document.getElementById('changePassword').value === document.getElementById('changePassword2').value && document.getElementById('changePassword').value !== '')
 			data = data+"password="+document.getElementById('changePassword').value;
@@ -192,10 +198,10 @@ function updateUserInfo(intent)
 		}
 	}
 	
-	if (intent === 'payBalance')
+	if (intent === 'payBalance') //use to pay the balance
 		data = data+"payBalance="+document.getElementById('payBalance').value;
 	
-	if (intent === 'updateUser')
+	if (intent === 'updateUser') //update the user information, data entries are concatenated as a single string, for which ever entries that are available
 	{
 		if (document.getElementById('firstName').value !== '')
 			data = data+"firstName="+document.getElementById('firstName').value;
@@ -243,15 +249,16 @@ function updateUserInfo(intent)
 		}
 	}
 	
-	if (data === "")
+	if (data === "") //if the user click apply without entering in anything, then there are nothing to process 
 	{
-		alert ("All fields were empty, no changes were made");
-		showTrvHist();
-		return;
+		alert ("All fields were empty, no changes were made"); //i hate alert, this need to be change !!!
+		showTrvHist(); //return the travel history to its original state before leaving
+		return; //return to our normal routine
 	}
 	
-	//document.getElementById('userTrvHistPanel').innerHTML = data;
-			
+	//document.getElementById('userTrvHistPanel').innerHTML = data; //this was use for debugging purposes
+	
+	//this is the ajax subroutine
 	if (window.XMLHttpRequest)
 		xmlhttp = new XMLHttpRequest();
 	else
@@ -261,16 +268,20 @@ function updateUserInfo(intent)
 	{
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
 			//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
-			document.getElementById('userTrvHistPanel').innerHTML = xmlhttp.responseText; //for debug
+			document.getElementById('userTrvHistPanel').innerHTML = xmlhttp.responseText; //by reaping the response text we can be sure that the server script finishes the procedure properly 
 	}
 		
-	xmlhttp.open ("post", "updateUserProfile.php", "true");
+	xmlhttp.open ("post", "updateUserProfile.php", "true"); //the updateUserProfile.php is the script that handles the server side subroutine for these functions
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send (data);
 }
-			
+
+/*
+ *this function changes the user information, it is directly invoke from the userProfile page, its functionality is handle by the updateUserInfo function just right above
+ *the content of of this function is simply altering the html content of the userTravHistPanel with the necessary text field items for the user to change their information
+ */			
 function changeUserInfo (id)
-{				
+{	//this entire string is the html content that replaces the content inside the userTravHistPanel
 	var string = "<div style = \"width:37%\"><font size = \"3\">" +
 			 "<label>First Name   <input name = \"firstName\" id = \"firstName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
 			 "<label>Last Name   <input name = \"lastName\" id = \"lastName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
@@ -283,11 +294,15 @@ function changeUserInfo (id)
 			 "<a style = \"float:right;color:black\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right;color:black\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
 			 "</font></div>";
 									
-	document.getElementById(id).innerHTML = string;
+	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
 }
 
+/*
+ *this function changes the user password, it is directly invoke from the userProfile page, its functionality is handle by the updateUserInfo function
+ *the content of of this function is simply altering the html content of the userTravHistPanel with the necessary text field items for the user to change their password
+ */	
 function updatePassword (id, error)
-{
+{	//this entire string is the html content that replaces the content inside the userTravHistPanel
 	var string = "<div style = \"width:43%\"><font size = \"3\">" +
 			 "<label>Enter new password   </label>" +
 			 "<input id = \"changePassword\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
@@ -298,27 +313,35 @@ function updatePassword (id, error)
 				string = string + "<br><span style = \"float:right\">Password invalid</span>";
 			string = string + "</div></font>";
 
-	document.getElementById(id).innerHTML = string;
+	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
 }
 
+/*
+ *this function allows the user to pay their balance, it is directly invoke from the userProfile page, its functionality is handle by the updateUserInfo function
+ *the content of of this function is simply altering the html content of the userTravHistPanel with the necessary text field items to allow the user to pay their balance
+ */	
 function payBalance (id)
-{
+{	//this entire string is the html content that replaces the content inside the userTravHistPanel
 	var string = "<div style = \"width:47%\"><font size = \"3\">" +
 			 "<label>Enter exact amount in dollars   </label>" +
 			 "<input id = \"payBalance\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>" +
 			 "<a style = \"float:right;color:black\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a><a style = \"float:right;color:black\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
 			 "</font></div>";
-	document.getElementById(id).innerHTML = string;
+	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
 }
-			
+
+/*
+ *this function allows the user to upload a picture to change their profile picture, it is directly invoke from the userProfile page
+ *the content of of this function is simply altering the html content of the userExtenPanel with the necessary button items to allow the user to upload and change their profile picture
+ */				
 function changeAvatar (id, avatar)
 {
 	//complimentary of http://blog.teamtreehouse.com/uploading-files-ajax
 	//http://codular.com/javascript-ajax-file-upload-with-progress
 	//http://www.w3schools.com/php/php_file_upload.asp
 	
-	if (avatarToggle === "false")
-	{
+	if (avatarToggle === "false") //this if else logic is use to toggle between the link and the button, the avatarToggle is a global variable and initially set to false to allow the function to switch to the buttons mode
+	{	//this entire string is the html content that replaces the content inside the userExtenPanel
 		var string = "<font size = \"3\">" +
 					 "<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
 					 "<a style = \"float:right; color:black\"href=\"logout.php\">Logout    </a><br>" +
@@ -329,9 +352,8 @@ function changeAvatar (id, avatar)
 					 "<input type = \"file\" name = \"fileToUpload\" id = \"fileToUpload\"><br>" +
 					 "</form></font>";
 		avatarToggle = "true";
-	} else
-	{
-		
+	} else //switch back to the link mode
+	{	//this entire string is the html content that replaces the content inside the userExtenPanel
 		var string = "<font size = \"3\">" +
 					 "<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
 					 "<a style = \"float:right; color:black\"href=\"logout.php\">Logout    </a><br>" +
@@ -341,10 +363,12 @@ function changeAvatar (id, avatar)
 		avatarToggle = "false";
 	}
 	
-	document.getElementById(id).innerHTML = string;	
+	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userExtenPanel
 }
 
-// Creates easy to use icon
+/*
+ *this function creates the airport markers and paces it on the map
+ */
 function createMarker(name, long, lat)
 {
 	// Generates marker
@@ -356,38 +380,37 @@ function createMarker(name, long, lat)
      	title: name,
 		icon: img
   	});
-	
-	// Gives marker onclick ocde
-	google.maps.event.addListener(marker, 'click', function()
-	{		
-		// If in src state, alter src
-		if(srcDestToggle == -1)
-		{
-			// Inputs data into select field
+  	
+	google.maps.event.addListener(marker, 'click', function() // Gives marker onclick code
+	{
+		if(srcDestToggle == -1) // If in src state, alter src
+		{	// Inputs data into select field
 			var elem = document.getElementById("departingAirport");
 			elem.value = "" + long + "|" + lat + "|departLabel|" + name;
 			elem.onchange();
 			//focusMarker("" + long + "|" + lat + "|departLabel|" + name);
 		}
-
-		// Otherwise, alter dest
-		else
+		else // Otherwise, alter dest
 		{
 			elem = document.getElementById("arivalAirport");
 			elem.value = "" + long + "|" + lat + "|arrivalLabel|" + name;
 			elem.onchange();
 			//focusMarker("" + long + "|" + lat + "|arrivalLabel|" + name);
 		}
-
-		// Toggles between src and dest state
-		srcDestToggle *= -1;
+		
+		srcDestToggle *= -1; // Toggles between src and dest state
 	});
 	return marker;
 }
-			
+
+/*
+ *this function update the content of the plane rental form panel. when the user selects and item in the main page to rent a plane
+ *content of this panel are populated with their selections to provide feedback on what they pick
+ *the parameter accepted here are the id of where on the form the content of the value of the selection is to be place
+ */
 function updateForm (id, value)
 {
-	if (value === '')
+	if (value === '') //if there value is empty, then we don't update the form
 		return;
 	
 	document.getElementById('mainFormPanel').innerHTML = mainFormPanel;
