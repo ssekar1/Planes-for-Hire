@@ -1,14 +1,23 @@
 System Design Document (SDD)
 	
+I worked on the majority of the document. I created the diagram for 2.2 Decomposition Description and added few description for section 3.2 File Descriptions. Me, andrew, roberto worked on the table after the requirement matrix. 
 
+----------------------------------------------------------------------------------
 User Interface Design (UID)
 	
+Me and roberto added most of the diagrams and pictures. I added figure 1.1. I added few lines for the 3.2.1 Logging In/ Registering description. I wrote all the desciption for 3.2.4 Administrator. Me and Andrew worked on section 4 (data validation).
 
+----------------------------------------------------------------------------------
 Testing Report (TR)
-	
 
+I did most of the uses case tests. I added the description for section 2( testing process). Me, Andrew, Roberto worked on the testing results. I added most of the pictures and decriptions. 	
+
+----------------------------------------------------------------------------------
 Code Inspection Report (CIR)
-	
 
+Andrew, Roberto, Sundar, Tam worked on this documents. 	Tam and Me worked on section 1.3 Coding and Commenting Conventions. I worked on ection 1.4 Defect Checklist. i created section Table 1. Defect Categories. Me, tam, andrew and roberto worked on Table 2. Defect Checklist, 3. Modules Inspected, 4. Defects. I worked on the description for 3. Modules Inspected, 2.2 Impressions of the Process and 1.4 Defect Checklist
+
+----------------------------------------------------------------------------------
 System Requirements Document (SRS)
-	
+
+I typed most of the stuff for the requirements. I did section 3 (use case tests.) Andrew, Me and roberto worked on section 4 (Goals). I also added open issues table.	
