@@ -1,15 +1,15 @@
 System Design Document (SDD)
 	
-hi
+Nope
 
 User Interface Design (UID)
-	
+Nope	
 
 Testing Report (TR)
-	
+I tested 2 of the user cases, and working on to implement the profife user case. 	
 
 Code Inspection Report (CIR)
-	
+I contributed on the inspection code document, section 1.4,2.2, 2.3, 3  	
 
 System Requirements Document (SRS)
-	
+nope	
