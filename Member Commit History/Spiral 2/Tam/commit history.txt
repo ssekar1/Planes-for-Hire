@@ -5,10 +5,11 @@ User Interface Design (UID)
 	
 
 Testing Report (TR)
-	
+Tested all implemented use cases
 
 Code Inspection Report (CIR)
-	
+Work with Andrew Sundar and Roberto in describing error defects, code defects, describe what each file does, describe impression of
+code implementation and routine experience    
 
 System Requirements Document (SRS)
 	
