@@ -5,4 +5,4 @@ All of our documents (SRS, CIR, etc) are located in the documents directory. The
 
 You may find our commit history in the Member commit history folder inside each of our named directories.  IE: Member commit history/Sprial2/Robert/commit history.txt
 
-The Codes are located user the folder named wwwcodes directory.
+The Codes are located under the folder named wwwcodes directory.
