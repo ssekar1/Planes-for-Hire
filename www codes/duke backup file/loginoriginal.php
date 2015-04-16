@@ -28,26 +28,33 @@
 			else
 				$query = $link->executeQuery("select * from `customer_profile` where email = '".$loginId."'", $_SERVER["SCRIPT_NAME"]);
 			$rows = mysql_num_rows($query);
-			
-			
+			/*$cost = 10;
+			$number = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.'); // will create a random numbers
+			$number = sprintf("$2a$%02d$", $cost) . $number;
+			*/
 			if ($rows == 1)
-			{							
+			{
 				while($row = mysql_fetch_array($query))	// retrieve the encrypt password
-					$_SESSION ['key'] = $row ['password']; // define the encrypted password									
-					if(password_verify($password,$_SESSION['key'])) // compare the user's pass with the encrypted pass
+					if(hash_equals($row['password']->encryptPassword , crypt($password, $row['password']->encryptPassword) ))  // compare 2 passwords
+					//if($row['password'] == crypt($_POST ['password'], $number) )
 					{
-						$_SESSION['loginId'] = $loginId; // if it true do Initializing Session
+						$error = " test Username or Password is invalid";
+						$_SESSION['loginId'] = $loginId; // Initializing Session
 					}
-					else
-						$error = "Username or Password is invalid";
 			}
 				else
 				{
-					
+					$error = " test1 Username or Password is invalid";
 					$error = "Username or Password is invalid";
 				}
 		}
-					
+			else
+			{
+				$error = " test2 Username or Password is invalid";
+				$error = "Username or Password is invalid";
+			}
+			//mysql_close($connection); // Closing connection
+		
 
 	if(isset($_SESSION['loginId']) && $_SESSION['loginId'] == "admin") //redirect to main page if login successful
 		print ("<META http-equiv = \"REFRESH\" content = \"0; private/admin.php\">");

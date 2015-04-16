@@ -19,14 +19,27 @@
 	else
 		$_SESSION ['avatar'] = $_POST ['avatar'];
 	$_SESSION ['email'] = $_POST ['email'];
-	$_SESSION ['password'] = $_POST ['password'];
+	//$_SESSION ['password'] = $_POST ['password'];
+	// ******************************************
+	// encrypt the password function_exists
+	//*******************************************
+	$cost = 10; // the bigger the cost the better the password wil be after hashed
+	$number = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.'); // will create a random numbers
+	$number = sprintf("$2a$%02d$", $cost) . $number; // prefix the password for the compare log in later
+	$_SESSION ['encryptPassword'] = crypt($_POST ['password'], $number); // hash the password
 	$_SESSION ['dateStamp'] = date('Y-m-d, H:i:s', time());
 	
-//===inserting new user into customer_profile table
+	//===inserting new user into customer_profile table
+	$sql = "INSERT INTO `customer_profile`(`firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `regDate`)
+		VALUES ('".$_SESSION ['firstName']."', '".$_SESSION ['lastName']."', '".$_SESSION ['street']."', '".$_SESSION ['city']."', '".$_SESSION ['state']."','".$_SESSION ['zip']."', '".$_SESSION ['avatar']."', '".$_SESSION ['email']."', '".$_SESSION ['phone']."', '".$_SESSION ['encryptPassword']."', '".$_SESSION ['dateStamp']."')";
+	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+
+	
+/*//===inserting new user into customer_profile table
 	$sql = "INSERT INTO `customer_profile`(`firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `regDate`)
 		VALUES ('".$_SESSION ['firstName']."', '".$_SESSION ['lastName']."', '".$_SESSION ['street']."', '".$_SESSION ['city']."', '".$_SESSION ['state']."','".$_SESSION ['zip']."', '".$_SESSION ['avatar']."', '".$_SESSION ['email']."', '".$_SESSION ['phone']."', '".$_SESSION ['password']."', '".$_SESSION ['dateStamp']."')";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-
+*/
 //===creating new travel history table for the new user, these tables are created dynamically for each new user
 	$sql = "CREATE TABLE `".$_SESSION ['email']."` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY, `origAirport` varchar(90) NULL, `origLong` double signed NULL, `origLat` double signed NULL, `destAirport` varchar(90) NULL, `destLong` double signed NULL, `destLat` double signed NULL, `dateTravel` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `leaseModel` varchar(90) NULL, `lateFee` double NULL)";
     $link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
