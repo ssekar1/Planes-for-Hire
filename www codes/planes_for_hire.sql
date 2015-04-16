@@ -2,8 +2,8 @@
 -- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Apr 05, 2015 at 10:03 PM
+-- Host: 127.0.0.1
+-- Generation Time: Apr 16, 2015 at 05:28 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -111,12 +111,12 @@ CREATE TABLE IF NOT EXISTS `customer_profile` (
   `avatar` text,
   `email` varchar(30) NOT NULL,
   `phone` varchar(11) NOT NULL,
-  `password` varchar(30) DEFAULT NULL,
+  `password` text,
   `checkOutStatus` int(1) unsigned NOT NULL DEFAULT '0',
   `plane` varchar(30) DEFAULT NULL,
   `regDate` datetime NOT NULL,
   `balance` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customer_profile`
@@ -124,7 +124,52 @@ CREATE TABLE IF NOT EXISTS `customer_profile` (
 
 INSERT INTO `customer_profile` (`id`, `firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `checkOutStatus`, `plane`, `regDate`, `balance`) VALUES
 (52, 'Sundar', 'Sekar', 'UMBC Hilltop', 'Baltimore', 'MD', '21526', 'none specify', 'ssekar1@umbc.edu', '1234567890', 'qwert12345', 0, '', '2015-03-28 17:37:50', 0),
-(55, 'Tam', 'Tran', '1000 Hilltop Circle', 'Baltimore', 'MD', '21250', 'default2.png', 'tamtran1@umbc.edu', '4104551000', 'test', 1, 'Cessna 303 Crusader', '2015-04-04 19:58:06', 42);
+(55, 'Tam', 'Tran', '1000 Hilltop Circle', 'Baltimore', 'MD', '21250', 'default2.png', 'tamtran1@umbc.edu', '4104551000', 'test', 1, 'Cessna 303 Crusader', '2015-04-04 19:58:06', 42),
+(61, 'duke', 'nguyen', '2610 hughes rd', 'adelphi', 'md', '20783', 'default.jpg', 'nguyenduvn200@gmail.com', '443443443', '123456', 0, NULL, '2015-04-10 06:31:19', 0),
+(62, 'duek', 'duke', 'duke', 'dke', 'dk', '89989', 'default.jpg', '88@gmail.com', '88888888', 'zxcvbn', 0, NULL, '2015-04-14 06:10:57', 0),
+(63, 'b', 'b', 'b', 'b', 'b', '99999', 'default.jpg', 'b@', '99999999', '$2a$10$OBSW20ULCpVbwx52kt1K0O0aOhknmxMbBLbYlGr53iWOpsNbyVY.6', 0, NULL, '2015-04-14 06:39:34', 0),
+(64, 'c', 'c', 'c', 'c', 'c', '99999', 'default.jpg', 'c@testsamepass', '99999999', '$2a$10$KtPAuZ9XrJxfLmc7wAC8ueyrBXmAZ5reS6AhqPmhhjOyy1Jvxmn2G', 0, NULL, '2015-04-14 07:39:43', 0),
+(65, 'd', 'd', 'd', 'd', 'd', '99999', 'default.jpg', 'd@testsamepass', '99999999', '$2a$10$l9s0gR6B.AM4IcE8/KJffOg.1qI9GffQPbMQcZ4bNG9mXjEH1lbWG', 0, NULL, '2015-04-14 07:40:42', 0),
+(66, 'duke', 'duke', 'duke', 'duke', 'du', '99999', 'default.jpg', 'test@gmail', '99999999', '$2a$10$HB8zd4Nn.cbhU7hGPw/r7u1qt.s0sxoxvrN8IlBEREDO0GUS1KVXe', 0, NULL, '2015-04-14 08:21:46', 0),
+(67, 'du', 'nguyen', '2000 hughes rd', 'adelphi', 'md', '20906', 'default.jpg', 'du2@umbc.edu', '443443443', '$2a$10$7xDOv6ZIdRnQBp6jtkpJj.C2pDAIQEa5PcmPd0so2Mzw9SoIfdNHa', 0, NULL, '2015-04-15 23:23:58', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `du2@umbc.edu`
+--
+
+CREATE TABLE IF NOT EXISTS `du2@umbc.edu` (
+`id` int(10) unsigned NOT NULL,
+  `origAirport` varchar(90) DEFAULT NULL,
+  `origLong` double DEFAULT NULL,
+  `origLat` double DEFAULT NULL,
+  `destAirport` varchar(90) DEFAULT NULL,
+  `destLong` double DEFAULT NULL,
+  `destLat` double DEFAULT NULL,
+  `dateTravel` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `leaseModel` varchar(90) DEFAULT NULL,
+  `lateFee` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nguyenduvn200@gmail.com`
+--
+
+CREATE TABLE IF NOT EXISTS `nguyenduvn200@gmail.com` (
+`id` int(10) unsigned NOT NULL,
+  `origAirport` varchar(90) DEFAULT NULL,
+  `origLong` double DEFAULT NULL,
+  `origLat` double DEFAULT NULL,
+  `destAirport` varchar(90) DEFAULT NULL,
+  `destLong` double DEFAULT NULL,
+  `destLat` double DEFAULT NULL,
+  `dateTravel` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `leaseModel` varchar(90) DEFAULT NULL,
+  `lateFee` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -298,6 +343,18 @@ ALTER TABLE `customer_profile`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `du2@umbc.edu`
+--
+ALTER TABLE `du2@umbc.edu`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `nguyenduvn200@gmail.com`
+--
+ALTER TABLE `nguyenduvn200@gmail.com`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `planes`
 --
 ALTER TABLE `planes`
@@ -333,7 +390,17 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=61;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=68;
+--
+-- AUTO_INCREMENT for table `du2@umbc.edu`
+--
+ALTER TABLE `du2@umbc.edu`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `nguyenduvn200@gmail.com`
+--
+ALTER TABLE `nguyenduvn200@gmail.com`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `planes`
 --
