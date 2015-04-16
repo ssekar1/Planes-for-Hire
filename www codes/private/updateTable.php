@@ -38,6 +38,9 @@
 		$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	} else
 	{	//this one change their data records  
+		//if ($field == "city")
+			print ("hello world");
+		
 		$sql = "UPDATE `customer_profile` SET `".$field."` = '".$newVal."' WHERE `email` = '".$email."'";
 		$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	}

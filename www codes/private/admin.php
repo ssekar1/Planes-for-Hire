@@ -69,6 +69,8 @@
 					print("<a href = \"javascript: edit('".$row ['email']."', '', 'delete');\" style = \"color: red\">Delete</a>");
 				}
 				print ("</table><br><br>");
+				
+				print ("<div id = \"test\">testing</div>");
 			}
 			else
 				print ("Database Access Error, Try Again");

