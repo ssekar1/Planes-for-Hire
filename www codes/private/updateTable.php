@@ -38,11 +38,23 @@
 		$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	} else
 	{	//this one change their data records  
-		//if ($field == "city")
-			print ("hello world");
-		
-		$sql = "UPDATE `customer_profile` SET `".$field."` = '".$newVal."' WHERE `email` = '".$email."'";
+		if ($field == "password")
+		{
+			$cost = 10; // the bigger the cost the better the password wil be after hashed
+			$number = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.'); // will create a random numbers
+			$number = sprintf("$2a$%02d$", $cost).$number; // prefix the password for the compare log in later
+			$_SESSION ['encryptPassword'] = crypt($_POST ['newVal'], $number); // hash the password
+			
+			if ($email == "admin")
+				$sql = "UPDATE `admin_setting` SET `".$field."` = '".$_SESSION ['encryptPassword']."' WHERE `id` = '1'";
+			else
+				$sql = "UPDATE `customer_profile` SET `".$field."` = '".$_SESSION ['encryptPassword']."' WHERE `email` = '".$email."'";
+		}
+			else
+				$sql = "UPDATE `customer_profile` SET `".$field."` = '".$newVal."' WHERE `email` = '".$email."'";
 		$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	}
+	
+	print ("<META http-equiv = \"REFRESH\" content = \"0; admin.php\">");
 ?>
 

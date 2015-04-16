@@ -120,7 +120,7 @@
 					xmlhttp.onreadystatechange = function()
 					{
 						if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-							document.getElementById('test').innerHTML = xmlhttp.responseText;
+							document.getElementById('xmlRespondFeedback').innerHTML = xmlhttp.responseText;
 					}
 					
 					xmlhttp.open ("post", "updateTable.php", "true");
@@ -129,7 +129,7 @@
 				} else
 					return;
 				
-				window.location.reload();
+				//window.location.reload();
 			}
 			
 		</script>

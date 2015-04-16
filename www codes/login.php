@@ -24,28 +24,21 @@
 			
 			//lookup database for user
 			if ($loginId == "admin")
-				$query = $link->executeQuery("select * from `admin_setting` where `password` = '".$password."'", $_SERVER["SCRIPT_NAME"]);
+				$query = $link->executeQuery("select * from `admin_setting`", $_SERVER["SCRIPT_NAME"]);
 			else
 				$query = $link->executeQuery("select * from `customer_profile` where email = '".$loginId."'", $_SERVER["SCRIPT_NAME"]);
 			$rows = mysql_num_rows($query);
 				
 			if ($rows == 1)
-			{							
-				if ($loginId == "admin")
-					$_SESSION['loginId'] = $loginId;
-				else
-				{
-					while($row = mysql_fetch_array($query))	// retrieve the encrypt password
-						$_SESSION ['key'] = $row ['password']; // define the encrypted password									
-						if(password_verify($password,$_SESSION['key'])) // compare the user's pass with the encrypted pass
-							$_SESSION['loginId'] = $loginId; // if it true do Initializing Session
-						else
-							$error = "Username or Password is invalid";
-				}	
-			} else
 			{
+				while($row = mysql_fetch_array($query))	// retrieve the encrypt password
+					$_SESSION ['key'] = $row ['password']; // define the encrypted password									
+				if(password_verify($password,$_SESSION['key'])) // compare the user's pass with the encrypted pass
+					$_SESSION['loginId'] = $loginId; // if it true do Initializing Session
+				else
+					$error = "Username or Password is invalid";
+			} else
 				$error = "Username or Password is invalid";
-			}	
 		}
 		
 		

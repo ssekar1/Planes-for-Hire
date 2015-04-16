@@ -15,9 +15,9 @@
 	print ("<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
 	
 	if(isset($loginUser))
-	{
-		print ("<font size = \"3\" style = \"float:left\">Hello ".$loginUser."</font>");
-		print ("<font size = \"3\" style = \"float:right\"><a href=\"../main.php\">Main Page    </a><a href=\"../logout.php\">Logout    </a></font><br>");
+	{		
+		print ("<font size = \"3\" style = \"float:left\">Hello ".$loginUser."   <a href=\"javascript: edit('admin', 'password', '');\" style = \"color: black\">Edit Password</a></font>");
+		print ("<font size = \"3\" style = \"float:right\"><a href=\"../main.php\" style = \"color: black\">Main Page    </a><a href=\"../logout.php\" style = \"color: black\">Logout    </a></font><br>");
 		
 		$memList = $link->executeQuery("select * from `customer_profile`", $_SERVER["SCRIPT_NAME"]);
 		
@@ -58,7 +58,7 @@
 							"</td><td><a href = \"javascript: edit('".$row ['email']."', 'email', '".$row ['email']."');\" style = \"color: black\">".$row ['email']."</a>".
 							"</td><td><a href = \"javascript: edit('".$row ['email']."', 'phone', '".$row ['phone']."');\" style = \"color: black\">".$row ['phone']."</a>");
 					if ($row ['password'] != NULL)
-						print("</td><td><a href = \"javascript: edit('".$row ['email']."', 'password', '".$row ['password']."');\" style = \"color: black\">".$row ['password']."</a>");
+						print("</td><td><a href = \"javascript: edit('".$row ['email']."', 'password', '');\" style = \"color: black\">Edit</a>");
 					else
 						print("</td><td><a href = \"javascript: edit('".$row ['email']."', 'password', '');\" style = \"color: black\">SUSPENDED</a>");
 					print("</td><td>".$row ['checkOutStatus']."</td><td>".$row ['regDate']);
@@ -69,8 +69,6 @@
 					print("<a href = \"javascript: edit('".$row ['email']."', '', 'delete');\" style = \"color: red\">Delete</a>");
 				}
 				print ("</table><br><br>");
-				
-				print ("<div id = \"test\">testing</div>");
 			}
 			else
 				print ("Database Access Error, Try Again");
@@ -80,5 +78,6 @@
 	} else
 		print ("<label> Login Error, Try Again</label><br>");
 	
+	print ("<label id = \"xmlRespondFeedback\"></label>");
 	include ("adminTailHTML.html");
 ?>
