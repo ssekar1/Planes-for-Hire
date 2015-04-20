@@ -23,8 +23,10 @@
 		$link->executeQuery("UPDATE `customer_profile` SET `phone` = '".$_POST['phone']."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
 	if (isset($_POST['password'])) //I think its right here!!!
 	{
-		$password = $_POST['password']; //encrypt the $password variable, this is one place
-		$_SESSION['key'] = blow_fish(" shit lol, $password")//your encryption shit!!! what is the line right after this do, that line updates the key into the database
+		$cost = 10; // the bigger the cost the better the password wil be after hashed
+		$number = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.'); // will create a random numbers
+		$number = sprintf("$2a$%02d$", $cost) . $number; // prefix the password for the compare log in later		
+		$_SESSION['key'] = crypt($_POST ['password'], $number); //hash the password is here
 		
 		$link->executeQuery("UPDATE `customer_profile` SET `password` = '".$_SESSION['key']."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
 	}
