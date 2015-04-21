@@ -14,10 +14,7 @@
 	$_SESSION ['state'] = $_POST ['state'];
 	$_SESSION ['zip'] = $_POST ['zip'];
 	$_SESSION ['phone'] = $_POST ['phone'];
-	if (empty($_POST ['avatar']))
-		$_SESSION ['avatar'] = "default.jpg";
-	else
-		$_SESSION ['avatar'] = $_POST ['avatar'];
+	$_SESSION ['avatar'] = "default.jpg";
 	$_SESSION ['email'] = $_POST ['email'];
 	//$_SESSION ['password'] = $_POST ['password'];
 	// ******************************************

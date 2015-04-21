@@ -43,10 +43,6 @@
 			print ("<input name = \"email\" id = \"email\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>");
 		print ("</label>");
 	
-	print ("<label>Profile Picture ");
-			print ("<input name = \"avatar\" id = \"avatar\" type = \"text\" placeholder = \"optional\" maxlength = \"30\" class = \"input\"/><br><br>");
-		print ("</label>");
-	
 	print ("<label>Password ");
 			print ("<input name = \"password\" id = \"password\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>");
 		print ("</label>");
