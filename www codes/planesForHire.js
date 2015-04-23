@@ -291,7 +291,7 @@ function changeUserInfo (id)
 			 "<label>Zip Code <input name = \"zip\" id = \"zip\" type = \"text\" maxlength = \"5\" class = \"input\" onKeyup = \"isValidChar (this.value, 'zip')\"/><br><br></label>" +
 			 "<label>Phone Number <input name = \"phone\" id = \"phone\" type = \"text\" maxlength = \"10\" class = \"input\" onKeyup = \"isValidChar (this.value, 'phone')\"/><br><br></label>" +
 			 "<label>Email <input name = \"email\" id = \"email\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<a style = \"float:right;color:black\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right;color:black\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
 			 "</font></div>";
 									
 	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
@@ -308,10 +308,10 @@ function updatePassword (id, error)
 			 "<input id = \"changePassword\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
 			 "<label>Retype password   </label>" +
 			 "<input id = \"changePassword2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
-			 "<a style = \"float:right;color:black\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a><a style = \"float:right;color:black\" href = \"javascript: showTrvHist();\">Cancel   </a>";
+			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>";
 			 if (error === 'error')
 				string = string + "<br><span style = \"float:right\">Password invalid</span>";
-			string = string + "</div></font>";
+			 string = string + "</div></font>";
 
 	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
 }
@@ -325,7 +325,7 @@ function payBalance (id)
 	var string = "<div style = \"width:47%\"><font size = \"3\">" +
 			 "<label>Enter exact amount in dollars   </label>" +
 			 "<input id = \"payBalance\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>" +
-			 "<a style = \"float:right;color:black\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a><a style = \"float:right;color:black\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
 			 "</font></div>";
 	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
 }
@@ -344,7 +344,7 @@ function changeAvatar (id, avatar)
 	{	//this entire string is the html content that replaces the content inside the userExtenPanel
 		var string = "<font size = \"3\">" +
 					 "<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
-					 "<a style = \"float:right; color:black\"href=\"logout.php\">Logout    </a><br>" +
+					 "<a style = \"float:right\"href=\"logout.php\">Logout    </a><br>" +
 					 "<img id = \"userAvatar\" class = \"userAvatar\" src = 	\"/picsUploads/" + avatar + "\"><br>" +
 					 "<form action = \"uploadFile.php\" method = \"post\" enctype = \"multipart/form-data\">" +
 					 "<input type = \"button\" value = \"Cancel\" onclick = \"changeAvatar('userExtenPanel', '" + avatar + "')\">" +
@@ -356,9 +356,9 @@ function changeAvatar (id, avatar)
 	{	//this entire string is the html content that replaces the content inside the userExtenPanel
 		var string = "<font size = \"3\">" +
 					 "<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
-					 "<a style = \"float:right; color:black\"href=\"logout.php\">Logout    </a><br>" +
+					 "<a style = \"float:right\"href=\"logout.php\">Logout    </a><br>" +
 					 "<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/" + avatar + "\"><br>" +
-					 "<a style = \"color:black\"href = \"javascript: changeAvatar('userExtenPanel', '" + avatar + "');\">Edit</a>" +
+					 "<a href = \"javascript: changeAvatar('userExtenPanel', '" + avatar + "');\">Edit</a>" +
 					 "</font>";
 		avatarToggle = "false";
 	}
@@ -458,20 +458,20 @@ function focusMarker(value)
 	var dataArr = value.split("|");
 	if (dataArr[0] === '')
 		return;
-	
+		
 	// Extracts values from delimited string
 	var lat = Number(dataArr[0]);
 	var lng = Number(dataArr[1]);
 	var latlng = new google.maps.Marker({position: new google.maps.LatLng(lat, lng, 0)});
 	var label = dataArr[2];
 	var airport = dataArr[3];
-					
-	// Breaks out of function early if input was bad
-	if (label === undefined && airport === undefined)
-		return;
 	
 	// Pans to location specified
 	map.panTo(latlng.getPosition());
+	
+	// Breaks out of function early if input was bad
+	if (label === undefined && airport === undefined)
+		return;
 	
 	// Assigns either src or dest global position objects
 	if(label == "departLabel")

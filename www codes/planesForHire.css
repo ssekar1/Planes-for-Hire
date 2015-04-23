@@ -1,5 +1,9 @@
 			/* removes underline from links */
-			a {text-decoration:none}
+			a
+			{
+				text-decoration: none;
+				color: #CC3300;
+			}
 			
 			pre {font-family: Arial, Verdana;}
 			span {color: red;}

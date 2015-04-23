@@ -33,7 +33,7 @@
 				print ("<strong><font size = \"5\"><a style = \"color:#CC3300\" href=\"main.php\">PLANES FOR HIRE</a></font></strong><br>");	
 				print ($fName." ");
 				print ($lName);
-				print ("<a style = \"float:right; color:black\" href = \"javascript: changeUserInfo('userTrvHistPanel');\">Edit</a><br>");
+				print ("<a style = \"float:right\" href = \"javascript: changeUserInfo('userTrvHistPanel');\">Edit</a><br>");
 				print ($street."<br>");
 				print ($city.", ");
 				print ($state." ");
@@ -43,23 +43,23 @@
 				if ($plane !== '')
 					print ("Plane on hold  ".$plane."<br><br>");
 				print ("Balance $".$balance);
-				print ("<a style = \"float:right; color:black\" href = \"javascript: payBalance('userTrvHistPanel');\">Pay</a><br>");
-				print ("<a style = \"float:right; color:black\" href = \"javascript: updatePassword('userTrvHistPanel');\">Change password</a><br><br>");
+				print ("<a style = \"float:right\" href = \"javascript: payBalance('userTrvHistPanel');\">Pay</a><br>");
+				print ("<a style = \"float:right\" href = \"javascript: updatePassword('userTrvHistPanel');\">Change password</a><br><br>");
 			print ("</div>");
 			
 			print("<div id = \"userExtenPanel\" class = \"userExtenPanel\">");
                         print("<form action=\"search.php\">");
                                 print ("<input type = \"submit\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" name=\"query\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
                         print("</form>");
-				print ("<a style = \"float:right; color:black\" href=\"logout.php\">Logout    </a><br>");
+				print ("<a style = \"float:right\" href=\"logout.php\">Logout    </a><br>");
 				print ("<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/".$avatar."\"><br>");
-				print ("<a style = \"color:black\" href = \"javascript: changeAvatar('userExtenPanel', '".$avatar."');\">Edit</a><br>");
+				print ("<a href = \"javascript: changeAvatar('userExtenPanel', '".$avatar."');\">Edit</a><br>");
 			print ("</div>");
 	
 			print("<div id = \"userTrvHistPanel\" class = \"userTrvHistPanel\">");
 				if (isset($_SESSION['loginId']) && $_SESSION['loginId'] !== "admin")
 				{	
-					print ("Travel History		<a style = \"color:black\" href = \"javascript: updateUserInfo('clearHist');\">Clear</a>");
+					print ("Travel History		<a href = \"javascript: updateUserInfo('clearHist');\">Clear</a>");
 					if (isset($travelHist))
 					{
 						//prints the labels for the travel history table

@@ -51,10 +51,13 @@
 	
 			if(isset($loginUser)) //if the user is logged in then their name will link to their user profile page and another link for them to log out
 			{
-				print ("<a style = \"float:right; color:black\" href=\"logout.php\">Logout    </a>");
-				print ("<a style = \"float:right; color:black\" href=\"userprofile.php\">Hello ".$loginUser.".   </a>");		
+				print ("<a style = \"float:right\" href=\"logout.php\">Logout    </a>");
+				if ($loginUser == "admin")
+					print ("<a style = \"float:right\" href=\"private/admin.php\">Hello ".$loginUser.".   </a>");
+				else
+					print ("<a style = \"float:right\" href=\"userprofile.php\">Hello ".$loginUser.".   </a>");		
 			} else //if they're not logged in then we provide a link for them to register and to login 
-				print ("<a style = \"float:right; color: black\" href=\"registration.php\">Register   </a><a style = \"float:right; color:black\" href=\"login.php\">Login   </a>");
+				print ("<a style = \"float:right\" href=\"registration.php\">Register   </a><a style = \"float:right\" href=\"login.php\">Login   </a>");
 		print ("</div>"); // this finishes the header pannel content
 		
 		print ("<div class = \"mainMapPanel\" id=\"googleMap\"></div>"); //defining the map pannel and closing the map pannel, the map pannel only contain the map itself
@@ -102,8 +105,6 @@
 						$planes = $link->executeQuery("select * from planes", $_SERVER["SCRIPT_NAME"]);
 						print ("Plane Model   <select id = \"planeSelect\" style = \"width: 180px\" onchange = \"updateForm('planeLabel', this.value)\">");
 						print ("<option value = ''>Select A Departing Airport</option>");
-//						while ($row = mysql_fetch_array($planes)) //these were orignially use to populate the plane list that was available to every location
-//							print ("<option value = \"".$row['model']."\">".$row['model']."</option>"); //however, it is no longer needed because we implimented plane availability base on location feature
 						print ("</select>");
 					print ("</div>"); //this finishes the dates and model selection panel
 					
@@ -120,7 +121,7 @@
 					print ("</div>"); //this finishes the checkIn checkOut button panel
 					
 					//this is the plane rental form panel, this is use as a feedback to let the user know what their current selections are
-					print ("<div id = \"mainFormPanel\"class = \"mainFormPanel\">"); //defining the plane rental form panel
+					print ("<div id = \"mainFormPanel\" class = \"mainFormPanel\">"); //defining the plane rental form panel
 						print("Plane Rental Form<br>"); //the content in these forms are populated based on their label id
 						print("<label>Depart from:  </label><label id = \"departLabel\"></label><br>");
 						print("<label>Arrive to:  </label><label id = \"arrivalLabel\"></label><br>");
@@ -138,7 +139,7 @@
 					while ($row = mysql_fetch_array($mapTbl))
 					{	//another regex again, since the the database airport name is long, we are only interested in the city and state of the airport to be displayed 
 						preg_match('/[^,]*,[^,]*$/', $row ['airport'], $matches); //(patern, subject, matchesFound), this is the format of the regex
-						print ("<a href = \"javascript: focusMarker('".$row ['long']."|".$row ['lat']."');\">".$matches[0]."</a><br>"); //when a user clicks on an airport, we pan to that location so they can see where it is
+						print ("<a href = \"javascript: focusMarker('".$row ['long']."|".$row ['lat']."');\" style = \"color: black\">".$matches[0]."</a><br>"); //when a user clicks on an airport, we pan to that location so they can see where it is
 					}
 				} else
 					print ("<font size =\"4\">Error Loading Airports<br>Please Reflesh Your Browser</font><br>"); //the error message in case if the SQL query is unsuccessful

@@ -19,7 +19,11 @@
 		
 		<style>
 			/* removes underline from links */
-			a {text-decoration:none}
+			a
+			{
+				text-decoration: none;
+				color: #CC3300;
+			}
 			
 			body
 			{	
@@ -30,10 +34,31 @@
      			margin-right: auto;
 				width: 1250px;
 			}
-			
 			pre
 			{
 				font-family: Arial, Verdana;
+			}
+			
+			.adminBasePanel
+			{
+				//background-color: #F3C1FF;
+				margin-left: auto;
+     			margin-right: auto;
+				width: 1300px;
+			}
+			.adminHeaderPanel
+			{
+				//background-color: #FFD6D6;
+				margin-left: auto;
+     			margin-right: auto;
+				width: 1300px;
+			}
+			.adminContentPanel
+			{
+				//background-color: #C2D6FF;
+				margin-left: auto;
+     			margin-right: auto;
+				width: 1300px;
 			}
 			
 			#textBox
@@ -87,15 +112,43 @@
 			{
 				color: red;
 			}
+			.input
+			{	
+				background-color: #ffffff;
+				border: 0px #a1a1a1 solid;
+				border-radius: 4px;
+				padding: 2px;
+				float:right;
+				height: 20px;
+				width: 305px;
+				font-size: 15px;
+			}
 			
 		</style>
 		
-		<script>			
+		<script>
+			var adminContentPanel;
+			var addPlaneHtmlContent = "<div style = \"width:35%\"><font size = \"3\"><br>" +
+							 "Model Name<input id = \"model\" maxlength = \"30\" class = \"input\"/><br><br>" +
+							 "Desire Location<select id = \"airportLocation\" style = \"width: 310px; float: right;\">" +
+							 "<option value = ''></option></select><br><br>" +
+							 "<a style = \"float:right\" href = \"javascript: addPlane('apply');\">Apply</a>" +
+							 "<a style = \"float:right\" href = \"javascript: restoreAdminContentPanel();\">Cancel   </a>" +
+							 "</font></div><br><br>";
+			
+			var addAirportHtmlContent = "<div style = \"width:35%\"><font size = \"3\"><br>" +
+							 "Airport Name<input id = \"airport\" maxlength = \"90\" class = \"input\"/><br><br>" +
+							 "Longitude<input id = \"lon\" maxlength = \"30\" class = \"input\"/><br><br>" +
+							 "Latitude<input id = \"lat\" maxlength = \"30\" class = \"input\"/><br><br>" +
+							 "<a style = \"float:right\" href = \"javascript: addAirport('apply');\">Apply</a>" +
+							 "<a style = \"float:right\" href = \"javascript: restoreAdminContentPanel();\">Cancel   </a>" +
+							 "</font></div><br><br>";
+			
 			function edit(email, field, value)
 			{
 				var msg = "Enter a new " + field + " value for member " + email + "\nThe current value is:";
-				var newVal;
-				
+				var newVal, intent = "updateField";
+			
 				if (value == "delete")
 				{
 					if (!confirm("Are you sure? This cannot be undone"))
@@ -103,12 +156,29 @@
 						newVal = "delete";
 				} else if (value == "suspend")
 					newVal = "suspend";
-				else
+				else if (value == "updateField")
 				{
-					newVal = prompt(msg, value);
-					if (newVal === value)
+					if (document.getElementById('fieldValue').value == '')
+					{
+						restoreAdminContentPanel();
 						return;
-				}
+					}
+					newVal = document.getElementById('fieldValue').value;
+					restoreAdminContentPanel();
+				} else if (field == "avatar")
+					document.getElementById('adminContentPanel').innerHTML = "<div style = \"width:35%\"><font size = \"3\"><br>" +
+																			 "Reset member " + email + " " + field + " ?<br>" +
+																			 "<a style = \"float:right\" href = \"javascript: edit('" + email + "', '" + field + "', 'updateField');\">Apply</a>" +
+																			 "<a style = \"float:right\" href = \"javascript: restoreAdminContentPanel();\">Cancel   </a>" +
+																			 "<input id = \"fieldValue\" maxlength = \"90\" value = \"default.jpg\" style = \"float:left; visibility:hidden;\" class = \"input\"/><br><br>" +
+																			 "</font></div><br><br>";
+				else
+					document.getElementById('adminContentPanel').innerHTML = "<div style = \"width:35%\"><font size = \"3\"><br>" +
+																			 "Enter a new " + field + " for member " + email + "<br>" +
+																			 "<input id = \"fieldValue\" maxlength = \"90\" placeholder = \"" + value + "\" style = \"float:left;\"class = \"input\"/><br><br>" +
+																			 "<a style = \"float:right\" href = \"javascript: edit('" + email + "', '" + field + "', 'updateField');\">Apply</a>" +
+																			 "<a style = \"float:right\" href = \"javascript: restoreAdminContentPanel();\">Cancel   </a>" +
+																			 "</font></div><br><br>";
 				
 				if (newVal.length >= 1)
 				{					
@@ -125,17 +195,96 @@
 					
 					xmlhttp.open ("post", "updateTable.php", "true");
 					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-					xmlhttp.send ("email=" + email + "&field=" + field + "&newVal=" + newVal);
+					xmlhttp.send ("email=" + email + "&field=" + field + "&newVal=" + newVal + "&intent=" + intent);
 				} else
 					return;
-				
-				//window.location.reload();
 			}
 			
+			function restoreAdminContentPanel()
+			{
+				document.getElementById('adminContentPanel').innerHTML = adminContentPanel;
+			}
+			
+			function addPlane(intent) 
+			{
+				var data, intent, model, location;
+				if (intent == '')
+				{
+					document.getElementById('adminContentPanel').innerHTML = addPlaneHtmlContent;
+					intent = "populateAirportList";
+					data = "intent=" + intent;
+				}
+				
+				if (intent == 'apply')
+				{
+					model = document.getElementById('model').value;
+					airportLocation = document.getElementById('airportLocation').value;
+					intent = "addPlaneToTable";
+					data = "intent=" + intent + "&model=" + model + "&airportLocation=" + airportLocation; 
+					restoreAdminContentPanel();
+				}
+				
+				if (data.length >= 1)
+				{
+					if (window.XMLHttpRequest)
+						xmlhttp = new XMLHttpRequest();
+					else
+						xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
+					
+					xmlhttp.onreadystatechange = function()
+					{
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+							document.getElementById('airportLocation').innerHTML = xmlhttp.responseText;
+					}
+					
+					xmlhttp.open ("post", "updateTable.php", "true");
+					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+					xmlhttp.send (data);
+				}
+			}
+			
+			function addAirport(intent)
+			{
+				var data, intent, airport, lon, lat;
+				if (intent == '')
+					document.getElementById('adminContentPanel').innerHTML = addAirportHtmlContent;
+				
+				if (intent == 'apply')
+				{
+					alert ("applying airport");
+					airport = document.getElementById('airport').value;
+					lon = document.getElementById('lon').value;
+					lat = document.getElementById('lat').value;
+					intent = "addNewAirportLocation";
+					data = "intent=" + intent + "&airport=" + airport + "&lon=" + lon + "&lat=" + lat;
+					restoreAdminContentPanel();
+				}
+				
+				if (data.length >= 1)
+				{
+					if (window.XMLHttpRequest)
+						xmlhttp = new XMLHttpRequest();
+					else
+						xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
+					
+					xmlhttp.onreadystatechange = function()
+					{
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+							document.getElementById('xmlRespondFeedback').innerHTML = xmlhttp.responseText;
+					}
+					
+					xmlhttp.open ("post", "updateTable.php", "true");
+					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+					xmlhttp.send (data);
+				}
+			}
+			
+			function adminContentPanelBak ()
+			{
+				adminContentPanel = document.getElementById('adminContentPanel').innerHTML;
+			}
 		</script>
 		
 	</head>
 	<body>
-		<div>
-		<font size = "4">
 		<pre>
