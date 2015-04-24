@@ -23,7 +23,7 @@
 			{
 				//background-color: #F3C1FF;
 				margin-left: auto;
-     			margin-right: auto;
+     				margin-right: auto;
 				width: 1300px;
 			}
 			.mainHeaderPanel
@@ -39,7 +39,7 @@
 				padding: 10px 50px 0px 20px; /*top right bottom left*/
 				border-top-right-radius: 30px;
 				border-top-left-radius: 30px;
-				box-shadow: 50px 30px 10px 10px #b2b2b2;
+				box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.25);
 			}
 			
 			.mainMapPanel
@@ -62,7 +62,7 @@
 
 			.mainSelectPanel
 			{
-				//background-color: #BAE3C8;
+				background-color: rgb(224,224,224);
 				border-style: solid;
 				border-left-width: 0px;
 				border-top-width: 0px;
