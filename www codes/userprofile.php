@@ -1,10 +1,11 @@
 <?php
 /*
-  This is the main page
+  This is the user profile page
 */
 	$debug = false;
 	session_start();// Starting Session
 	include ("headHTML.html");
+	include ('travelHist.php'); //needs this class to dereference linked list object
 	
 	if (isset($_SESSION['loginId']))
 	{
@@ -23,7 +24,16 @@
 				$plane = $row['plane'];
 				$balance = $row['balance'];
 			}
-		$travelHist = $link->executeQuery("select * from `".$_SESSION['loginId']."`", $_SERVER["SCRIPT_NAME"]);
+		
+		$result = $link->executeQuery("select * from `customer_profile` where `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
+		while ($row = mysql_fetch_array($result))
+			$serializedTravelHistData = $row ['travelHist'];
+		$travelHistList = unserialize($serializedTravelHistData);
+		if ($travelHistList == NULL) //perform automatic repair of linked list if list doesn't exist in database
+		{
+			$travelHistList = new SplDoublyLinkedList();
+			$link->executeQuery("UPDATE `customer_profile` SET `travelHist` = '".serialize(new SplDoublyLinkedList())."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
+		}
 	}
 	
 	print ("<div class = \"userBaseFramePanel\">");
@@ -55,32 +65,36 @@
 				print ("<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/".$avatar."\"><br>");
 				print ("<a href = \"javascript: changeAvatar('userExtenPanel', '".$avatar."');\">Edit</a><br>");
 			print ("</div>");
-	
+			
 			print("<div id = \"userTrvHistPanel\" class = \"userTrvHistPanel\">");
 				if (isset($_SESSION['loginId']) && $_SESSION['loginId'] !== "admin")
 				{	
 					print ("Travel History		<a href = \"javascript: updateUserInfo('clearHist');\">Clear</a>");
-					if (isset($travelHist))
+					if (isset($travelHistList))
 					{
 						//prints the labels for the travel history table
 						print ("<table border='0px'>");
 						print ("<tr>");
 						print ("<td>Departing Airport							</td>");
 						print ("<td>Arrival Airport								</td>");
-						print ("<td>Date And Time Traveled  	</td>");
+						print ("<td>Date Traveled  	</td>");
 						print ("<td>Leased Model							</td>");
 						print ("</tr>");
-						
-						while ($row = mysql_fetch_array($travelHist))
-							print ("<tr><td>".$row ['origAirport']."</td><td>".$row ['destAirport']."</td><td>".$row ['dateTravel']."</td><td>".$row ['leaseModel']."</td></tr>");
-						print ("</table></font>");
+				
+						for ($travelHistList -> rewind(); $travelHistList -> valid(); $travelHistList -> next())
+							print ("<tr><td>".$travelHistList -> current() -> depart."</td><td>".$travelHistList -> current() -> arrive."</td><td>".$travelHistList -> current() -> travelDate."</td><td>".$travelHistList -> current() -> leasedModel."</td></tr>");
+						print ("</table></font>");			
 					} else	
 						print ("Error loading travel history table");
 				}
 			print ("</div>");
+		
 		print ("</div>");
+		
 		print ("</font>");
 	print ("</div>");
+	
 	print ("<script>saveTrvHist();</script>");
+	print ("<label id = \"xmlRespondFeedback\"></label>");
 	include ("tailHTML.html");
 ?>

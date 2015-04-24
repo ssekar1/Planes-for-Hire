@@ -251,12 +251,9 @@ function updateUserInfo(intent)
 	
 	if (data === "") //if the user click apply without entering in anything, then there are nothing to process 
 	{
-		alert ("All fields were empty, no changes were made"); //i hate alert, this need to be change !!!
 		showTrvHist(); //return the travel history to its original state before leaving
 		return; //return to our normal routine
 	}
-	
-	//document.getElementById('userTrvHistPanel').innerHTML = data; //this was use for debugging purposes
 	
 	//this is the ajax subroutine
 	if (window.XMLHttpRequest)
@@ -268,7 +265,7 @@ function updateUserInfo(intent)
 	{
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
 			//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
-			document.getElementById('userTrvHistPanel').innerHTML = xmlhttp.responseText; //by reaping the response text we can be sure that the server script finishes the procedure properly 
+			document.getElementById('xmlRespondFeedback').innerHTML = xmlhttp.responseText; //by reaping the response text we can be sure that the server script finishes the procedure properly 
 	}
 		
 	xmlhttp.open ("post", "updateUserProfile.php", "true"); //the updateUserProfile.php is the script that handles the server side subroutine for these functions
@@ -369,10 +366,17 @@ function changeAvatar (id, avatar)
 /*
  *this function creates the airport markers and paces it on the map
  */
-function createMarker(name, long, lat)
+function createMarker(name, long, lat, type)
 {
-	// Generates marker
-	var img = "resources/images/pin.png";
+	// Generates planes and airport markers
+	if (type === "plane")
+	{
+		lat += .005; //offset the plane marker to one side to it wouldn't cover up the airport entirely
+		img = "resources/images/plane.png";
+	}
+	else if (type === "airport")
+		var img = "resources/images/pin.png";
+	
 	var marker = new google.maps.Marker
 	({
       	position: new google.maps.LatLng(long, lat, 0),
@@ -381,20 +385,36 @@ function createMarker(name, long, lat)
 		icon: img
   	});
   	
+  	if (type === "plane") //plane marker can overlap airport marker, so we want to make the plane marker clickable as well
+	  	lat -= .005; //offset value to accurately point the airport 
+  	
 	google.maps.event.addListener(marker, 'click', function() // Gives marker onclick code
 	{
 		if(srcDestToggle == -1) // If in src state, alter src
 		{	// Inputs data into select field
-			var elem = document.getElementById("departingAirport");
-			elem.value = "" + long + "|" + lat + "|departLabel|" + name;
-			elem.onchange();
-			//focusMarker("" + long + "|" + lat + "|departLabel|" + name);
+			if (document.getElementById("departingAirport"))
+			{
+				var elem = document.getElementById("departingAirport");
+				elem.value = "" + long + "|" + lat + "|departLabel|" + name;
+				elem.onchange();
+			} else //this is the case when the user is not log in
+			{
+				var elem = document.createElement("link");
+				elem.onclick = focusMarker("" + long + "|" + lat + "|departLabel|" + name);
+			}
 		}
 		else // Otherwise, alter dest
 		{
-			elem = document.getElementById("arivalAirport");
-			elem.value = "" + long + "|" + lat + "|arrivalLabel|" + name;
-			elem.onchange();
+			if (document.getElementById("arivalAirport")) 
+			{
+				elem = document.getElementById("arivalAirport");
+				elem.value = "" + long + "|" + lat + "|arrivalLabel|" + name;
+				elem.onchange();
+			} else
+			{
+				var elem = document.createElement("link");
+				elem.onclick = focusMarker("" + long + "|" + lat + "|departLabel|" + name);
+			}
 			//focusMarker("" + long + "|" + lat + "|arrivalLabel|" + name);
 		}
 		

@@ -4,7 +4,9 @@
 */
 	$debug = false;
 	include ('link.php');
+	include ('travelHist.php');
 	$link = new Link($debug);
+	$travelHistObj = new TravelHistory();	
 	session_start();
 	
 	$_SESSION['depart'] = $_POST['depart'];
@@ -15,10 +17,34 @@
 	$originalReturnDate = $_SESSION['returnDate'];
 	$_SESSION['returnDate'] = date('Y-m-d', strtotime($_SESSION['returnDate']));
 	$_SESSION['model'] = $_POST['model'];
-	$email = $_SESSION['loginId'];
+	$email = $_SESSION['loginId'];	
+	
+	$result = $link->executeQuery("select * from `customer_profile` WHERE `email` = '".$email."'", $_SERVER["SCRIPT_NAME"]);
+	while ($row = mysql_fetch_array($result))
+		$serializedTravelHistData = $row ['travelHist'];
+	
+	$travelHistList = unserialize($serializedTravelHistData);
+	if ($travelHistList == NULL) //perform automatic repair of linked list if doesn't exist in database
+	{
+		$travelHistList = new SplDoublyLinkedList();
+		$link->executeQuery("UPDATE `customer_profile` SET `travelHist` = '".serialize(new SplDoublyLinkedList())."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
+	}
+	
+	if (count($travelHistList) > 50)
+		$travelHistList -> offsetUnset(0); //removing the first item from the list
+	
+	preg_match('/^[^,]*/', $_SESSION['depart'], $matches); //(patern, subject, matchesFound), this is the format of the regex
+	$travelHistObj -> depart = $matches[0];
+	preg_match('/^[^,]*/', $_SESSION['arrive'], $matches); //(patern, subject, matchesFound), this is the format of the regex
+	$travelHistObj -> arrive = $matches[0];
+	$travelHistObj -> travelDate = date('Y-m-d', strtotime($_SESSION['startDate']));
+	$travelHistObj -> leasedModel = $_SESSION['model'];
+	
+	$travelHistList -> push ($travelHistObj);
+	$serializedTravelHistData = serialize($travelHistList);
 	
 	//update the customer_profile table to indicate they have check out a plane, and which plane model they check out		
-	$sql = "UPDATE `customer_profile` SET `checkOutStatus` = '1', `plane` = '".$_SESSION['model']."' WHERE `email` = '".$email."'";
+	$sql = "UPDATE `customer_profile` SET `checkOutStatus` = '1', `plane` = '".$_SESSION['model']."', `travelHist` = '".$serializedTravelHistData."' WHERE `email` = '".$email."'";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
 	//update the planes table to mark the specific model as checked out
@@ -33,17 +59,6 @@
 		$origLong = $row ['long'];
 		$origLat = $row ['lat'];
 	}
-	
-	$sql = "select * from `airport_locations` WHERE `airport` = '".$_SESSION['arrive']."'";
-	$result = $link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-	while ($row = mysql_fetch_array($result))
-	{
-		$destLong = $row ['long'];
-		$destLat = $row ['lat'];
-	}
-	
-	$sql = "INSERT INTO `".$email."` (`origAirport`, `origLong`, `origLat`, `destAirport`, `destLong`, `destLat`, `dateTravel`, `leaseModel`) VALUES ('".$_SESSION['depart']."', '".$origLong."', '".$origLat."', '".$_SESSION['arrive']."', '".$destLong."', '".$destLat."', CURRENT_TIMESTAMP,  '".$_SESSION['model']."')";
-	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
 	$result = $link->executeQuery("select * from `customer_profile` WHERE `email` = '".$email."'", $_SERVER["SCRIPT_NAME"]);
 	while ($row = mysql_fetch_array($result))

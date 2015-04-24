@@ -34,13 +34,20 @@
 			/* 
 			 * this is a javascript/php function to populate the airport pins on the map
 			 * this is the only function that is not included in the planesForHire.js file because it contains php codes 
+			 * this function is called inside the initialized map function after the page is loaded
 			 */
 			function populatePins ()
 			{
 				<?php
 					if (isset($mapTbl))						
 						while ($row = mysql_fetch_array($mapTbl))
-							print("createMarker(\"".$row ['airport']."\", ".$row ['long'].", ".$row ['lat'].");");
+						{
+							print("createMarker(\"".$row ['airport']."\", ".$row ['long'].", ".$row ['lat'].", \"airport\");");
+							$query = $link->executeQuery("select * from `planes` WHERE `currentLocation` = '".$row ['airport']."'", $_SERVER["SCRIPT_NAME"]);
+							if (mysql_num_rows($query) > 0)
+								print("createMarker(\"".$row ['airport']."\", ".$row ['long'].", ".$row ['lat'].", \"plane\");");
+							
+						}
 				?>
 			}
 		</script>

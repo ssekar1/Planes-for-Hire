@@ -4,7 +4,9 @@
 */
 	$debug = false;
 	include ('link.php');
+	include ('travelHist.php');
 	$link = new Link($debug);
+	$travelHistObj = new TravelHistory();
 	session_start();// Starting Session
 	
 	if (isset($_POST['firstName']))
@@ -31,7 +33,10 @@
 		$link->executeQuery("UPDATE `customer_profile` SET `password` = '".$_SESSION['key']."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
 	}
 	if (isset($_POST['clearHist']))
-			$link->executeQuery("TRUNCATE TABLE `".$_SESSION['loginId']."`", $_SERVER["SCRIPT_NAME"]);
+	{
+		$serializedTravelHistData = serialize(new SplDoublyLinkedList());
+		$link->executeQuery("UPDATE `customer_profile` SET `travelHist` = '".$serializedTravelHistData."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
+	}
 	if (isset($_POST['email']))
 	{
 		$link->executeQuery("UPDATE `customer_profile` SET `email` = '".$_POST['email']."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);

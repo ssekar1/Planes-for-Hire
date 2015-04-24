@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 16, 2015 at 02:14 AM
+-- Generation Time: Apr 24, 2015 at 03:08 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `airport_locations` (
   `airport` text NOT NULL,
   `long` double NOT NULL,
   `lat` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `airport_locations`
@@ -112,18 +112,20 @@ CREATE TABLE IF NOT EXISTS `customer_profile` (
   `email` varchar(30) NOT NULL,
   `phone` varchar(11) NOT NULL,
   `password` text,
+  `travelHist` text,
   `checkOutStatus` int(1) unsigned NOT NULL DEFAULT '0',
   `plane` varchar(30) DEFAULT NULL,
   `regDate` datetime NOT NULL,
   `balance` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customer_profile`
 --
 
-INSERT INTO `customer_profile` (`id`, `firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `checkOutStatus`, `plane`, `regDate`, `balance`) VALUES
-(68, 'Tam', 'Tran', '1000 Hilltop Circle', 'test', 'MD', '21250', 'default.jpg', 'tamtran1@umbc.edu', '4104551000', '$2a$10$9N/mCd0ZrZRDvSn.srAAu.WZqQnAKvh/vAFsRlGZNtafJsInCYkGW', 0, NULL, '2015-04-16 00:48:56', 0);
+INSERT INTO `customer_profile` (`id`, `firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `travelHist`, `checkOutStatus`, `plane`, `regDate`, `balance`) VALUES
+(80, 'Tam', 'Tran', '1000 Hilltop Circle', 'Baltimore', 'MD', '21250', 'default.jpg', 'tamtran1@umbc.edu', '4104551000', '$2a$10$239CuRNuDq4BdXwfzV9o.OY5sn0iICHeWhAHlrQQeD7oFjSjY23MG', 'C:19:"SplDoublyLinkedList":3730:{i:0;:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Los Angeles Airport";s:6:"arrive";s:25:"Washington Dulles Airport";s:10:"travelDate";s:10:"2015-04-27";s:11:"leasedModel";s:22:"Bombardier Global 5000";}:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Los Angeles Airport";s:6:"arrive";s:27:"Albuquerque Sunport Airport";s:10:"travelDate";s:10:"2015-04-20";s:11:"leasedModel";s:18:"Cessna 182 SkyLane";}:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Los Angeles Airport";s:6:"arrive";s:22:"Rolla National Airport";s:10:"travelDate";s:10:"2015-04-27";s:11:"leasedModel";s:18:"Embraer Phenom 300";}:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Los Angeles Airport";s:6:"arrive";s:34:"Hartsfield Jackson Atlanta Airport";s:10:"travelDate";s:10:"2015-04-13";s:11:"leasedModel";s:25:"Bombardier Challenger 950";}:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Los Angeles Airport";s:6:"arrive";s:20:"Philadelphia Airport";s:10:"travelDate";s:10:"2015-04-14";s:11:"leasedModel";s:22:"Bombardier Global 6000";}:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Los Angeles Airport";s:6:"arrive";s:30:"Minneapolis Saint Paul Airport";s:10:"travelDate";s:10:"2015-04-13";s:11:"leasedModel";s:18:"Dassault Falcon 10";}:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Los Angeles Airport";s:6:"arrive";s:36:"George Bush Intercontinental Airport";s:10:"travelDate";s:10:"2015-04-27";s:11:"leasedModel";s:19:"Cessna 177 Cardinal";}:O:13:"TravelHistory":4:{s:6:"depart";s:13:"Miami Airport";s:6:"arrive";s:14:"Denver Airport";s:10:"travelDate";s:10:"2015-04-20";s:11:"leasedModel";s:19:"Cessna 305 Bird Dog";}:O:13:"TravelHistory":4:{s:6:"depart";s:16:"Bismarck Airport";s:6:"arrive";s:28:"Baltimore Washington Airport";s:10:"travelDate";s:10:"2015-04-20";s:11:"leasedModel";s:27:"Cessna 510 Citation Mustang";}:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Great Falls Airport";s:6:"arrive";s:13:"Miami Airport";s:10:"travelDate";s:10:"2015-04-20";s:11:"leasedModel";s:24:"Bombardier Learjet 60 XR";}:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Los Angeles Airport";s:6:"arrive";s:36:"George Bush Intercontinental Airport";s:10:"travelDate";s:10:"2015-04-20";s:11:"leasedModel";s:18:"Cessna 175 Skylark";}:O:13:"TravelHistory":4:{s:6:"depart";s:16:"Portland Airport";s:6:"arrive";s:19:"Great Falls Airport";s:10:"travelDate";s:10:"2015-04-13";s:11:"leasedModel";s:17:"Cessna Model CR-3";}:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Los Angeles Airport";s:6:"arrive";s:16:"McCarran Airport";s:10:"travelDate";s:10:"2015-04-21";s:11:"leasedModel";s:20:"Cessna 165 Airmaster";}:O:13:"TravelHistory":4:{s:6:"depart";s:28:"Detroit Metropolitan Airport";s:6:"arrive";s:30:"Minneapolis Saint Paul Airport";s:10:"travelDate";s:10:"2015-04-13";s:11:"leasedModel";s:20:"Cessna 320 Skyknight";}:O:13:"TravelHistory":4:{s:6:"depart";s:21:"Hays Regional Airport";s:6:"arrive";s:21:"San Francisco Airport";s:10:"travelDate";s:10:"2015-04-13";s:11:"leasedModel";s:21:"Bombardier Learjet 35";}:O:13:"TravelHistory":4:{s:6:"depart";s:19:"Los Angeles Airport";s:6:"arrive";s:14:"O Hare Airport";s:10:"travelDate";s:10:"2015-04-28";s:11:"leasedModel";s:17:"Cessna Model CR-2";}:O:13:"TravelHistory":4:{s:6:"depart";s:34:"Hartsfield Jackson Atlanta Airport";s:6:"arrive";s:14:"O Hare Airport";s:10:"travelDate";s:10:"2015-04-28";s:11:"leasedModel";s:25:"Bombardier Challenger 950";}:O:13:"TravelHistory":4:{s:6:"depart";s:36:"George Bush Intercontinental Airport";s:6:"arrive";s:28:"Detroit Metropolitan Airport";s:10:"travelDate";s:10:"2015-04-20";s:11:"leasedModel";s:19:"Cessna 177 Cardinal";}:O:13:"TravelHistory":4:{s:6:"depart";s:28:"Detroit Metropolitan Airport";s:6:"arrive";s:21:"San Francisco Airport";s:10:"travelDate";s:10:"2015-04-27";s:11:"leasedModel";s:19:"Cessna 177 Cardinal";}}', 1, 'Cessna 177 Cardinal', '2015-04-24 01:36:29', 262.5),
+(81, 'Test', 'Test', 'Test', 'Test', 'MD', '12345', 'default.jpg', 'test', '0987654321', '$2a$10$L7.gU0fPVs0gkpQpsuyp8OkDWat2MYlk9estjHc2i6DuryCxt3zYS', 'C:19:"SplDoublyLinkedList":200:{i:0;:O:13:"TravelHistory":4:{s:6:"depart";s:21:"San Francisco Airport";s:6:"arrive";s:23:"John F. Kennedy Airport";s:10:"travelDate";s:10:"2015-04-08";s:11:"leasedModel";s:21:"Bombardier Learjet 35";}}', 0, '', '2015-04-24 02:23:27', 136.5);
 
 -- --------------------------------------------------------
 
@@ -141,62 +143,43 @@ CREATE TABLE IF NOT EXISTS `planes` (
   `returnTo` varchar(90) DEFAULT NULL,
   `returnDate` date DEFAULT NULL,
   `lastCheckout` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `planes`
 --
 
 INSERT INTO `planes` (`id`, `model`, `status`, `currentLocation`, `client`, `leaseFrom`, `returnTo`, `returnDate`, `lastCheckout`) VALUES
-(1, 'Cessna 165 Airmaster', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:46:12'),
-(2, 'Cessna 175 Skylark', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 06:40:44'),
-(3, 'Cessna 177 Cardinal', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:47:59'),
+(1, 'Cessna 165 Airmaster', 1, 'McCarran Airport, Las Vegas, NV', '', '', '', '0000-00-00', '2015-04-24 06:13:42'),
+(2, 'Cessna 175 Skylark', 1, 'George Bush Intercontinental Airport, Houston, TX', '', '', '', '0000-00-00', '2015-04-24 06:13:10'),
+(3, 'Cessna 177 Cardinal', 0, '', 'tamtran1@umbc.edu', 'Detroit Metropolitan Airport, Detroit, MI', 'San Francisco Airport, San Francisco, CA', '2015-04-29', '2015-04-24 07:05:54'),
 (4, 'Cessna 180 Skywagon', 1, 'Dallas/Fort Worth Airport, Dallas/Fort Worth, TX', '', '', '', '0000-00-00', '2015-04-05 07:16:02'),
-(5, 'Cessna 162 Skycatcher', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 06:40:01'),
-(6, 'Cessna 205 Super Skywagon', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 06:40:28'),
-(7, 'Cessna 210 Centurion', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 06:57:42'),
+(5, 'Cessna 162 Skycatcher', 1, 'Phoenix Sky Harbor Airport, Phoenix, AZ', '', '', '', '0000-00-00', '2015-04-24 05:16:01'),
+(6, 'Cessna 205 Super Skywagon', 1, 'Denver Airport, Denver, CO', '', '', '', '0000-00-00', '2015-04-24 03:11:34'),
+(7, 'Cessna 210 Centurion', 1, 'O Hare Airport, Chicago, IL', '', '', '', '0000-00-00', '2015-04-21 23:02:10'),
 (8, 'Cessna T-50 Bobcat', 1, 'Idaho Falls Regional Airport, Idaho, ID', '', '', '', '0000-00-00', '2015-04-05 07:47:22'),
-(9, 'Cessna 336 Skymaster', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:03:06'),
-(10, 'Cessna 421 Golden Eagle', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 06:58:51'),
+(9, 'Cessna 336 Skymaster', 1, 'Honolulu Airport, Honolulu, HI	', '', '', '', '0000-00-00', '2015-04-24 03:35:12'),
+(10, 'Cessna 421 Golden Eagle', 1, 'Philadelphia Airport, Philadelphia, PA', '', '', '', '0000-00-00', '2015-04-24 04:22:50'),
 (11, 'Cessna 414 Chancellor', 1, 'Philadelphia Airport, Philadelphia, PA', '', '', '', '0000-00-00', '2015-04-05 07:47:07'),
-(12, 'Cessna 305 Bird Dog', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 06:59:24'),
-(13, 'Cessna 510 Citation Mustang', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 06:59:45'),
+(12, 'Cessna 305 Bird Dog', 1, 'Denver Airport, Denver, CO', '', '', '', '0000-00-00', '2015-04-24 06:11:40'),
+(13, 'Cessna 510 Citation Mustang', 1, 'Baltimore Washington Airport, Baltimore, MD', '', '', '', '0000-00-00', '2015-04-24 06:12:04'),
 (14, 'Cessna 303 Crusader', 1, 'Denver Airport, Denver, CO', '', '', '', '0000-00-00', '2015-04-16 04:47:36'),
-(15, 'Cessna Model CR-1', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:00:31'),
-(16, 'Cessna Model CR-2', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:00:46'),
-(17, 'Cessna Model CR-3', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:01:33'),
-(18, 'Cessna 172 Skyhawk', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:01:51'),
-(19, 'Cessna 182 SkyLane', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:02:08'),
-(20, 'Cessna 320 Skyknight', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:02:44'),
-(21, 'Bombardier Learjet 35', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:02:22'),
-(22, 'Bombardier Learjet 40 XR', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:03:33'),
-(23, 'Bombardier Learjet 60 XR', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:04:13'),
-(24, 'Bombardier Challenger 605', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:04:35'),
-(25, 'Bombardier Challenger 850', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:04:58'),
-(26, 'Bombardier Challenger 950', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:05:13'),
-(27, 'Bombardier Global 5000', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:05:37'),
-(28, 'Bombardier Global 6000', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:06:02'),
-(29, 'Dassault Falcon 10', 1, 'Los Angeles Airport, Los Angeles, CA', '', '', '', '0000-00-00', '2015-04-05 07:06:28'),
-(30, 'Embraer Phenom 300', 1, '', '', '', '', '0000-00-00', '2015-04-05 07:42:09');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tamtran1@umbc.edu`
---
-
-CREATE TABLE IF NOT EXISTS `tamtran1@umbc.edu` (
-`id` int(10) unsigned NOT NULL,
-  `origAirport` varchar(90) DEFAULT NULL,
-  `origLong` double DEFAULT NULL,
-  `origLat` double DEFAULT NULL,
-  `destAirport` varchar(90) DEFAULT NULL,
-  `destLong` double DEFAULT NULL,
-  `destLat` double DEFAULT NULL,
-  `dateTravel` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `leaseModel` varchar(90) DEFAULT NULL,
-  `lateFee` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+(15, 'Cessna Model CR-1', 1, 'Denver Airport, Denver, CO', '', '', '', '0000-00-00', '2015-04-24 01:46:07'),
+(16, 'Cessna Model CR-2', 1, 'O Hare Airport, Chicago, IL', '', '', '', '0000-00-00', '2015-04-24 06:15:48'),
+(17, 'Cessna Model CR-3', 1, 'Great Falls Airport, Great Falls, MT', '', '', '', '0000-00-00', '2015-04-24 06:13:24'),
+(18, 'Cessna 172 Skyhawk', 1, 'McCarran Airport, Las Vegas, NV', '', '', '', '0000-00-00', '2015-04-24 05:14:42'),
+(19, 'Cessna 182 SkyLane', 1, 'Albuquerque Sunport Airport, Albuquerque, NM', '', '', '', '0000-00-00', '2015-04-24 05:48:56'),
+(20, 'Cessna 320 Skyknight', 1, 'Minneapolis Saint Paul Airport, Minneapolis, MIN', '', '', '', '0000-00-00', '2015-04-24 06:14:04'),
+(21, 'Bombardier Learjet 35', 1, 'John F. Kennedy Airport, New York, NY', '', '', '', '0000-00-00', '2015-04-24 07:08:17'),
+(22, 'Bombardier Learjet 40 XR', 1, 'Salt Lake City Airport, Salt Lake, UT	', '', '', '', '0000-00-00', '2015-04-24 03:12:00'),
+(23, 'Bombardier Learjet 60 XR', 1, 'Miami Airport, Miami, FL', '', '', '', '0000-00-00', '2015-04-24 06:12:45'),
+(24, 'Bombardier Challenger 605', 1, 'Minneapolis Saint Paul Airport, Minneapolis, MIN', '', '', '', '0000-00-00', '2015-04-24 03:37:57'),
+(25, 'Bombardier Challenger 850', 1, 'Golden Triangle Regional Airport, Columbus, MS', '', '', '', '0000-00-00', '2015-04-24 05:42:07'),
+(26, 'Bombardier Challenger 950', 1, 'O Hare Airport, Chicago, IL', '', '', '', '0000-00-00', '2015-04-24 07:03:26'),
+(27, 'Bombardier Global 5000', 1, 'Washington Dulles Airport, Washington D.C. , VA', '', '', '', '0000-00-00', '2015-04-24 05:48:26'),
+(28, 'Bombardier Global 6000', 1, 'Philadelphia Airport, Philadelphia, PA', '', '', '', '0000-00-00', '2015-04-24 06:08:13'),
+(29, 'Dassault Falcon 10', 1, 'Minneapolis Saint Paul Airport, Minneapolis, MIN', '', '', '', '0000-00-00', '2015-04-24 06:08:39'),
+(30, 'Embraer Phenom 300', 1, 'Rolla National Airport, Rolla, MO', '', '', '', '0000-00-00', '2015-04-24 06:02:18');
 
 --
 -- Indexes for dumped tables
@@ -227,12 +210,6 @@ ALTER TABLE `planes`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tamtran1@umbc.edu`
---
-ALTER TABLE `tamtran1@umbc.edu`
- ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -245,22 +222,17 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `airport_locations`
 --
 ALTER TABLE `airport_locations`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=69;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=82;
 --
 -- AUTO_INCREMENT for table `planes`
 --
 ALTER TABLE `planes`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
---
--- AUTO_INCREMENT for table `tamtran1@umbc.edu`
---
-ALTER TABLE `tamtran1@umbc.edu`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -78,10 +78,7 @@
 			}
 		
 			//drop the client from the database
-			$sql = "DELETE FROM `customer_profile` WHERE `email` = '".$email."'";
-			$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-			$sql = "DROP TABLE `".$email."`";
-			$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+			$link->executeQuery("DELETE FROM `customer_profile` WHERE `email` = '".$email."'", $_SERVER["SCRIPT_NAME"]);
 		} else if ($newVal == "suspend")
 		{	//suspend the nauty client
 			$sql = "UPDATE `customer_profile` SET `password` = NULL WHERE `email` = '".$email."'";

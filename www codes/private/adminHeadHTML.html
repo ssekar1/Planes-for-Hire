@@ -151,9 +151,12 @@
 			
 				if (value == "delete")
 				{
-					if (!confirm("Are you sure? This cannot be undone"))
-						return;
-						newVal = "delete";
+					document.getElementById('adminContentPanel').innerHTML = "<div style = \"width:25%\"><font size = \"3\"><br>" +
+																			 "Delete member " + email + " " + field + "?   This cannot be undone<br>" +
+																			 "<a style = \"float:right;color:red;\" href = \"javascript: edit('" + email + "', '" + field + "', 'updateField');\">Delete</a>" +
+																			 "<a style = \"float:right\" href = \"javascript: restoreAdminContentPanel();\">Cancel   </a>" +
+																			 "<input id = \"fieldValue\" maxlength = \"90\" value = \"delete\" style = \"float:left; visibility:hidden;\" class = \"input\"/><br><br>" +
+																			 "</font></div><br><br>";
 				} else if (value == "suspend")
 					newVal = "suspend";
 				else if (value == "updateField")
@@ -164,7 +167,6 @@
 						return;
 					}
 					newVal = document.getElementById('fieldValue').value;
-					restoreAdminContentPanel();
 				} else if (field == "avatar")
 					document.getElementById('adminContentPanel').innerHTML = "<div style = \"width:35%\"><font size = \"3\"><br>" +
 																			 "Reset member " + email + " " + field + " ?<br>" +
@@ -173,7 +175,7 @@
 																			 "<input id = \"fieldValue\" maxlength = \"90\" value = \"default.jpg\" style = \"float:left; visibility:hidden;\" class = \"input\"/><br><br>" +
 																			 "</font></div><br><br>";
 				else
-					document.getElementById('adminContentPanel').innerHTML = "<div style = \"width:35%\"><font size = \"3\"><br>" +
+					document.getElementById('adminContentPanel').innerHTML = "<div style = \"width:23.5%\"><font size = \"3\"><br>" +
 																			 "Enter a new " + field + " for member " + email + "<br>" +
 																			 "<input id = \"fieldValue\" maxlength = \"90\" placeholder = \"" + value + "\" style = \"float:left;\"class = \"input\"/><br><br>" +
 																			 "<a style = \"float:right\" href = \"javascript: edit('" + email + "', '" + field + "', 'updateField');\">Apply</a>" +
