@@ -78,14 +78,14 @@
 			{
 				//background-color: #D8D8FF;
 				width: 50%;
-				float:left;
+				//float:left;
 				padding: 0px 0px 5px 0px; /*top right bottom left*/
 			}
 			.mainArrivalPanel
 			{
 				//background-color: #DBFFC9;
 				width: 50%;
-				float:right;
+				//float:right;
 				padding: 0px 0px 5px 0px; /*top right bottom left*/
 			}
 			.mainDateModelPanel
@@ -299,7 +299,7 @@
 				-moz-appearance: none;
 				appearance: none;
 				font-family: Arial, Verdana;
-
+				
 			}
 			select::-ms-expand
 			{	
