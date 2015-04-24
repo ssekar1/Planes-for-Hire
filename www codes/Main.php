@@ -55,7 +55,7 @@
 				if ($loginUser == "admin")
 					print ("<a style = \"float:right\" href=\"private/admin.php\">Hello ".$loginUser.".   </a>");
 				else
-					print ("<a style = \"float:right\" href=\"userprofile.php\">Hello ".$loginUser.".   </a>");		
+					print ("<a style = \"float:right\" href=\"userprofile.php\">Hello ".$loginUser."   </a>");		
 			} else //if they're not logged in then we provide a link for them to register and to login 
 				print ("<div class = 'regLoginStyle'>  <a href='login.php'>Login</a> | <a href='registration.php'> Register&nbsp&nbsp&nbsp</a></div>");
 		print ("</div>"); // this finishes the header pannel content
@@ -68,7 +68,8 @@
 					//this is the departing airport selection menu, this contains the list of available airport from the database, the list of planes is also affected by this selection item, but it is not being controlled here! 
 					print ("<div class = \"mainDepartPanel\">"); //defining the depart pannel for the departing airport selection menu
 						mysql_data_seek($mapTbl, 0); //resetting the array cursor to re-fetch the data
-						print ("Departing Airport   <br><select id = \"departingAirport\" style = \"width:150px\" onchange = \"focusMarker(this.value)\">");
+						print ("<div style = 'float: left'>Departing Airport</div>");
+						print("<select id = 'departingAirport' style = 'width:150px; float: right' onchange = 'focusMarker(this.value)'><br>");
 						print ("<option value = ''></option>");
 						while ($row = mysql_fetch_array($mapTbl))
 						{	//this is the regex, since the the database airport name is long, we are only interested in the city and state of the airport to be displayed  
@@ -81,7 +82,7 @@
 					//this is the arrival airport selection menu, this contain the list of available airports from the database
 					print ("<div class = \"mainArrivalPanel\">"); //defining the arrival panel for the arrival airport selection menu
 						mysql_data_seek($mapTbl, 0); //resetting the array cursor to re-fetch the data
-						print ("Arival Airport   <br><select id = \"arivalAirport\" style = \"width:150px\" onchange = \"focusMarker(this.value)\">");
+						print ("Arrival Airport<select id = \"arrivalAirport\" style = \"width:150px\" onchange = \"focusMarker(this.value)\">");
 						print ("<option value = ''></option>");
 						while ($row = mysql_fetch_array($mapTbl))
 						{	//another regex again, since the the database airport name is long, we are only interested in the city and state of the airport to be displayed 
