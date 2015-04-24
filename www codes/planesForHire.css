@@ -47,7 +47,7 @@
 				//background-color: #FFADEB;
 				-webkit-transform: translateZ(0);
    				 -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
-				width: 70%;
+				width: 65%;
 				height: 600px;
 				border-bottom-left-radius: 30px;
 				float: left;
@@ -70,7 +70,7 @@
 				border-color:#E6E6E6;
 				border-bottom-right-radius: 30px;
 				padding: 10px 10px 40px 10px; /*top right bottom left*/
-				width: 28.23%;
+				width: 33.2%;
 				height:550px;
 				float:right;
 			}
