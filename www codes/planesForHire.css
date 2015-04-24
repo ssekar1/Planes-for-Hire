@@ -2,7 +2,12 @@
 			a
 			{
 				text-decoration: none;
-				color: #CC3300;
+				color: #FFFFFF;
+			}
+
+			a:hover
+			{
+				color: yellow;
 			}
 			
 			pre {font-family: Arial, Verdana;}
@@ -10,7 +15,7 @@
 			
 			body
 			{	
-    			background-color: linen;
+    				background-color: linen;
 				font-family: Arial, Verdana;
 				
 			}
@@ -34,8 +39,9 @@
 				padding: 10px 50px 0px 20px; /*top right bottom left*/
 				border-top-right-radius: 30px;
 				border-top-left-radius: 30px;
-				box-shadow: 50px 30px 70px 10px #b2b2b2;
+				box-shadow: 50px 30px 10px 10px #b2b2b2;
 			}
+			
 			.mainMapPanel
 			{
 				//background-color: #FFADEB;
@@ -46,6 +52,14 @@
 				border-bottom-left-radius: 30px;
 				float: left;
 			}
+
+			.regLoginStyle
+			{
+				float: right;
+				color: white;
+				position: relative;
+			}			
+
 			.mainSelectPanel
 			{
 				//background-color: #BAE3C8;

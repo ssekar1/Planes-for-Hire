@@ -44,7 +44,7 @@
 		print ("<font size = \"3\">"); //set the default font size for the base container, all sub panel will use this specified font size
 		
 		print ("<div class = \"mainHeaderPanel\">"); //defining the header panel, this is use to hold the application logo, login, registration, and search bar items 
-			print ("<b><font style = \"float:left\" size = \"6\" color = \"#CC3300\">PLANES FOR HIRE</font></b><br>"); //this is the application logo
+			print ("<b style='color: white; font-size: 30px; float: left'>PLANES FOR HIRE</b><br>"); //this is the application logo
 			print("<form action=\"search.php\">"); //this is the search bar and its submit button, it is also a php form
 				print ("<input type = \"submit\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" name=\"query\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
 			print("</form>");
@@ -57,7 +57,7 @@
 				else
 					print ("<a style = \"float:right\" href=\"userprofile.php\">Hello ".$loginUser.".   </a>");		
 			} else //if they're not logged in then we provide a link for them to register and to login 
-				print ("<a style = \"float:right\" href=\"registration.php\">Register   </a><a style = \"float:right\" href=\"login.php\">Login   </a>");
+				print ("<div class = 'regLoginStyle'>  <a href='login.php'>Login</a> | <a href='registration.php'> Register&nbsp&nbsp&nbsp</a></div>");
 		print ("</div>"); // this finishes the header pannel content
 		
 		print ("<div class = \"mainMapPanel\" id=\"googleMap\"></div>"); //defining the map pannel and closing the map pannel, the map pannel only contain the map itself
