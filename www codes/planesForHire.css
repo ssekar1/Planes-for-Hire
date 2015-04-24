@@ -93,7 +93,14 @@
 				//background-color: #C2D6FF;
 				width: 100%;
 				float:right;
-				padding: 0px 0px 0px 0px; /*top right bottom left*/
+				padding: 0px 0px 6px 0px; /*top right bottom left*/
+			}
+			.mainRentalModelPanel
+			{
+				//background-color: #C2D6FF;
+				width: 100%;
+				float:right;
+				padding: 0px 0px 6px 0px; /*top right bottom left*/
 			}
 			.mainButtonPanel
 			{

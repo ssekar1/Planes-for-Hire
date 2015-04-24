@@ -92,9 +92,10 @@
 					print ("</div>"); //this finishes the arrival panel for the arrival selection menu
 					
 					//these are the rental dates and plane model select panel, this panel contans all the necessary items to define which and when the planes should be ready and when it should be return
-					print ("<div class = \"mainDateModelPanel\">"); //defining the pannel for the dates and model selection items
+						print ("<div class = \"mainDateModelPanel\">"); //defining the pannel for the dates and model selection items
 						print ("Start Date   <input type = \"text\" id = \"datePicker\" onchange = \"updateForm('startLabel', this.value)\"><br>"); //this is the date selection item, it uses the jQuery date select for faster date entry 
 						//this is the rental duration selection item, this allows the user to select how long they can rent the plane for, we only allow a 5 days maximum
+						print ("<div class = \"mainRentalModelPanel\">");
 						print ("Rental Duration   <select id = \"durationSelect\" onchange = \"updateForm('durationLabel', this.value)\">");
 						print ("<option value = ''></option>"); 
 						for ($x = 1; $x < 6; $x++)
