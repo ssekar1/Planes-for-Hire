@@ -48,7 +48,7 @@
 			print("<form action=\"search.php\">"); //this is the search bar and its submit button, it is also a php form
 				print ("<input type = \"submit\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" name=\"query\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
 			print("</form>");
-	
+	//-----------------------------------------------------------
 			if(isset($loginUser)) //if the user is logged in then their name will link to their user profile page and another link for them to log out
 			{
 				print ("<a style = \"float:right\" href=\"logout.php\">Logout    </a>");
