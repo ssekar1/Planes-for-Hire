@@ -20,7 +20,7 @@
 		$_SESSION['balance'] = $row ['balance']; //use to calculate with the late fee, late fee will be added to total balance
 	}
 	
-	$_SESSION['balance'] = $_SESSION['balance'] + $_SESSION['feeOwe'];
+	$_SESSION['balance'] += $_SESSION['feeOwe'];
 	
 	//update their profile by removing the plane entry, and mark them as having no plane check out, also put in the new total latefee
 	$sql = "UPDATE `customer_profile` SET `checkOutStatus` = '0', `plane` = '', `balance` = ".$_SESSION['balance']." WHERE `email` = '".$email."'";
@@ -31,12 +31,27 @@
 	while ($row = mysql_fetch_array($result))
 	{
 		$_SESSION['currentLocation'] = $row ['returnTo'];
+		$serializedMemberWaitList = $row ['memberWaitList'];
 	}
 	
-	//mark the plane as check in, and remove the them from the plane record
-	$sql = "UPDATE `planes` SET `status` = '1', `client` = '', `leaseFrom` = '', `currentLocation` = '".$_SESSION['currentLocation']."', `returnTo` = '', `returnDate` = '0000-00-00' WHERE `model` = '".$_SESSION['model']."'";
-	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);	
+	$result = $link->executeQuery("select * from `airport_locations` WHERE `airport` = '".$_SESSION['currentLocation']."'", $_SERVER["SCRIPT_NAME"]);
+	while ($row = mysql_fetch_array($result))
+	{
+		$long= $row ['long'];
+		$lat = $row ['lat'];
+	}
 	
+	//mark the plane as check in, remove the user from the plane record, and update the plane current location
+	$sql = "UPDATE `planes` SET `status` = '1', `client` = '', `leaseFrom` = '', `currentLocation` = '".$_SESSION['currentLocation']."', `returnTo` = '', `returnDate` = '0000-00-00' WHERE `model` = '".$_SESSION['model']."'";
+	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+	
+	$memberWaitList = unserialize($serializedMemberWaitList);
+	if ($memberWaitList != NULL)
+		if ($memberWaitList -> offsetExists(0))
+		{
+			$nextWaitingMember = $memberWaitList -> offsetGet(0);
+			$link->executeQuery("UPDATE `customer_profile` SET `notification` = '".$_SESSION['model']."|".$_SESSION['currentLocation']."|".$long."|".$lat."' WHERE `email` = '".$nextWaitingMember."'", $_SERVER["SCRIPT_NAME"]);
+		}
 	print ("<META http-equiv = \"REFRESH\" content = \"0; checkInResult.php\">");
 ?>
 

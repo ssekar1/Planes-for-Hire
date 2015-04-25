@@ -18,9 +18,10 @@
 				$loginUser = $row['firstName']; //in the main, the $loginUser variable is use for greeting the user by their name
 				$userEmail = $row['email']; //this variable is use for pulling their travel history record
 				$checkOutStatus = $row['checkOutStatus']; //this variable is use to determine if they'd check out a plane, and if they do, we don't let them check out another one
-				
 				if ($checkOutStatus == 1) //if they did check out a plane, then get the model they're currently holding
 					$modelRented = $row['plane'];
+				if ($row['notification'] != '')
+					$notification = $row['notification'];					
 			}
 		
 		if (isset ($modelRented)) //if they did check out a plane, then we check the plane record to see when it was suppose to be return
@@ -36,8 +37,6 @@
 		if ($_SESSION['loginId'] == "admin") //unique case for administrator if they're logged in
 			$loginUser = $_SESSION['loginId'];
 		
-//		if (isset ($userEmail)) //this is for when we use to have the user travel history on tha main page. but its probably not used anymore
-//			$travelHist = $link->executeQuery("select * from `".$userEmail."`", $_SERVER["SCRIPT_NAME"]);
 	}
 	
 	print ("<div class = \"mainBasePanel\">"); //defining the base container for all sub panel
@@ -149,8 +148,39 @@
 		print ("</font>"); //closing the font setting for the base container
 	print ("</div>"); //this finishes the base container
 	print ("<script> mainFormPanelBak(); </script>"); //this function is used to back up the content of the plane rental form, so that we can alter its content to display other messages and still be able to return it back to its original states 
+	
+	print ("<label id = \"xmlRespondFeedback\"></label>");
+	if (isset($notification))
+		print ("<script> showNotification('".$notification."'); </script>");
+	
 	include ("tailHTML.html"); //the tailHTML is invoke here
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -6,6 +6,7 @@ var mainFormPanel; 				//this variable is use to back up the content of the form
 var srcDestToggle = -1;			//Toggle that alternates between -1 and 1.  -1 meaning src, 1 meaning destination.
 var src = dest = null;			//Two points storing long and lat coords
 var flightPath = null;			//Object representing a Google Maps path graphics object
+var notification = '';
 
 function saveTrvHist () {userTrvHist = document.getElementById('userTrvHistPanel').innerHTML;}
 function showTrvHist () {document.getElementById('userTrvHistPanel').innerHTML = userTrvHist;}
@@ -279,17 +280,18 @@ function updateUserInfo(intent)
  */			
 function changeUserInfo (id)
 {	//this entire string is the html content that replaces the content inside the userTravHistPanel
-	var string = "<div style = \"width:37%\"><font size = \"3\">" +
-			 "<label>First Name   <input name = \"firstName\" id = \"firstName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<label>Last Name   <input name = \"lastName\" id = \"lastName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<label>Street Address   <input name = \"street\" id = \"street\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<label>City   <input name = \"city\" id = \"city\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<label>State <input name = \"state\" id = \"state\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<label>Zip Code <input name = \"zip\" id = \"zip\" type = \"text\" maxlength = \"5\" class = \"input\" onKeyup = \"isValidChar (this.value, 'zip')\"/><br><br></label>" +
-			 "<label>Phone Number <input name = \"phone\" id = \"phone\" type = \"text\" maxlength = \"10\" class = \"input\" onKeyup = \"isValidChar (this.value, 'phone')\"/><br><br></label>" +
-			 "<label>Email <input name = \"email\" id = \"email\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
-			 "</font></div>";
+	var string = 
+		"<div style = \"width:37%\"><font size = \"3\">" +
+		"<label>First Name   <input name = \"firstName\" id = \"firstName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<label>Last Name   <input name = \"lastName\" id = \"lastName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<label>Street Address   <input name = \"street\" id = \"street\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<label>City   <input name = \"city\" id = \"city\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<label>State <input name = \"state\" id = \"state\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<label>Zip Code <input name = \"zip\" id = \"zip\" type = \"text\" maxlength = \"5\" class = \"input\" onKeyup = \"isValidChar (this.value, 'zip')\"/><br><br></label>" +
+		"<label>Phone Number <input name = \"phone\" id = \"phone\" type = \"text\" maxlength = \"10\" class = \"input\" onKeyup = \"isValidChar (this.value, 'phone')\"/><br><br></label>" +
+		"<label>Email <input name = \"email\" id = \"email\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<a style = \"float:right\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+		"</font></div>";
 									
 	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
 }
@@ -305,7 +307,8 @@ function updatePassword (id, error)
 			 "<input id = \"changePassword\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
 			 "<label>Retype password   </label>" +
 			 "<input id = \"changePassword2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
-			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>";
+			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a>" +
+			 "<a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>";
 			 if (error === 'error')
 				string = string + "<br><span style = \"float:right\">Password invalid</span>";
 			 string = string + "</div></font>";
@@ -322,7 +325,8 @@ function payBalance (id)
 	var string = "<div style = \"width:47%\"><font size = \"3\">" +
 			 "<label>Enter exact amount in dollars   </label>" +
 			 "<input id = \"payBalance\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>" +
-			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a>" +
+			 "<a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
 			 "</font></div>";
 	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
 }
@@ -340,7 +344,8 @@ function changeAvatar (id, avatar)
 	if (avatarToggle === "false") //this if else logic is use to toggle between the link and the button, the avatarToggle is a global variable and initially set to false to allow the function to switch to the buttons mode
 	{	//this entire string is the html content that replaces the content inside the userExtenPanel
 		var string = "<font size = \"3\">" +
-					 "<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
+					 "<input type = \"button\" value = \"Find it\" id = \"searchButton\">" + 
+					 "<input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
 					 "<a style = \"float:right\"href=\"logout.php\">Logout    </a><br>" +
 					 "<img id = \"userAvatar\" class = \"userAvatar\" src = 	\"/picsUploads/" + avatar + "\"><br>" +
 					 "<form action = \"uploadFile.php\" method = \"post\" enctype = \"multipart/form-data\">" +
@@ -352,7 +357,8 @@ function changeAvatar (id, avatar)
 	} else //switch back to the link mode
 	{	//this entire string is the html content that replaces the content inside the userExtenPanel
 		var string = "<font size = \"3\">" +
-					 "<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
+					 "<input type = \"button\" value = \"Find it\" id = \"searchButton\">" +
+					 "<input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
 					 "<a style = \"float:right\"href=\"logout.php\">Logout    </a><br>" +
 					 "<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/" + avatar + "\"><br>" +
 					 "<a href = \"javascript: changeAvatar('userExtenPanel', '" + avatar + "');\">Edit</a>" +
@@ -423,6 +429,103 @@ function createMarker(name, long, lat, type)
 	return marker;
 }
 
+function handleNotification (value)
+{
+	var valueArr = value.split("|");
+	notification = valueArr[1];
+	var data = "notification=" + notification;
+	
+	if (valueArr[0] === "yes")
+	{
+		var data = "model=" + notification;
+		document.getElementById('departingAirport').value = "" + valueArr[3] + "|" + valueArr[4] + "|departLabel|" + valueArr[2];
+		document.getElementById('departingAirport').onchange();
+		
+	} else if (valueArr[0] === "no")
+	{
+		document.getElementById('mainFormPanel').innerHTML = mainFormPanel;
+		
+		if (window.XMLHttpRequest)
+			xmlhttp = new XMLHttpRequest();
+		else
+			xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
+
+		xmlhttp.onreadystatechange = function()
+		{
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			{
+				//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
+				document.getElementById('xmlRespondFeedback').innerHTML = xmlhttp.responseText; //for debug inside main page
+				
+			}
+		}
+		xmlhttp.open ("post", "handleNotification.php", "true");
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send (data);
+	}
+}
+
+function showNotification(value)
+{
+	var valueArr = value.split("|");
+	document.getElementById('mainFormPanel').innerHTML = 
+		"<br><br><span>A plane you've been waiting for is available !</span><br><br>" + valueArr[0] +
+		" is available right now at<br>" + valueArr[1] +
+		"<br><br>Would you like to check it out?<br>" +
+		"<a style =\"float:right\" href = \"javascript: handleNotification('yes|" + value + "');\">Yes       </a>" +
+		"<a style = \"float:right\"href = \"javascript: handleNotification('no|" + value + "|');\">No   </a>";
+}
+
+function waitingList(value)
+{
+	var valueArr = value.split("|");
+	var model = valueArr[1];
+	var id = valueArr[3];
+	var airport;
+	if (document.getElementById('departingAirport'))
+	{
+		var airportDataStr = document.getElementById('departingAirport').value;
+		var airportDataArr = airportDataStr.split("|");
+		airport = airportDataArr[3];
+	} else
+		airport = valueArr[1];
+	var data = "model=" + model + "&airport=" + airport;
+	
+	if (valueArr[0] === "yes")
+	{
+		if (valueArr[2] === "removeFromList")
+			data += data + "&intent=" + valueArr[2];
+		else if (valueArr[2] === "showConfirm")
+			data += "&intent=" + valueArr[2];
+		else if (valueArr[2] === "addToList")
+			data += "&intent=" + valueArr[2];
+			
+		//alert (data); for debug
+		
+		if (window.XMLHttpRequest)
+			xmlhttp = new XMLHttpRequest();
+		else
+			xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
+	
+		xmlhttp.onreadystatechange = function()
+		{
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			{
+				//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
+				document.getElementById(id).innerHTML = xmlhttp.responseText; //for debug inside main page
+				//document.getElementById('userTrvHistPanel').innerHTML = xmlhttp.responseText; //for debug inside user profile page
+			}
+		}
+		
+		xmlhttp.open ("post", "waitingList.php", "true");
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send (data);
+	}
+	else if (valueArr[0] === "no") 
+		document.getElementById('mainFormPanel').innerHTML = mainFormPanel;
+	// cont here get the value done and work on the waiting list
+}
+
 /*
  *this function update the content of the plane rental form panel. when the user selects and item in the main page to rent a plane
  *content of this panel are populated with their selections to provide feedback on what they pick
@@ -430,6 +533,15 @@ function createMarker(name, long, lat, type)
  */
 function updateForm (id, value)
 {
+	var valueArr = value.split("|");
+	if (valueArr[1] === '0')
+	{		
+		waitingList ('yes|' + valueArr[0] + '|showConfirm|mainFormPanel');
+		return;
+	}
+	
+	value = valueArr[0];
+	
 	if (value === '') //if there value is empty, then we don't update the form
 		return;
 	
@@ -447,9 +559,14 @@ function updateForm (id, value)
 	
 	mainFormPanel = document.getElementById('mainFormPanel').innerHTML;
 	
-	/*===========update drop down box for planes here==================*/ 
+	//this section performs the update drop down box for the planes select options 
 	if (id === 'departLabel')
 	{
+		var data = "airport=" + value;
+		
+		if (notification !== '')
+			data += "&notification=" + notification;
+		
 		if (window.XMLHttpRequest)
 			xmlhttp = new XMLHttpRequest();
 		else
@@ -461,15 +578,20 @@ function updateForm (id, value)
 			{
 				//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
 				document.getElementById('planeSelect').innerHTML = xmlhttp.responseText; //for debug
+				
+				if (notification !== '') //part of notification handler, automatically selecting the plane for the user when they select yes
+				{
+					document.getElementById('planeSelect').value = notification + "|1";
+					document.getElementById('planeSelect').onchange();
+					notification = '';
+				}
 			}
 		}
 		
 		xmlhttp.open ("post", "populatePlaneOption.php", "true");
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		xmlhttp.send ("airport=" + value);
-	}
-	/*====================//=========================*/
-	
+		xmlhttp.send (data);
+	}	
 }
 
 function focusMarker(value)
