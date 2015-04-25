@@ -2,12 +2,7 @@
 			a
 			{
 				text-decoration: none;
-				color: #FFFFFF;
-			}
-
-			a:hover
-			{
-				color: yellow;
+				color: #CC3300;
 			}
 			
 			pre {font-family: Arial, Verdana;}
@@ -15,7 +10,7 @@
 			
 			body
 			{	
-    				background-color: linen;
+    			background-color: linen;
 				font-family: Arial, Verdana;
 				
 			}
@@ -23,7 +18,7 @@
 			{
 				//background-color: #000000;
 				margin-left: auto;
-     				margin-right: auto;
+     			margin-right: auto;
 				width: 1300px;
 			}
 			.mainHeaderPanel
@@ -39,30 +34,21 @@
 				padding: 10px 50px 0px 20px; /*top right bottom left*/
 				border-top-right-radius: 30px;
 				border-top-left-radius: 30px;
-				box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.25);
+				box-shadow: 50px 30px 70px 10px #b2b2b2;
 			}
-			
 			.mainMapPanel
 			{
 				//background-color: #FFADEB;
 				-webkit-transform: translateZ(0);
    				 -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
-				width: 65%;
+				width: 70%;
 				height: 600px;
 				border-bottom-left-radius: 30px;
 				float: left;
 			}
-
-			.regLoginStyle
-			{
-				float: right;
-				color: white;
-				position: relative;
-			}			
-
 			.mainSelectPanel
 			{
-				background-color: rgb(224,224,224);
+				//background-color: #BAE3C8;
 				border-style: solid;
 				border-left-width: 0px;
 				border-top-width: 0px;
@@ -70,7 +56,7 @@
 				border-color:#E6E6E6;
 				border-bottom-right-radius: 30px;
 				padding: 10px 10px 40px 10px; /*top right bottom left*/
-				width: 33.2%;
+				width: 28.23%;
 				height:550px;
 				float:right;
 			}
@@ -78,14 +64,14 @@
 			{
 				//background-color: #D8D8FF;
 				width: 50%;
-				//float:left;
+				float:left;
 				padding: 0px 0px 5px 0px; /*top right bottom left*/
 			}
 			.mainArrivalPanel
 			{
 				//background-color: #DBFFC9;
 				width: 50%;
-				//float:right;
+				float:right;
 				padding: 0px 0px 5px 0px; /*top right bottom left*/
 			}
 			.mainDateModelPanel
@@ -93,14 +79,7 @@
 				//background-color: #C2D6FF;
 				width: 100%;
 				float:right;
-				padding: 0px 0px 5px 0px; /*top right bottom left*/
-			}
-			.mainRentalModelPanel
-			{
-				//background-color: #C2D6FF;
-				width: 100%;
-				float:right;
-				padding: 0px 0px 6px 0px; /*top right bottom left*/
+				padding: 0px 0px 0px 0px; /*top right bottom left*/
 			}
 			.mainButtonPanel
 			{
@@ -306,7 +285,7 @@
 				-moz-appearance: none;
 				appearance: none;
 				font-family: Arial, Verdana;
-				
+
 			}
 			select::-ms-expand
 			{	

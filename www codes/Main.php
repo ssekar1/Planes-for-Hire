@@ -43,7 +43,7 @@
 		print ("<font size = \"3\">"); //set the default font size for the base container, all sub panel will use this specified font size
 		
 		print ("<div class = \"mainHeaderPanel\">"); //defining the header panel, this is use to hold the application logo, login, registration, and search bar items 
-			print ("<b style='color: white; font-size: 30px; float: left'>PLANES FOR HIRE</b><br>"); //this is the application logo
+			print ("<b><font style = \"float:left\" size = \"6\" color = \"#CC3300\">PLANES FOR HIRE</font></b><br>"); //this is the application logo
 			print("<form action=\"search.php\">"); //this is the search bar and its submit button, it is also a php form
 				print ("<input type = \"submit\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" name=\"query\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
 			print("</form>");
@@ -52,11 +52,11 @@
 			{
 				print ("<a style = \"float:right\" href=\"logout.php\">Logout    </a>");
 				if ($loginUser == "admin")
-					print ("<a style = \"float:right\" href=\"private/admin.php\">Hello ".$loginUser."   </a>");
+					print ("<a style = \"float:right\" href=\"private/admin.php\">Hello ".$loginUser.".   </a>");
 				else
-					print ("<a style = \"float:right\" href=\"userprofile.php\">Hello ".$loginUser."   </a>");		
+					print ("<a style = \"float:right\" href=\"userprofile.php\">Hello ".$loginUser.".   </a>");		
 			} else //if they're not logged in then we provide a link for them to register and to login 
-				print ("<div class = 'regLoginStyle'>  <a href='login.php'>Login</a> | <a href='registration.php'> Register&nbsp&nbsp&nbsp</a></div>");
+				print ("<a style = \"float:right\" href=\"registration.php\">Register   </a><a style = \"float:right\" href=\"login.php\">Login   </a>");
 		print ("</div>"); // this finishes the header pannel content
 		
 		print ("<div class = \"mainMapPanel\" id=\"googleMap\"></div>"); //defining the map pannel and closing the map pannel, the map pannel only contain the map itself
@@ -80,7 +80,7 @@
 					//this is the arrival airport selection menu, this contain the list of available airports from the database
 					print ("<div class = \"mainArrivalPanel\">"); //defining the arrival panel for the arrival airport selection menu
 						mysql_data_seek($mapTbl, 0); //resetting the array cursor to re-fetch the data
-						print ("Arrival Airport   <br><select id = \"arivalAirport\" style = \"width:150px\" onchange = \"focusMarker(this.value)\">");
+						print ("Arival Airport   <br><select id = \"arivalAirport\" style = \"width:150px\" onchange = \"focusMarker(this.value)\">");
 						print ("<option value = ''></option>");
 						while ($row = mysql_fetch_array($mapTbl))
 						{	//another regex again, since the the database airport name is long, we are only interested in the city and state of the airport to be displayed 
@@ -91,10 +91,9 @@
 					print ("</div>"); //this finishes the arrival panel for the arrival selection menu
 					
 					//these are the rental dates and plane model select panel, this panel contans all the necessary items to define which and when the planes should be ready and when it should be return
-						print ("<div class = \"mainDateModelPanel\">"); //defining the pannel for the dates and model selection items
+					print ("<div class = \"mainDateModelPanel\">"); //defining the pannel for the dates and model selection items
 						print ("Start Date   <input type = \"text\" id = \"datePicker\" onchange = \"updateForm('startLabel', this.value)\"><br>"); //this is the date selection item, it uses the jQuery date select for faster date entry 
 						//this is the rental duration selection item, this allows the user to select how long they can rent the plane for, we only allow a 5 days maximum
-						print ("<div class = \"mainRentalModelPanel\">");
 						print ("Rental Duration   <select id = \"durationSelect\" onchange = \"updateForm('durationLabel', this.value)\">");
 						print ("<option value = ''></option>"); 
 						for ($x = 1; $x < 6; $x++)
