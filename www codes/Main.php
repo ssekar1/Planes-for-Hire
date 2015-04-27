@@ -18,9 +18,10 @@
 				$loginUser = $row['firstName']; //in the main, the $loginUser variable is use for greeting the user by their name
 				$userEmail = $row['email']; //this variable is use for pulling their travel history record
 				$checkOutStatus = $row['checkOutStatus']; //this variable is use to determine if they'd check out a plane, and if they do, we don't let them check out another one
-				
 				if ($checkOutStatus == 1) //if they did check out a plane, then get the model they're currently holding
 					$modelRented = $row['plane'];
+				if ($row['notification'] != '')
+					$notification = $row['notification'];					
 			}
 		
 		if (isset ($modelRented)) //if they did check out a plane, then we check the plane record to see when it was suppose to be return
@@ -36,15 +37,13 @@
 		if ($_SESSION['loginId'] == "admin") //unique case for administrator if they're logged in
 			$loginUser = $_SESSION['loginId'];
 		
-//		if (isset ($userEmail)) //this is for when we use to have the user travel history on tha main page. but its probably not used anymore
-//			$travelHist = $link->executeQuery("select * from `".$userEmail."`", $_SERVER["SCRIPT_NAME"]);
 	}
 	
 	print ("<div class = \"mainBasePanel\">"); //defining the base container for all sub panel
 		print ("<font size = \"3\">"); //set the default font size for the base container, all sub panel will use this specified font size
 		
 		print ("<div class = \"mainHeaderPanel\">"); //defining the header panel, this is use to hold the application logo, login, registration, and search bar items 
-			print ("<b style='color: white; font-size: 30px; float: left'>PLANES FOR HIRE</b><br>"); //this is the application logo
+			print ("<b><font style = \"float:left\" size = \"6\" color = \"#CC3300\">PLANES FOR HIRE</font></b><br>"); //this is the application logo
 			print("<form action=\"search.php\">"); //this is the search bar and its submit button, it is also a php form
 				print ("<input type = \"submit\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" name=\"query\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
 			print("</form>");
@@ -53,11 +52,11 @@
 			{
 				print ("<a style = \"float:right\" href=\"logout.php\">Logout    </a>");
 				if ($loginUser == "admin")
-					print ("<a style = \"float:right\" href=\"private/admin.php\">Hello ".$loginUser."   </a>");
+					print ("<a style = \"float:right\" href=\"private/admin.php\">Hello ".$loginUser.".   </a>");
 				else
-					print ("<a style = \"float:right\" href=\"userprofile.php\">Hello ".$loginUser."   </a>");		
+					print ("<a style = \"float:right\" href=\"userprofile.php\">Hello ".$loginUser.".   </a>");		
 			} else //if they're not logged in then we provide a link for them to register and to login 
-				print ("<div class = 'regLoginStyle'>  <a href='login.php'>Login</a> | <a href='registration.php'> Register&nbsp&nbsp&nbsp</a></div>");
+				print ("<a style = \"float:right\" href=\"registration.php\">Register   </a><a style = \"float:right\" href=\"login.php\">Login   </a>");
 		print ("</div>"); // this finishes the header pannel content
 		
 		print ("<div class = \"mainMapPanel\" id=\"googleMap\"></div>"); //defining the map pannel and closing the map pannel, the map pannel only contain the map itself
@@ -81,7 +80,7 @@
 					//this is the arrival airport selection menu, this contain the list of available airports from the database
 					print ("<div class = \"mainArrivalPanel\">"); //defining the arrival panel for the arrival airport selection menu
 						mysql_data_seek($mapTbl, 0); //resetting the array cursor to re-fetch the data
-						print ("Arrival Airport   <br><select id = \"arivalAirport\" style = \"width:150px\" onchange = \"focusMarker(this.value)\">");
+						print ("Arival Airport   <br><select id = \"arivalAirport\" style = \"width:150px\" onchange = \"focusMarker(this.value)\">");
 						print ("<option value = ''></option>");
 						while ($row = mysql_fetch_array($mapTbl))
 						{	//another regex again, since the the database airport name is long, we are only interested in the city and state of the airport to be displayed 
@@ -92,10 +91,9 @@
 					print ("</div>"); //this finishes the arrival panel for the arrival selection menu
 					
 					//these are the rental dates and plane model select panel, this panel contans all the necessary items to define which and when the planes should be ready and when it should be return
-						print ("<div class = \"mainDateModelPanel\">"); //defining the pannel for the dates and model selection items
+					print ("<div class = \"mainDateModelPanel\">"); //defining the pannel for the dates and model selection items
 						print ("Start Date   <input type = \"text\" id = \"datePicker\" onchange = \"updateForm('startLabel', this.value)\"><br>"); //this is the date selection item, it uses the jQuery date select for faster date entry 
 						//this is the rental duration selection item, this allows the user to select how long they can rent the plane for, we only allow a 5 days maximum
-						print ("<div class = \"mainRentalModelPanel\">");
 						print ("Rental Duration   <select id = \"durationSelect\" onchange = \"updateForm('durationLabel', this.value)\">");
 						print ("<option value = ''></option>"); 
 						for ($x = 1; $x < 6; $x++)
@@ -149,8 +147,39 @@
 		print ("</font>"); //closing the font setting for the base container
 	print ("</div>"); //this finishes the base container
 	print ("<script> mainFormPanelBak(); </script>"); //this function is used to back up the content of the plane rental form, so that we can alter its content to display other messages and still be able to return it back to its original states 
+	
+	print ("<label id = \"xmlRespondFeedback\"></label>");
+	if (isset($notification))
+		print ("<script> showNotification('".$notification."'); </script>");
+	
 	include ("tailHTML.html"); //the tailHTML is invoke here
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -54,7 +54,8 @@
 					print ("Plane on hold  ".$plane."<br><br>");
 				print ("Balance $".$balance);
 				print ("<a style = \"float:right\" href = \"javascript: payBalance('userTrvHistPanel');\">Pay</a><br>");
-				print ("<a style = \"float:right\" href = \"javascript: updatePassword('userTrvHistPanel');\">Change password</a><br><br>");
+				print ("<a style = \"float:right\" href = \"javascript: updatePassword('userTrvHistPanel');\">Change password</a>");
+				print ("<a style = \"float:left\" href = \"javascript: waitingList('yes|none|removeFromList|userTrvHistPanel');\">Remove from all waiting list</a><br><br>");
 			print ("</div>");
 			
 			print("<div id = \"userExtenPanel\" class = \"userExtenPanel\">");

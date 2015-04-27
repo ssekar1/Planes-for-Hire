@@ -27,9 +27,8 @@
 				$query = $link->executeQuery("select * from `admin_setting`", $_SERVER["SCRIPT_NAME"]);
 			else
 				$query = $link->executeQuery("select * from `customer_profile` where email = '".$loginId."'", $_SERVER["SCRIPT_NAME"]);
-			$rows = mysql_num_rows($query);
 				
-			if ($rows == 1)
+			if (mysql_num_rows($query) == 1)
 			{
 				while($row = mysql_fetch_array($query))	// retrieve the encrypt password
 					$_SESSION ['key'] = $row ['password']; // define the encrypted password									

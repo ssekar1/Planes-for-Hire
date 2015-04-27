@@ -6,10 +6,65 @@ var mainFormPanel; 				//this variable is use to back up the content of the form
 var srcDestToggle = -1;			//Toggle that alternates between -1 and 1.  -1 meaning src, 1 meaning destination.
 var src = dest = null;			//Two points storing long and lat coords
 var flightPath = null;			//Object representing a Google Maps path graphics object
+var notification = '';
+
+var changeAvatarOnHTML = //this entire string is the html content that replaces the content inside the userExtenPanel
+		"<font size = \"3\">" +
+		"<input type = \"button\" value = \"Find it\" id = \"searchButton\">" + 
+		"<input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
+		"<a style = \"float:right\"href=\"logout.php\">Logout    </a><br>" +
+		"<img id = \"userAvatar\" class = \"userAvatar\" src = \"\"><br>" +
+		"<form action = \"uploadFile.php\" method = \"post\" enctype = \"multipart/form-data\">" +
+		"<input type = \"button\" value = \"Cancel\" onclick = \"changeAvatar('userExtenPanel')\">" +
+		"<input type = \"submit\" value = \"Apply\" name = \"submit\">" +
+		"<input type = \"file\" name = \"fileToUpload\" id = \"fileToUpload\"><br>" +
+		"</form></font>";
+
+var changeAvatarOffHTML = //this entire string is the html content that replaces the content inside the userExtenPanel
+		"<font size = \"3\">" +
+		"<input type = \"button\" value = \"Find it\" id = \"searchButton\">" +
+		"<input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
+		"<a style = \"float:right\" href=\"logout.php\">Logout    </a><br>" +
+		"<img id = \"userAvatar\" class = \"userAvatar\" src = \"\"><br>" +
+		"<a href = \"javascript: changeAvatar('userExtenPanel');\">Edit</a>" +
+		"</font>";
+
+var changeUserInfoHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel
+		"<div style = \"width:37%;\"><font size = \"3\">" +
+		"<label>First Name   <input name = \"firstName\" id = \"firstName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<label>Last Name   <input name = \"lastName\" id = \"lastName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<label>Street Address   <input name = \"street\" id = \"street\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<label>City   <input name = \"city\" id = \"city\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<label>State <input name = \"state\" id = \"state\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<label>Zip Code <input name = \"zip\" id = \"zip\" type = \"text\" maxlength = \"5\" class = \"input\" onKeyup = \"isValidChar (this.value, 'zip')\"/><br><br></label>" +
+		"<label>Phone Number <input name = \"phone\" id = \"phone\" type = \"text\" maxlength = \"10\" class = \"input\" onKeyup = \"isValidChar (this.value, 'phone')\"/><br><br></label>" +
+		"<label>Email <input name = \"email\" id = \"email\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
+		"<a style = \"float:right\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+		"</font></div>";
+
+var updatePasswordHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel
+		"<div style = \"width:43%\"><font size = \"3\">" +
+		"<label>Enter new password   </label>" +
+		"<input id = \"changePassword\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
+		"<label>Retype password   </label>" +
+		"<input id = \"changePassword2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
+		"<a style = \"float:right\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a>" +
+		"<a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+		"<br><div class = \"passErr\" style = \"float:right; color:red; opacity: 0;\">Password invalid</div>" +
+		"</font></div>";
+		
+var payBalanceHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel
+		"<div style = \"width:47%\"><font size = \"3\">" +
+		"<label>Enter exact amount in dollars   </label>" +
+		"<input id = \"payBalance\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>" +
+		"<a style = \"float:right\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a>" +
+		"<a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+		"</font></div>";
 
 function saveTrvHist () {userTrvHist = document.getElementById('userTrvHistPanel').innerHTML;}
 function showTrvHist () {document.getElementById('userTrvHistPanel').innerHTML = userTrvHist;}
-
+function mainFormPanelBak () {mainFormPanel = document.getElementById('mainFormPanel').innerHTML;}
+function mainFormPanelRes () {document.getElementById('mainFormPanel').innerHTML = mainFormPanel;}
 $(function() {$("#datePicker").datepicker();}); //this is the jQuery function to perform the date picker selection for the checkout date, makes inputing date much faster 
 
 /*
@@ -33,26 +88,11 @@ function checkIn(checkOutStatus, dayVal, feeVal)
 			diffDays = 0;
 			feeOwe = 0;
 		}
-					
 		var data = "diffDays="+diffDays+"&feeOwe="+feeOwe; //the data to pass to the backend server are the days late and how much it cost per day
+		ajax ("mainFormPanel", "checkIn.php", data);
 		
-		if (window.XMLHttpRequest)
-			xmlhttp = new XMLHttpRequest();
-		else
-			xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
-			
-		xmlhttp.onreadystatechange = function()
-		{
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-				document.getElementById('mainFormPanel').innerHTML = xmlhttp.responseText; //the return content here is simply a redirect to the checkinResult.php, check last line of checkIn.php
-		}
-		
-		xmlhttp.open ("post", "checkIn.php", "true"); //ajax communicates with checkIn.php server script to perform database operation for checkin process
-		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		xmlhttp.send (data);
-	} else
+	} else //change the content of the plane rental form and display a message telling them that they don't have any planes checked out
 		document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>You currently dont have any planes checked out</span></center>"; //if they don't have any planes checked out
-		//change the content of the plane rental form and display a message telling them that they don't have any planes checked out
 	return;
 }
 
@@ -62,8 +102,7 @@ function checkIn(checkOutStatus, dayVal, feeVal)
  */
 function checkOut(checkOutStatus)
 {								
-	document.getElementById('mainFormPanel').innerHTML = mainFormPanel; //first, restore whatever content that was originally belong to the plane rental form panel
-	
+	mainFormPanelRes(); //first, restore whatever content that was originally belong to the plane rental form panel
 	var depart = document.getElementById('departLabel').innerHTML; //collect all necessary checkout data from the plane rental form
 	var arrive = document.getElementById('arrivalLabel').innerHTML; //if the data content is insufficient for checkout, we will display an error message
 	var duration = document.getElementById('durationLabel').innerHTML; //indicating the chck out form is incomplete
@@ -76,33 +115,14 @@ function checkOut(checkOutStatus)
 		if (depart !== '' && arrive !== '' && duration !== '' && startDate !== '' && returnDate !== '' && model !== '') //verify all the collected data are not empty 
 		{	//combine all collected data into a single string of data
 			var data = "depart="+depart+"&arrive="+arrive+"&duration="+duration+"&startDate="+startDate+"&returnDate="+returnDate+"&model="+model;
-			
-			if (window.XMLHttpRequest)
-				xmlhttp = new XMLHttpRequest();
-			else
-				xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
-			
-			xmlhttp.onreadystatechange = function()
-			{
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-					document.getElementById('mainFormPanel').innerHTML = xmlhttp.responseText; //the content of this response is the data that was selected by the user,
-					//and was just pushed into the database, it changes the content of the plane rental form to show this result. its content are render from the
-					//checkOut.php server script 
-			}
-		
-			xmlhttp.open ("post", "checkOut.php", "true"); //ajax communicates with checkOut.php server script to perform database operation for checkout process 
-			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-			xmlhttp.send (data);
+			ajax ("mainFormPanel", "checkOut.php", data);
 		} else
 		{	//error message telling user that rental form is incomplete
 			document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>Rental form incomplete</span></center>";
 			return;
 		}
-	} else
-	{	//error message telling user that they currently have a lane checkout
+	} else //error message telling user that they currently have a lane checkout
 		document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>You already checkout a plane</span></center>";
-		return;
-	}
 }
 
 /*
@@ -254,23 +274,7 @@ function updateUserInfo(intent)
 		showTrvHist(); //return the travel history to its original state before leaving
 		return; //return to our normal routine
 	}
-	
-	//this is the ajax subroutine
-	if (window.XMLHttpRequest)
-		xmlhttp = new XMLHttpRequest();
-	else
-		xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
-	
-	xmlhttp.onreadystatechange = function()
-	{
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-			//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
-			document.getElementById('xmlRespondFeedback').innerHTML = xmlhttp.responseText; //by reaping the response text we can be sure that the server script finishes the procedure properly 
-	}
-		
-	xmlhttp.open ("post", "updateUserProfile.php", "true"); //the updateUserProfile.php is the script that handles the server side subroutine for these functions
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send (data);
+	ajax ("xmlRespondFeedback", "updateUserProfile.php", data);
 }
 
 /*
@@ -278,20 +282,8 @@ function updateUserInfo(intent)
  *the content of of this function is simply altering the html content of the userTravHistPanel with the necessary text field items for the user to change their information
  */			
 function changeUserInfo (id)
-{	//this entire string is the html content that replaces the content inside the userTravHistPanel
-	var string = "<div style = \"width:37%\"><font size = \"3\">" +
-			 "<label>First Name   <input name = \"firstName\" id = \"firstName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<label>Last Name   <input name = \"lastName\" id = \"lastName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<label>Street Address   <input name = \"street\" id = \"street\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<label>City   <input name = \"city\" id = \"city\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<label>State <input name = \"state\" id = \"state\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<label>Zip Code <input name = \"zip\" id = \"zip\" type = \"text\" maxlength = \"5\" class = \"input\" onKeyup = \"isValidChar (this.value, 'zip')\"/><br><br></label>" +
-			 "<label>Phone Number <input name = \"phone\" id = \"phone\" type = \"text\" maxlength = \"10\" class = \"input\" onKeyup = \"isValidChar (this.value, 'phone')\"/><br><br></label>" +
-			 "<label>Email <input name = \"email\" id = \"email\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
-			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
-			 "</font></div>";
-									
-	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
+{									
+	document.getElementById(id).innerHTML = changeUserInfoHTML; //this line modifies the the content of the userTravHistPanel
 }
 
 /*
@@ -299,18 +291,11 @@ function changeUserInfo (id)
  *the content of of this function is simply altering the html content of the userTravHistPanel with the necessary text field items for the user to change their password
  */	
 function updatePassword (id, error)
-{	//this entire string is the html content that replaces the content inside the userTravHistPanel
-	var string = "<div style = \"width:43%\"><font size = \"3\">" +
-			 "<label>Enter new password   </label>" +
-			 "<input id = \"changePassword\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
-			 "<label>Retype password   </label>" +
-			 "<input id = \"changePassword2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
-			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>";
-			 if (error === 'error')
-				string = string + "<br><span style = \"float:right\">Password invalid</span>";
-			 string = string + "</div></font>";
-
-	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
+{
+	if (!document.getElementById('updatePasswordHTML'))
+		document.getElementById(id).innerHTML = updatePasswordHTML; //this line modifies the the content of the userTravHistPanel
+	if (error === 'error')
+		$('.passErr').animate({opacity: '1'});
 }
 
 /*
@@ -318,49 +303,31 @@ function updatePassword (id, error)
  *the content of of this function is simply altering the html content of the userTravHistPanel with the necessary text field items to allow the user to pay their balance
  */	
 function payBalance (id)
-{	//this entire string is the html content that replaces the content inside the userTravHistPanel
-	var string = "<div style = \"width:47%\"><font size = \"3\">" +
-			 "<label>Enter exact amount in dollars   </label>" +
-			 "<input id = \"payBalance\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>" +
-			 "<a style = \"float:right\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
-			 "</font></div>";
-	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userTravHistPanel
+{
+	document.getElementById(id).innerHTML = payBalanceHTML; //this line modifies the the content of the userTravHistPanel
 }
 
 /*
  *this function allows the user to upload a picture to change their profile picture, it is directly invoke from the userProfile page
  *the content of of this function is simply altering the html content of the userExtenPanel with the necessary button items to allow the user to upload and change their profile picture
+ *complimentary of http://blog.teamtreehouse.com/uploading-files-ajax
+ *http://codular.com/javascript-ajax-file-upload-with-progress
+ *http://www.w3schools.com/php/php_file_upload.asp
  */				
-function changeAvatar (id, avatar)
+function changeAvatar (id)
 {
-	//complimentary of http://blog.teamtreehouse.com/uploading-files-ajax
-	//http://codular.com/javascript-ajax-file-upload-with-progress
-	//http://www.w3schools.com/php/php_file_upload.asp
-	
+	var avatar = document.getElementById('userAvatar').src;
 	if (avatarToggle === "false") //this if else logic is use to toggle between the link and the button, the avatarToggle is a global variable and initially set to false to allow the function to switch to the buttons mode
-	{	//this entire string is the html content that replaces the content inside the userExtenPanel
-		var string = "<font size = \"3\">" +
-					 "<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
-					 "<a style = \"float:right\"href=\"logout.php\">Logout    </a><br>" +
-					 "<img id = \"userAvatar\" class = \"userAvatar\" src = 	\"/picsUploads/" + avatar + "\"><br>" +
-					 "<form action = \"uploadFile.php\" method = \"post\" enctype = \"multipart/form-data\">" +
-					 "<input type = \"button\" value = \"Cancel\" onclick = \"changeAvatar('userExtenPanel', '" + avatar + "')\">" +
-					 "<input type = \"submit\" value = \"Apply\" name = \"submit\">" +
-					 "<input type = \"file\" name = \"fileToUpload\" id = \"fileToUpload\"><br>" +
-					 "</form></font>";
+	{	
+		document.getElementById(id).innerHTML = changeAvatarOnHTML;
+		document.getElementById('userAvatar').src = avatar;
 		avatarToggle = "true";
 	} else //switch back to the link mode
-	{	//this entire string is the html content that replaces the content inside the userExtenPanel
-		var string = "<font size = \"3\">" +
-					 "<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">" +
-					 "<a style = \"float:right\"href=\"logout.php\">Logout    </a><br>" +
-					 "<img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/" + avatar + "\"><br>" +
-					 "<a href = \"javascript: changeAvatar('userExtenPanel', '" + avatar + "');\">Edit</a>" +
-					 "</font>";
+	{	
+		document.getElementById(id).innerHTML = changeAvatarOffHTML; //this line modifies the the content of the userExtenPanel
+		document.getElementById('userAvatar').src = avatar;
 		avatarToggle = "false";
 	}
-	
-	document.getElementById(id).innerHTML = string; //this line modifies the the content of the userExtenPanel
 }
 
 /*
@@ -423,6 +390,66 @@ function createMarker(name, long, lat, type)
 	return marker;
 }
 
+function handleNotification (value)
+{
+	var valueArr = value.split("|");
+	notification = valueArr[1];
+	var data = "notification=" + notification;
+	
+	if (valueArr[0] === "yes")
+	{
+		var data = "model=" + notification;
+		document.getElementById('departingAirport').value = "" + valueArr[3] + "|" + valueArr[4] + "|departLabel|" + valueArr[2];
+		document.getElementById('departingAirport').onchange();
+		
+	} else if (valueArr[0] === "no")
+	{
+		mainFormPanelRes();
+		ajax ("xmlRespondFeedback", "handleNotification.php", data);
+	}
+}
+
+function showNotification(value)
+{
+	var valueArr = value.split("|");
+	document.getElementById('mainFormPanel').innerHTML = 
+		"<br><br><span>A plane you've been waiting for is available !</span><br><br>" + valueArr[0] +
+		" is available right now at<br>" + valueArr[1] +
+		"<br><br>Would you like to check it out?<br>" +
+		"<a style =\"float:right\" href = \"javascript: handleNotification('yes|" + value + "');\">Yes       </a>" +
+		"<a style = \"float:right\"href = \"javascript: handleNotification('no|" + value + "|');\">No   </a>";
+}
+
+function waitingList(value)
+{
+	var valueArr = value.split("|");
+	var model = valueArr[1];
+	var id = valueArr[3];
+	var airport;
+	if (document.getElementById('departingAirport'))
+	{
+		var airportDataStr = document.getElementById('departingAirport').value;
+		var airportDataArr = airportDataStr.split("|");
+		airport = airportDataArr[3];
+	} else
+		airport = valueArr[1];
+	var data = "model=" + model + "&airport=" + airport;
+	
+	if (valueArr[0] === "yes")
+	{
+		if (valueArr[2] === "removeFromList")
+			data += data + "&intent=" + valueArr[2];
+		else if (valueArr[2] === "showConfirm")
+			data += "&intent=" + valueArr[2];
+		else if (valueArr[2] === "addToList")
+			data += "&intent=" + valueArr[2];
+		
+		ajax (id, "waitingList.php", data);
+	}
+	else if (valueArr[0] === "no") 
+		mainFormPanelRes();
+}
+
 /*
  *this function update the content of the plane rental form panel. when the user selects and item in the main page to rent a plane
  *content of this panel are populated with their selections to provide feedback on what they pick
@@ -430,10 +457,19 @@ function createMarker(name, long, lat, type)
  */
 function updateForm (id, value)
 {
+	var valueArr = value.split("|");
+	if (valueArr[1] === '0')
+	{		
+		waitingList ('yes|' + valueArr[0] + '|showConfirm|mainFormPanel');
+		return;
+	}
+	
+	value = valueArr[0];
+	
 	if (value === '') //if there value is empty, then we don't update the form
 		return;
 	
-	document.getElementById('mainFormPanel').innerHTML = mainFormPanel;
+	mainFormPanelRes();
 	document.getElementById(id).innerHTML = value;
 	
 	if (document.getElementById('durationLabel').innerHTML !== '' && document.getElementById('startLabel').innerHTML !== '')
@@ -445,12 +481,26 @@ function updateForm (id, value)
 		document.getElementById('returnLabel').innerHTML = formDate;
 	}
 	
-	mainFormPanel = document.getElementById('mainFormPanel').innerHTML;
+	mainFormPanelBak();
 	
-	/*===========update drop down box for planes here==================*/ 
+	//this section performs the update drop down box for the planes select options 
 	if (id === 'departLabel')
 	{
-		if (window.XMLHttpRequest)
+		var data = "airport=" + value;
+		
+		if (notification !== '')
+			data += "&notification=" + notification;
+		
+		ajax("planeSelect", "populatePlaneOption.php", data);
+	}	
+}
+
+//this is the common ajax function to be implemented into the rest of the javascript, this should reduce unnecessary lengthly codes 
+function ajax (id, php, data)
+{
+	//alert ("this is the common ajax\n" + "id: " + id + "\nphp: " + php + "\ndata: " + data); //for debugging purposes
+	
+	if (window.XMLHttpRequest)
 			xmlhttp = new XMLHttpRequest();
 		else
 			xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
@@ -460,16 +510,20 @@ function updateForm (id, value)
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
 			{
 				//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
-				document.getElementById('planeSelect').innerHTML = xmlhttp.responseText; //for debug
+				document.getElementById(id).innerHTML = xmlhttp.responseText; //will need a feedback target on html document
+				
+				if (notification !== '') //part of notification handler, automatically selecting the plane for the user when they select yes
+				{
+					document.getElementById('planeSelect').value = notification + "|1";
+					document.getElementById('planeSelect').onchange();
+					notification = '';
+				}
 			}
 		}
 		
-		xmlhttp.open ("post", "populatePlaneOption.php", "true");
+		xmlhttp.open ("post", php, "true"); // will need a designation php target file 
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		xmlhttp.send ("airport=" + value);
-	}
-	/*====================//=========================*/
-	
+		xmlhttp.send (data); //will need the data to be sent
 }
 
 function focusMarker(value)
@@ -533,11 +587,6 @@ function drawPath(lngLatPath)
 
 	// Applies path to map
 	flightPath.setMap(map);
-}
-
-function mainFormPanelBak ()
-{
-	mainFormPanel = document.getElementById('mainFormPanel').innerHTML;
 }
 
 // --------------- Init function for map -------------------------------
