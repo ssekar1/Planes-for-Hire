@@ -24,6 +24,11 @@
 				text-decoration: none;
 				color: #CC3300;
 			}
+			a:hover
+			{
+				text-decoration: none;
+				color: blue;
+			}
 			
 			body
 			{	
@@ -255,7 +260,7 @@
 			function ajax (id, php, data)
 			{
 				//alert ("this is the common ajax\n" + "id: " + id + "\nphp: " + php + "\ndata: " + data); //for debugging purposes
-	
+				
 				if (window.XMLHttpRequest)
 					xmlhttp = new XMLHttpRequest();
 				else
@@ -267,6 +272,8 @@
 					{
 						//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
 						document.getElementById(id).innerHTML = xmlhttp.responseText; //will need a feedback target on html document
+						
+						
 					}
 				}
 	

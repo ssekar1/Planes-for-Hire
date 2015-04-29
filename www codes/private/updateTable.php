@@ -38,6 +38,9 @@
 				$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 			}
 		}
+	} else if ($intent == "verifyEmail") //list the airports currently in database
+	{	
+		print ("verifying email");
 	} else if ($intent == "listAirports") //list the airports currently in database
 	{	
 		print ("<br><table border='0px'>");

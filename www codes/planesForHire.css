@@ -5,6 +5,11 @@
 				color: #CC3300;
 			}
 			
+			a:hover
+			{
+				color:blue;
+			}
+			
 			pre {font-family: Arial, Verdana;}
 			span {color: red;}
 			

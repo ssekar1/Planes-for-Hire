@@ -53,7 +53,7 @@ var updatePasswordHTML = //this entire string is the html content that replaces 
 		"<br><passErr class = \"valErr\" style = \"float:right; color:red; opacity: 0;\">Password invalid</passErr>" +
 		"</font></div>";
 		
-var payBalanceHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel.
+var payBalanceHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel
 		"<div style = \"width:47%\"><font size = \"3\">" +
 		"<label>Enter exact amount in dollars   </label>" +
 		"<input id = \"payBalance\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>" +
@@ -300,11 +300,7 @@ function updatePassword (id, error)
 	if (!document.getElementById('updatePasswordHTML'))
 		document.getElementById(id).innerHTML = updatePasswordHTML; //this line modifies the the content of the userTravHistPanel
 	if (error === 'error')
-<<<<<<< HEAD
-		$('.passErr').animate({opacity: '1'});
-=======
 		$('.valErr').animate({opacity: '1'});
->>>>>>> origin/master
 }
 
 /*
