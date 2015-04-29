@@ -72,7 +72,10 @@
 						while ($row = mysql_fetch_array($mapTbl))
 						{	//this is the regex, since the the database airport name is long, we are only interested in the city and state of the airport to be displayed  
 							preg_match('/[^,]*,[^,]*$/', $row ['airport'], $matches); //(patern, subject, matchesFound), this is the format of the regex
-							print ("<option value = '".$row ['long']."|".$row ['lat']."|departLabel|".$row ['airport']."'>".$matches[0]."</option>");
+							if ($matches)
+								print ("<option value = '".$row ['long']."|".$row ['lat']."|departLabel|".$row ['airport']."'>".$matches[0]."</option>");
+							else
+								print ("<option value = '".$row ['long']."|".$row ['lat']."|departLabel|".$row ['airport']."'>".$row ['airport']."</option>");
 						}
 						print ("</select>");
 					print ("</div>"); //this finishes the depart panel for the depart selection menu
@@ -85,7 +88,10 @@
 						while ($row = mysql_fetch_array($mapTbl))
 						{	//another regex again, since the the database airport name is long, we are only interested in the city and state of the airport to be displayed 
 							preg_match('/[^,]*,[^,]*$/', $row ['airport'], $matches); //(patern, subject, matchesFound), this is the format of the regex
-							print ("<option value = '".$row ['long']."|".$row ['lat']."|arrivalLabel|".$row ['airport']."'>".$matches[0]."</option>");
+							if ($matches)
+								print ("<option value = '".$row ['long']."|".$row ['lat']."|arrivalLabel|".$row ['airport']."'>".$matches[0]."</option>");
+							else
+								print ("<option value = '".$row ['long']."|".$row ['lat']."|arrivalLabel|".$row ['airport']."'>".$row ['airport']."</option>");
 						}
 						print ("</select>");
 					print ("</div>"); //this finishes the arrival panel for the arrival selection menu
@@ -138,7 +144,10 @@
 					while ($row = mysql_fetch_array($mapTbl))
 					{	//another regex again, since the the database airport name is long, we are only interested in the city and state of the airport to be displayed 
 						preg_match('/[^,]*,[^,]*$/', $row ['airport'], $matches); //(patern, subject, matchesFound), this is the format of the regex
-						print ("<a href = \"javascript: focusMarker('".$row ['long']."|".$row ['lat']."');\" style = \"color: black\">".$matches[0]."</a><br>"); //when a user clicks on an airport, we pan to that location so they can see where it is
+						if ($matches)
+							print ("<a href = \"javascript: focusMarker('".$row ['long']."|".$row ['lat']."');\" style = \"color: black\">".$matches[0]."</a><br>"); //when a user clicks on an airport, we pan to that location so they can see where it is
+						else
+							print ("<a href = \"javascript: focusMarker('".$row ['long']."|".$row ['lat']."');\" style = \"color: black\">".$row ['airport']."</a><br>");
 					}
 				} else
 					print ("<font size =\"4\">Error Loading Airports<br>Please Reflesh Your Browser</font><br>"); //the error message in case if the SQL query is unsuccessful
@@ -154,35 +163,3 @@
 	
 	include ("tailHTML.html"); //the tailHTML is invoke here
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

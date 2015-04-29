@@ -50,15 +50,16 @@ var updatePasswordHTML = //this entire string is the html content that replaces 
 		"<input id = \"changePassword2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
 		"<a style = \"float:right\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a>" +
 		"<a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
-		"<br><div class = \"passErr\" style = \"float:right; color:red; opacity: 0;\">Password invalid</div>" +
+		"<br><passErr class = \"valErr\" style = \"float:right; color:red; opacity: 0;\">Password invalid</passErr>" +
 		"</font></div>";
 		
-var payBalanceHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel
+var payBalanceHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel.
 		"<div style = \"width:47%\"><font size = \"3\">" +
 		"<label>Enter exact amount in dollars   </label>" +
 		"<input id = \"payBalance\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br>" +
 		"<a style = \"float:right\" href = \"javascript: updateUserInfo('payBalance');\">Apply</a>" +
 		"<a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+		"<br><passErr class = \"valErr\" style = \"float:right; color:red; opacity: 0;\">Invalid amount</passErr>" +
 		"</font></div>";
 
 function saveTrvHist () {userTrvHist = document.getElementById('userTrvHistPanel').innerHTML;}
@@ -154,6 +155,11 @@ function isValidChar (char, id)
 		}
 	}
 }
+
+function test ()
+{
+	alert ("test");
+}
 			
 /*
  *this function is used by the registration process to check if all required fields are entered before submitting
@@ -171,27 +177,18 @@ function confirmEntry ()
 								if (document.getElementById ('email').value != '')
 									if (document.getElementById ('password').value != '')
 										if (document.getElementById ('password2').value == document.getElementById ('password').value)
-											document.form.submit();
-										else
-											alert ('the password doesn\'t match');
-									else
-										alert ('you need to enter your a password');
-								else
-									alert ('you need to enter your email');
-							else
-								alert ('you need to enter your phone number');
-						else
-							alert ('you need to enter your zip code');
-					else
-						alert ('you need to enter your state');
-				else
-					alert ('you need to enter your city');
-			else
-				alert ('you need to enter your street address');
-		else
-			alert ('You need to enter your last name'); 
-	else
-		alert ('You need to enter your first name');				
+											ajax ('xmlRespondFeedback', 'confirm.php', "verifyEmail=" + document.getElementById ('email').value);
+										else document.getElementById ('valErr').innerHTML = "the password doesn't match";
+									else document.getElementById ('valErr').innerHTML = "you need to enter your a password";
+								else document.getElementById ('valErr').innerHTML = "you need to enter your email";
+							else document.getElementById ('valErr').innerHTML = "you need to enter your phone number";
+						else document.getElementById ('valErr').innerHTML = "you need to enter your zip code";
+					else document.getElementById ('valErr').innerHTML = "you need to enter your state";
+				else document.getElementById ('valErr').innerHTML = "you need to enter your city";
+			else document.getElementById ('valErr').innerHTML = "you need to enter your street address";
+		else document.getElementById ('valErr').innerHTML = "You need to enter your last name"; 
+	else document.getElementById ('valErr').innerHTML = "You need to enter your first name";
+	document.getElementById ('valErr').style.opacity = '1';
 }
 
 /*
@@ -219,7 +216,15 @@ function updateUserInfo(intent)
 	}
 	
 	if (intent === 'payBalance') //use to pay the balance
+	{
+		if (document.getElementById('payBalance').value < 0)
+		{
+			$('.valErr').animate({opacity: '1'});
+			return;
+		}
 		data = data+"payBalance="+document.getElementById('payBalance').value;
+		
+	}
 	
 	if (intent === 'updateUser') //update the user information, data entries are concatenated as a single string, for which ever entries that are available
 	{
@@ -295,7 +300,11 @@ function updatePassword (id, error)
 	if (!document.getElementById('updatePasswordHTML'))
 		document.getElementById(id).innerHTML = updatePasswordHTML; //this line modifies the the content of the userTravHistPanel
 	if (error === 'error')
+<<<<<<< HEAD
 		$('.passErr').animate({opacity: '1'});
+=======
+		$('.valErr').animate({opacity: '1'});
+>>>>>>> origin/master
 }
 
 /*
@@ -457,6 +466,7 @@ function waitingList(value)
  */
 function updateForm (id, value)
 {
+	mainFormPanelRes();
 	var valueArr = value.split("|");
 	if (valueArr[1] === '0')
 	{		
@@ -468,6 +478,17 @@ function updateForm (id, value)
 	
 	if (value === '') //if there value is empty, then we don't update the form
 		return;
+	
+	if (id === 'startLabel') //verify if the selected checkout date is current or later
+	{
+		var selDte = Date.parse(value);
+		var currDte = Date.parse(((new Date()).getMonth() + 1) + "/" + (new Date()).getDate() + "/" + (new Date()).getFullYear());
+		if (selDte < currDte)
+		{
+			document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>Invalid start date</span></center>";
+			return;
+		}
+	}
 	
 	mainFormPanelRes();
 	document.getElementById(id).innerHTML = value;
@@ -512,6 +533,11 @@ function ajax (id, php, data)
 				//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
 				document.getElementById(id).innerHTML = xmlhttp.responseText; //will need a feedback target on html document
 				
+				if (document.getElementById ('xmlRespondFeedback').innerHTML === 'email valid')
+					document.form.submit();
+				else if (document.getElementById ('xmlRespondFeedback').innerHTML === 'email not valid')
+					document.getElementById ('valErr').innerHTML = "Cannot use this email";
+					
 				if (notification !== '') //part of notification handler, automatically selecting the plane for the user when they select yes
 				{
 					document.getElementById('planeSelect').value = notification + "|1";

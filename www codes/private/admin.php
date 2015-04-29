@@ -20,7 +20,9 @@
 				print ("<font size = \"3\">");
 				print ("<grtngTag style = \"float:left\">Hello ".$loginUser."   </grtngTag>");
 				print ("<a href=\"javascript: edit('admin', 'password', '');\" style = \"float:left\">Edit Password   </a>");
+				print ("<a href=\"javascript: listPlanes('');\" style = \"float:left\">Planes   </a>");
 				print ("<a href=\"javascript: addPlane('');\" style = \"float:left\">Add Plane   </a>");
+				print ("<a href=\"javascript: listAirports('');\" style = \"float:left\">Airports   </a>");
 				print ("<a href=\"javascript: addAirport('');\" style = \"float:left\">Add Airport   </a>");
 				print ("<a href=\"../main.php\" style = \" float:right\">Main Page    </a>");
 				print ("<a href=\"../logout.php\" style = \"float:right\">Logout    </a><br>");

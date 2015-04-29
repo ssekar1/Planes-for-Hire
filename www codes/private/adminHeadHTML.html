@@ -144,6 +144,14 @@
 							 "<a style = \"float:right\" href = \"javascript: restoreAdminContentPanel();\">Cancel   </a>" +
 							 "</font></div><br><br>";
 			
+			function adminContentPanelBak () {adminContentPanel = document.getElementById('adminContentPanel').innerHTML;}
+			function listAirports () {ajax ("adminContentPanel", "updateTable.php", "intent=listAirports");}
+			function listPlanes () {ajax ("adminContentPanel", "updateTable.php", "intent=listPlanes");}
+			
+			function deletePlane (model) {ajax ("adminContentPanel", "updateTable.php", "intent=deletePlane&model=" + model);}
+			function deleteAirport (airport) {ajax ("adminContentPanel", "updateTable.php", "intent=deleteAirport&airport=" + airport);}
+			
+			
 			function edit(email, field, value)
 			{
 				var msg = "Enter a new " + field + " value for member " + email + "\nThe current value is:";
@@ -174,32 +182,25 @@
 																			 "<a style = \"float:right\" href = \"javascript: restoreAdminContentPanel();\">Cancel   </a>" +
 																			 "<input id = \"fieldValue\" maxlength = \"90\" value = \"default.jpg\" style = \"float:left; visibility:hidden;\" class = \"input\"/><br><br>" +
 																			 "</font></div><br><br>";
+				else if (field === "password")
+					document.getElementById('adminContentPanel').innerHTML = "<div style = \"width:23.5%\"><font size = \"3\"><br>" +
+																			 "Enter a new " + field + " for member " + email + "<br>" +
+																			 "<input id = \"fieldValue\" maxlength = \"90\" placeholder = \"" + value + "\" style = \"float:left;\" type = \"password\" class = \"input\"/><br><br>" +
+																			 "<a style = \"float:right\" href = \"javascript: edit('" + email + "', '" + field + "', 'updateField');\">Apply</a>" +
+																			 "<a style = \"float:right\" href = \"javascript: restoreAdminContentPanel();\">Cancel   </a>" +
+																			 "</font></div><br><br>";
 				else
 					document.getElementById('adminContentPanel').innerHTML = "<div style = \"width:23.5%\"><font size = \"3\"><br>" +
 																			 "Enter a new " + field + " for member " + email + "<br>" +
-																			 "<input id = \"fieldValue\" maxlength = \"90\" placeholder = \"" + value + "\" style = \"float:left;\"class = \"input\"/><br><br>" +
+																			 "<input id = \"fieldValue\" maxlength = \"90\" placeholder = \"" + value + "\" style = \"float:left;\" class = \"input\"/><br><br>" +
 																			 "<a style = \"float:right\" href = \"javascript: edit('" + email + "', '" + field + "', 'updateField');\">Apply</a>" +
 																			 "<a style = \"float:right\" href = \"javascript: restoreAdminContentPanel();\">Cancel   </a>" +
 																			 "</font></div><br><br>";
 				
-				if (newVal.length >= 1)
-				{					
-					if (window.XMLHttpRequest)
-						xmlhttp = new XMLHttpRequest();
-					else
-						xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
-					
-					xmlhttp.onreadystatechange = function()
-					{
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-							document.getElementById('xmlRespondFeedback').innerHTML = xmlhttp.responseText;
-					}
-					
-					xmlhttp.open ("post", "updateTable.php", "true");
-					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-					xmlhttp.send ("email=" + email + "&field=" + field + "&newVal=" + newVal + "&intent=" + intent);
-				} else
-					return;
+				var data = "email=" + email + "&field=" + field + "&newVal=" + newVal + "&intent=" + intent;
+				
+				if (newVal.length >= 1)	
+					ajax ("xmlRespondFeedback", "updateTable.php", data);
 			}
 			
 			function restoreAdminContentPanel()
@@ -227,22 +228,7 @@
 				}
 				
 				if (data.length >= 1)
-				{
-					if (window.XMLHttpRequest)
-						xmlhttp = new XMLHttpRequest();
-					else
-						xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
-					
-					xmlhttp.onreadystatechange = function()
-					{
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-							document.getElementById('airportLocation').innerHTML = xmlhttp.responseText;
-					}
-					
-					xmlhttp.open ("post", "updateTable.php", "true");
-					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-					xmlhttp.send (data);
-				}
+					ajax ("airportLocation", "updateTable.php", data);
 			}
 			
 			function addAirport(intent)
@@ -253,7 +239,6 @@
 				
 				if (intent == 'apply')
 				{
-					alert ("applying airport");
 					airport = document.getElementById('airport').value;
 					lon = document.getElementById('lon').value;
 					lat = document.getElementById('lat').value;
@@ -263,27 +248,31 @@
 				}
 				
 				if (data.length >= 1)
-				{
-					if (window.XMLHttpRequest)
-						xmlhttp = new XMLHttpRequest();
-					else
-						xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
-					
-					xmlhttp.onreadystatechange = function()
-					{
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-							document.getElementById('xmlRespondFeedback').innerHTML = xmlhttp.responseText;
-					}
-					
-					xmlhttp.open ("post", "updateTable.php", "true");
-					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-					xmlhttp.send (data);
-				}
+					ajax ("xmlRespondFeedback", "updateTable.php", data);
 			}
 			
-			function adminContentPanelBak ()
+			//this is the common ajax function to be implemented into the rest of the javascript, this should reduce unnecessary lengthly codes 
+			function ajax (id, php, data)
 			{
-				adminContentPanel = document.getElementById('adminContentPanel').innerHTML;
+				//alert ("this is the common ajax\n" + "id: " + id + "\nphp: " + php + "\ndata: " + data); //for debugging purposes
+	
+				if (window.XMLHttpRequest)
+					xmlhttp = new XMLHttpRequest();
+				else
+					xmlhttp = new ActiveXObject ("Microsoft.XMLHTTP");
+	
+				xmlhttp.onreadystatechange = function()
+				{
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+					{
+						//compliments of https://www.developphp.com/video/JavaScript/Ajax-Post-to-PHP-File-XMLHttpRequest-Object-Return-Data-Tutorial
+						document.getElementById(id).innerHTML = xmlhttp.responseText; //will need a feedback target on html document
+					}
+				}
+	
+				xmlhttp.open ("post", php, "true"); // will need a designation php target file 
+				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xmlhttp.send (data); //will need the data to be sent
 			}
 		</script>
 		

@@ -51,9 +51,13 @@
 			print ("<input name = \"password2\" id = \"password2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>");
 		print ("</label>");
 	
+	print ("<center><valErr id = \"valErr\" class = \"valErr\" style = \"opacity: 0; color:red;\">---</valErr><center><br>");
+	
 	print ("<button type = \"button\" id = \"submitButton\" onclick= \"confirmEntry ()\">Submit</button><br><br>");
+	
 	
 	print ("</div>");
 	print ("</form>");
+	print ("<label id = \"xmlRespondFeedback\" style =\"visibility: hidden\" ></label>");
 	include ("tailHTML.html");
 ?>
