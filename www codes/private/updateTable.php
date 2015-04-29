@@ -38,16 +38,95 @@
 				$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 			}
 		}
-	}
-	else if ($intent == "addPlaneToTable")
+	} else if ($intent == "listAirports") //list the airports currently in database
+	{	
+		print ("<br><table border='0px'>");
+		print ("<tr>");
+		print ("<td>Delete   </td>");
+		print ("<td>Airport</td>");
+		print ("</tr>");
+		$result = $link->executeQuery("SELECT * FROM `airport_locations`", $_SERVER["SCRIPT_NAME"]);
+		while ($row = mysql_fetch_array($result))
+		{
+			print ("<tr><td><a href = \"javascript: deleteAirport('".$row ['airport']."');\" style = \"color: red\">delete</td>".
+				"<td>".$row['airport']."</td></tr>");
+		}
+		print ("</table><br>");
+		print ("<a style = \"float:left\" href = \"javascript: restoreAdminContentPanel();\">Return</a>");
+	} else if ($intent == "deleteAirport") //delete an airport
+	{
+		//$planeResult = $link->executeQuery("SELECT * FROM `planes` WHERE `currentLocation` = '".$airport."'", $_SERVER["SCRIPT_NAME"]);
+		$airportResult = $link->executeQuery("SELECT * FROM `airport_locations` WHERE `airport` != '".$airport."'", $_SERVER["SCRIPT_NAME"]);
+		$link->executeQuery("UPDATE `planes` SET `currentLocation` = '".mysql_fetch_array($airportResult)['airport']."' WHERE `currentLocation` = '".$airport."'", $_SERVER["SCRIPT_NAME"]);
+		$link->executeQuery("UPDATE `planes` SET `returnTo` = '".mysql_fetch_array($airportResult)['airport']."' WHERE `returnTo` = '".$airport."'", $_SERVER["SCRIPT_NAME"]);
+		
+		$link->executeQuery("DELETE FROM `airport_locations` WHERE `airport` = '".$airport."'", $_SERVER["SCRIPT_NAME"]);
+		print ($airport." was deleted<br><table border='0px'>");
+		print ("<tr>");
+		print ("<td>Delete   </td>");
+		print ("<td>Airport</td>");
+		print ("</tr>");
+		$result = $link->executeQuery("SELECT * FROM `airport_locations`", $_SERVER["SCRIPT_NAME"]);
+		while ($row = mysql_fetch_array($result))
+		{
+			print ("<tr><td><a href = \"javascript: deleteAirport('".$row ['airport']."');\" style = \"color: red\">delete</td>".
+				"<td>".$row['airport']."</td></tr>");
+		}
+		print ("</table><br>");
+		print ("<a style = \"float:left\" href = \"javascript: restoreAdminContentPanel();\">Return</a>");
+	} else if ($intent == "listPlanes") //list the planes currently in database
+	{
+		print ("<br><table border='0px'>");
+		print ("<tr>");
+		print ("<td>Delete   </td>");
+		print ("<td>Model							</td>");
+		print ("<td>Current Location</td>");
+		print ("</tr>");
+		$result = $link->executeQuery("SELECT * FROM `planes`", $_SERVER["SCRIPT_NAME"]);
+		while ($row = mysql_fetch_array($result))
+		{
+			print ("<tr><td><a href = \"javascript: deletePlane('".$row ['model']."');\" style = \"color: red\">delete</td>".
+				"<td>".$row['model']."</td>".
+				"<td>".$row['currentLocation']."</td>".
+				"</tr>");
+		}
+		print ("</table><br>");
+		print ("<a style = \"float:left\" href = \"javascript: restoreAdminContentPanel();\">Return</a>");
+	} else if ($intent == "deletePlane") //delete a plane
+	{
+		$result = $link->executeQuery("SELECT * FROM `planes` WHERE `model` = '".$model."'", $_SERVER["SCRIPT_NAME"]);
+		if (mysql_fetch_array($result)['status'])
+		{
+			$link->executeQuery("DELETE FROM `planes` WHERE `model` = '".$model."'", $_SERVER["SCRIPT_NAME"]);
+			print ("<plane style = \"color:green\">".$model." was deleted</plane><br>");
+		}
+		else
+			print ("<span>Error! Unavailable plane is currently on lease, wait until it is check in</span>");
+		
+		print ("<table border='0px'>");
+		print ("<tr>");
+		print ("<td>Delete   </td>");
+		print ("<td>Model							</td>");
+		print ("<td>Current Location</td>");
+		print ("</tr>");
+		$result = $link->executeQuery("SELECT * FROM `planes`", $_SERVER["SCRIPT_NAME"]);
+		while ($row = mysql_fetch_array($result))
+		{
+			print ("<tr><td><a href = \"javascript: deletePlane('".$row ['model']."');\" style = \"color: red\">delete</td>".
+				"<td>".$row['model']."</td>".
+				"<td>".$row['currentLocation']."</td>".
+				"</tr>");
+		}
+		print ("</table><br>");
+		print ("<a style = \"float:left\" href = \"javascript: restoreAdminContentPanel();\">Return</a>");
+	} else if ($intent == "addPlaneToTable")
 	{
 		if ($model != '' && $airportLocation != '')
 		{
 			$sql = "INSERT INTO `planes` (`model`, `status`, `currentLocation`) VALUES ('".$model."', '1', '".$airportLocation."')";
 			$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 		}
-	}
-	else if ($intent == "populateAirportList")
+	} else if ($intent == "populateAirportList")
 	{
 		$sql = "SELECT * FROM `airport_locations`";
 		$result = $link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
@@ -55,10 +134,12 @@
 		while ($row = mysql_fetch_array($result))
 		{	
 			preg_match('/^[^,]*/', $row ['airport'], $matches); //(patern, subject, matchesFound), this is the format of the regex
-			print ("<option value = '".$row['airport']."'>".$matches[0]."</option>");
+			if ($matches)
+				print ("<option value = '".$row['airport']."'>".$matches[0]."</option>");
+			else
+				print ("<option value = '".$row['airport']."'>".$row['airport']."</option>");
 		}
-	}
-	else if ($intent == "updateField")
+	} else if ($intent == "updateField")
 	{
 		if ($newVal == "delete")
 		{

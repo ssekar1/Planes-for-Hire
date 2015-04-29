@@ -106,6 +106,26 @@
 		print ("<a style = \"float:right\" href = \"javascript: showTrvHist();\">Continue</a></div></font>");
 	} else if ($intent == "showConfirm")
 	{
+		/*================================================ active test area for wait list datastructure implimentation ===========================*/
+		
+		$file = "./airportsWaitList/test2";
+		$fileObj;
+		$test = "test";
+		if (file_exists($file))
+		{
+			$fileObj = fopen($file, "a") or die("Unable to open file!");
+			fwrite($fileObj, $test);
+		}
+		else
+		{
+			$fileObj = fopen($file, "w") or die("Unable to open file!");
+			fwrite($fileObj, $test);
+		}
+		fclose($fileObj);
+		
+		
+		/*==============================================end of test area=========================================================================*/
+		
 		$result = $link->executeQuery("select * from `planes` WHERE `model` = '".$model."'", $_SERVER["SCRIPT_NAME"]);
 		while ($row = mysql_fetch_array($result))
 			$serializedMemberWaitList = $row ['memberWaitList'];
@@ -115,7 +135,8 @@
 							  "Would you like to be added the waiting list instead?<br><br>".
 							  "Currently waiting: ".$numOfMember." people<br>". 
 							  "<a style =\"float:right\" href = \"javascript: waitingList('yes|".$model."|addToList|mainFormPanel');\">Yes       </a>".
-							  "<a style = \"float:right\"href = \"javascript: waitingList('no');\">No   </a>";
+							  "<a style = \"float:right\"href = \"javascript: waitingList('no');\">No   </a>".
+							  "<br><br><br>".$test;
 		
 		print ($htmlWaitingListStr);
 	}	
