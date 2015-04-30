@@ -45,14 +45,14 @@ var changeUserInfoHTML = //this entire string is the html content that replaces 
 		"</font></div>";
 
 var updatePasswordHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel
-		"<div style = \"width:43%\"><font size = \"3\">" +
+		"<div id = \"updatePasswordHTML\" style = \"width:43%\"><font size = \"3\">" +
 		"<label>Enter new password   </label>" +
 		"<input id = \"changePassword\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
 		"<label>Retype password   </label>" +
 		"<input id = \"changePassword2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
 		"<a style = \"float:right\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a>" +
 		"<a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
-		"<br><valErr id = \"valErr\" class = \"valErr\" style = \"float:right; color:red; opacity: 0;\">Password invalid</valErr>" +
+		"<br><valErr id = \"valErr\" class = \"valErr\" style = \"float:right; color:red; opacity: 0;\">---</valErr>" +
 		"</font></div>";
 		
 var payBalanceHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel
@@ -179,7 +179,9 @@ function confirmEntry ()
 								if (document.getElementById ('email').value != '')
 									if (document.getElementById ('password').value != '')
 										if (document.getElementById ('password2').value == document.getElementById ('password').value)
-											ajax ('xmlRespondFeedback', 'confirm.php', "verifyEmail=" + document.getElementById ('email').value);
+											if ((document.getElementById ('password').value).length > 7)
+												ajax ('xmlRespondFeedback', 'confirm.php', "verifyEmail=" + document.getElementById ('email').value);
+											else document.getElementById ('valErr').innerHTML = "password needs to be at least 8 characters long";
 										else document.getElementById ('valErr').innerHTML = "the password doesn't match";
 									else document.getElementById ('valErr').innerHTML = "you need to enter your a password";
 								else document.getElementById ('valErr').innerHTML = "you need to enter your email";
@@ -209,9 +211,20 @@ function updateUserInfo(intent)
 	if (intent === 'updatePassword') //use to update the password
 	{
 		if (document.getElementById('changePassword').value === document.getElementById('changePassword2').value && document.getElementById('changePassword').value !== '')
-			data = data+"password="+document.getElementById('changePassword').value;
-		else
 		{
+			if ((document.getElementById('changePassword').value).length >= 7)
+			{
+				data = data+"password="+document.getElementById('changePassword').value;
+			}
+			else
+			{
+				document.getElementById('valErr').innerHTML = "password needs to be at least 8 characters long";
+				updatePassword ('userTrvHistPanel', 'error');
+				return;
+			}
+		} else
+		{
+			document.getElementById('valErr').innerHTML = "password don't match";
 			updatePassword ('userTrvHistPanel', 'error');
 			return;
 		}
