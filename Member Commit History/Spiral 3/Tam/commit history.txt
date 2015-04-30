@@ -1,14 +1,17 @@
 System Design Document (SDD)
-	
+work with team members to design and implements database and data structures into application
+help team members describes all previously implemented technologies and software into application
 
 User Interface Design (UID)
-	
+work with team members to design and implement elegant and easy to use front end user interface
+help team members describe all previously implemented user interfaces for documentation 
 
 Testing Report (TR)
-	
+help team members on documents by describing all bug and issues related to application implementation	
 
 Code Inspection Report (CIR)
-	
+work on all use case functionality to identify their expected goals
+exercise case functionality stability and describe their relevant issues and recommendation to team members
 
 System Requirements Document (SRS)
 	
