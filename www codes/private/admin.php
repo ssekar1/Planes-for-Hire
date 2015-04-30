@@ -9,6 +9,10 @@
 	if (isset($_SESSION['loginId']) && $_SESSION['loginId'] == "admin")
 				$loginUser = $_SESSION['loginId'];
 	
+	$result = $link->executeQuery("select * from `admin_setting`", $_SERVER["SCRIPT_NAME"]);
+	while ($row = mysql_fetch_array($result))
+		$lateFeeDemo = $row['lateFeeDemo'];
+	
 	print ("<div class = \"adminBasePanel\">"); //defining the base container for all sub panel
 		print ("<font size = \"3\">"); //set the default font size for the base container, all sub panel will use this specified font size
 		
@@ -24,6 +28,10 @@
 				print ("<a href=\"javascript: addPlane('');\" style = \"float:left\">Add Plane   </a>");
 				print ("<a href=\"javascript: listAirports('');\" style = \"float:left\">Airports   </a>");
 				print ("<a href=\"javascript: addAirport('');\" style = \"float:left\">Add Airport   </a>");
+				if ($lateFeeDemo == "on")
+					print ("<a href=\"javascript: lateFeeDemo('');\" style = \"float:left\">Late fee demo ON</a>");
+				else
+					print ("<a href=\"javascript: lateFeeDemo('');\" style = \"float:left\">Late fee demo OFF</a>");
 				print ("<a href=\"../main.php\" style = \" float:right\">Main Page    </a>");
 				print ("<a href=\"../logout.php\" style = \"float:right\">Logout    </a><br>");
 				print ("</font>");

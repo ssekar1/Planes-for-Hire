@@ -37,6 +37,9 @@
 		if ($_SESSION['loginId'] == "admin") //unique case for administrator if they're logged in
 			$loginUser = $_SESSION['loginId'];
 		
+		$query = $link->executeQuery("select * from `admin_setting`", $_SERVER["SCRIPT_NAME"]); //determine we can demonstrate the late fee feature
+		while ($row = mysql_fetch_array($query))
+			$lateFeeDemo = $row['lateFeeDemo'];
 	}
 	
 	print ("<div class = \"mainBasePanel\">"); //defining the base container for all sub panel
@@ -161,5 +164,7 @@
 	if (isset($notification))
 		print ("<script> showNotification('".$notification."'); </script>");
 	
+	if (isset($lateFeeDemo))
+		print ("<script> lateFeeDemo('".$lateFeeDemo."'); </script>");
 	include ("tailHTML.html"); //the tailHTML is invoke here
 ?>

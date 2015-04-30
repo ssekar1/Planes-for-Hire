@@ -13,7 +13,7 @@
 	if ($_SESSION['feeOwe'] > 0)
 	{
 		print ("<font size = \"3\" style = \"float:left\">However, your check in is ".$_SESSION['diffDays']." days late. </font>");
-		print ("<font size = \"3\" style = \"float:left\">A late fee in total ammount of ".$_SESSION['feeOwe']." has been added to your balance</font><br>");
+		print ("<font size = \"3\" style = \"float:left\">A late fee in total ammount of $".$_SESSION['feeOwe']." has been added to your balance</font><br>");
 	}
 	
 	print ("<font size = \"3\" style = \"float:left\">Thank you for using Planes For Hire for your flying needs</font><br><br>");

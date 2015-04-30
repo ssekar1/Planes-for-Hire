@@ -43,8 +43,8 @@
 		$serializedTravelHistData = serialize(new SplDoublyLinkedList());
 		
 		//inserting new user into customer_profile table
-		$sql = "INSERT INTO `customer_profile`(`firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `travelHist`,`regDate`)
-			VALUES ('".$_SESSION ['firstName']."', '".$_SESSION ['lastName']."', '".$_SESSION ['street']."', '".$_SESSION ['city']."', '".$_SESSION ['state']."','".$_SESSION ['zip']."', '".$_SESSION ['avatar']."', '".$_SESSION ['email']."', '".$_SESSION ['phone']."', '".$_SESSION ['encryptPassword']."', '".$serializedTravelHistData."', '".$_SESSION ['dateStamp']."')";
+		$sql = "INSERT INTO `customer_profile`(`firstName`, `lastName`, `street`, `city`, `state`, `zip`, `avatar`, `email`, `phone`, `password`, `travelHist`, `plane`,`regDate`)
+			VALUES ('".$_SESSION ['firstName']."', '".$_SESSION ['lastName']."', '".$_SESSION ['street']."', '".$_SESSION ['city']."', '".$_SESSION ['state']."','".$_SESSION ['zip']."', '".$_SESSION ['avatar']."', '".$_SESSION ['email']."', '".$_SESSION ['phone']."', '".$_SESSION ['encryptPassword']."', '".$serializedTravelHistData."', '','".$_SESSION ['dateStamp']."')";
 		$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 		
 		print ("<form action = \"debug.php\" method = \"post\" name = \"form\">");

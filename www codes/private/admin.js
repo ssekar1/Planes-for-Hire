@@ -29,6 +29,11 @@ function listPlanes () {ajax ("adminContentPanel", "updateTable.php", "intent=li
 function deletePlane (model) {ajax ("adminContentPanel", "updateTable.php", "intent=deletePlane&model=" + model);}
 function deleteAirport (airport) {ajax ("adminContentPanel", "updateTable.php", "intent=deleteAirport&airport=" + airport);}
 
+function lateFeeDemo ()
+{
+	ajax ("xmlRespondFeedback", "lateFeeDemo.php", '');
+}
+
 function edit(email, field, value)
 {
 	var msg = "Enter a new " + field + " value for member " + email + "\nThe current value is:";

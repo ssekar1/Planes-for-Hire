@@ -7,7 +7,8 @@ var srcDestToggle = -1;			//Toggle that alternates between -1 and 1.  -1 meaning
 var src = dest = null;			//Two points storing long and lat coords
 var flightPath = null;			//Object representing a Google Maps path graphics object
 var notification = '';
-var updateUserInfoData;			//global variable use for ajax in update user info 
+var updateUserInfoData;			//global variable use for ajax in update user info
+var lateFeeDemo;
 
 var changeAvatarOnHTML = //this entire string is the html content that replaces the content inside the userExtenPanel
 		"<font size = \"3\">" +
@@ -68,7 +69,66 @@ function saveTrvHist () {userTrvHist = document.getElementById('userTrvHistPanel
 function showTrvHist () {document.getElementById('userTrvHistPanel').innerHTML = userTrvHist;}
 function mainFormPanelBak () {mainFormPanel = document.getElementById('mainFormPanel').innerHTML;}
 function mainFormPanelRes () {document.getElementById('mainFormPanel').innerHTML = mainFormPanel;}
+function lateFeeDemo (value) {lateFeeDemo = value}
 $(function() {$("#datePicker").datepicker();}); //this is the jQuery function to perform the date picker selection for the checkout date, makes inputing date much faster 
+
+/*
+ *this function update the content of the plane rental form panel. when the user selects and item in the main page to rent a plane
+ *content of this panel are populated with their selections to provide feedback on what they pick
+ *the parameter accepted here are the id of where on the form the content of the value of the selection is to be place
+ */
+function updateForm (id, value)
+{
+	mainFormPanelRes();
+	var valueArr = value.split("|");
+	if (valueArr[1] === '0')
+	{		
+		waitingList ('yes|' + valueArr[0] + '|showConfirm|mainFormPanel');
+		return;
+	}
+	
+	value = valueArr[0];
+	
+	if (value === '') //if there value is empty, then we don't update the form
+		return;
+	
+	if (lateFeeDemo === "off")
+		if (id === 'startLabel') //verify if the selected checkout date is current or later
+		{
+			var selDte = Date.parse(value);
+			var currDte = Date.parse(((new Date()).getMonth() + 1) + "/" + (new Date()).getDate() + "/" + (new Date()).getFullYear());
+			if (selDte < currDte)
+			{
+				document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>Invalid start date</span></center>";
+				return;
+			}
+		}
+	
+	mainFormPanelRes();
+	document.getElementById(id).innerHTML = value;
+	
+	if (document.getElementById('durationLabel').innerHTML !== '' && document.getElementById('startLabel').innerHTML !== '')
+	{
+		var msec = Date.parse(document.getElementById('startLabel').innerHTML);
+		var date = new Date(msec);
+		date.setDate(date.getDate() + (parseInt(document.getElementById('durationLabel').innerHTML) - 1));
+		var formDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear(); 
+		document.getElementById('returnLabel').innerHTML = formDate;
+	}
+	
+	mainFormPanelBak();
+	
+	//this section performs the update drop down box for the planes select options 
+	if (id === 'departLabel')
+	{
+		var data = "airport=" + value;
+		
+		if (notification !== '')
+			data += "&notification=" + notification;
+		
+		ajax("planeSelect", "populatePlaneOption.php", data);
+	}	
+}
 
 /*
  *this checkin function performs any late fees calculation and then asynchronously calls the backend server to perform the any
@@ -472,63 +532,6 @@ function waitingList(value)
 	}
 	else if (valueArr[0] === "no") 
 		mainFormPanelRes();
-}
-
-/*
- *this function update the content of the plane rental form panel. when the user selects and item in the main page to rent a plane
- *content of this panel are populated with their selections to provide feedback on what they pick
- *the parameter accepted here are the id of where on the form the content of the value of the selection is to be place
- */
-function updateForm (id, value)
-{
-	mainFormPanelRes();
-	var valueArr = value.split("|");
-	if (valueArr[1] === '0')
-	{		
-		waitingList ('yes|' + valueArr[0] + '|showConfirm|mainFormPanel');
-		return;
-	}
-	
-	value = valueArr[0];
-	
-	if (value === '') //if there value is empty, then we don't update the form
-		return;
-	
-	if (id === 'startLabel') //verify if the selected checkout date is current or later
-	{
-		var selDte = Date.parse(value);
-		var currDte = Date.parse(((new Date()).getMonth() + 1) + "/" + (new Date()).getDate() + "/" + (new Date()).getFullYear());
-		if (selDte < currDte)
-		{
-			document.getElementById('mainFormPanel').innerHTML = "<br><br><center><span>Invalid start date</span></center>";
-			return;
-		}
-	}
-	
-	mainFormPanelRes();
-	document.getElementById(id).innerHTML = value;
-	
-	if (document.getElementById('durationLabel').innerHTML !== '' && document.getElementById('startLabel').innerHTML !== '')
-	{
-		var msec = Date.parse(document.getElementById('startLabel').innerHTML);
-		var date = new Date(msec);
-		date.setDate(date.getDate() + (parseInt(document.getElementById('durationLabel').innerHTML) - 1));
-		var formDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear(); 
-		document.getElementById('returnLabel').innerHTML = formDate;
-	}
-	
-	mainFormPanelBak();
-	
-	//this section performs the update drop down box for the planes select options 
-	if (id === 'departLabel')
-	{
-		var data = "airport=" + value;
-		
-		if (notification !== '')
-			data += "&notification=" + notification;
-		
-		ajax("planeSelect", "populatePlaneOption.php", data);
-	}	
 }
 
 //this is the common ajax function to be implemented into the rest of the javascript, this should reduce unnecessary lengthly codes 
