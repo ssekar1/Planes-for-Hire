@@ -1,15 +1,14 @@
 System Design Document (SDD)
-	
+I updated the database tables.	
 
 User Interface Design (UID)
-	
+I updated the image for the registration becuase we no longer have an "upload picture" option when registering. I also deleted any mention of registration page having a "picture upload" option. I also updated account protection and waiting list images.
 
 Testing Report (TR)
-	
+Added an image for the invalid registration option. Updated tables for account protection and waiting list.
 
 Code Inspection Report (CIR)
-	
-
-System Requirements Document (SRS)
+Helped update the defect checklists
 	
 Administration Manual
+I wrote parts 1-2.1. I also wrote the one sentence summaries of each section. I also wrote setion 4.2. I don't remember if I wrote 4.1.
