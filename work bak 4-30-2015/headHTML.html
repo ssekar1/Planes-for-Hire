@@ -1,0 +1,56 @@
+<!--description: This is the head.html, this is a standardize page with cascading style sheet, layout, and scripts-->
+<!--predefined for all pages in this directory-->
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Planes For Hire</title>
+		<!--<img src="resources\images\plane001.gif" alt="HTML5 Icon" style="position:absolute; left:80px; top:10px; width:200px; height:120px;border:none;">-->
+		
+		<?php	
+			/* 
+			 * this block of php codes fetches the link.php file and creates the $link object so we can use it to
+			 * communicate with the beckend database server. every other codes in this web app who depends on this headHTML
+			 * will use this same $link object declared here for database query. the first database query made here is fething the
+			 * pins from the maptable so that it can be placed on the map
+			 */
+			include ('link.php');
+			$link = new Link($debug);
+			$mapTbl = $link->executeQuery("select * from `airport_locations`", $_SERVER["SCRIPT_NAME"]);
+		?>
+		<!--the planesForHire.css defines the standard for how the web app should look. all written from scratch -->
+		<link rel="stylesheet" href="planesForHire.css">
+		<link rel="stylesheet" href="/resources/demos/style.css">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		
+		<script src="http://maps.googleapis.com/maps/api/js"></script>
+  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<!--the planesForHire.js provides all the frontend functionality for the web app, as well as minor backend database functionality such as table queries -->
+		<script src="planesForHire.js"></script>
+		
+		<script>
+			/* 
+			 * this is a javascript/php function to populate the airport pins on the map
+			 * this is the only function that is not included in the planesForHire.js file because it contains php codes 
+			 * this function is called inside the initialized map function after the page is loaded
+			 */
+			function populatePins ()
+			{
+				<?php
+					if (isset($mapTbl))						
+						while ($row = mysql_fetch_array($mapTbl))
+						{
+							print("createMarker(\"".$row ['airport']."\", ".$row ['long'].", ".$row ['lat'].", \"airport\");");
+							$query = $link->executeQuery("select * from `planes` WHERE `currentLocation` = '".$row ['airport']."'", $_SERVER["SCRIPT_NAME"]);
+							if (mysql_num_rows($query) > 0)
+								print("createMarker(\"".$row ['airport']."\", ".$row ['long'].", ".$row ['lat'].", \"plane\");");
+							
+						}
+				?>
+			}
+		</script>
+	</head>
+	<body>
+	<pre>

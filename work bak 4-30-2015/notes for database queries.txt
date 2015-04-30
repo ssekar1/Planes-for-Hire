@@ -1,0 +1,18 @@
+these are samples to be use for the coding process 
+
+CREATE TABLE `tamtran1@umbc.edu` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                                  `origAirport` varchar(30) NOT NULL,
+                                  `origLong` double signed NOT NULL,
+                                  `origLat` double signed NOT NULL,
+                                  `destAirport` varchar(30) NOT NULL,
+                                  `destLong` double signed NOT NULL,
+                                  `destLat` double signed NOT NULL,
+                                  `dateTravel` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);
+                                                                    
+INSERT INTO `tamtran1@umbc.edu` (`id`, `origAirport`, `origLong`, `origLat`, `destAirport`, `destLong`, `destLat`, `dateTravel`) VALUES (NULL, 'test airport', '-45.678', '34.786', 'test airport 2', '78.123', '12.565', CURRENT_TIMESTAMP);
+
+CREATE TABLE `aminSetting` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                                  `someTable` varchar(30),
+                                  `lastLogon` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);
+                                  
+UPDATE `customer_profile` SET `zip` = '0987654321' WHERE `email` = 'testUser@yahoo.com';
