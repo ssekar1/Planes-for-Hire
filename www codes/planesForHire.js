@@ -7,6 +7,7 @@ var srcDestToggle = -1;			//Toggle that alternates between -1 and 1.  -1 meaning
 var src = dest = null;			//Two points storing long and lat coords
 var flightPath = null;			//Object representing a Google Maps path graphics object
 var notification = '';
+var updateUserInfoData;			//global variable use for ajax in update user info 
 
 var changeAvatarOnHTML = //this entire string is the html content that replaces the content inside the userExtenPanel
 		"<font size = \"3\">" +
@@ -30,7 +31,7 @@ var changeAvatarOffHTML = //this entire string is the html content that replaces
 		"</font>";
 
 var changeUserInfoHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel
-		"<div style = \"width:37%;\"><font size = \"3\">" +
+		"<div id = \"changeUserInfo\" style = \"width:37%;\"><font size = \"3\">" +
 		"<label>First Name   <input name = \"firstName\" id = \"firstName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
 		"<label>Last Name   <input name = \"lastName\" id = \"lastName\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
 		"<label>Street Address   <input name = \"street\" id = \"street\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
@@ -40,6 +41,7 @@ var changeUserInfoHTML = //this entire string is the html content that replaces 
 		"<label>Phone Number <input name = \"phone\" id = \"phone\" type = \"text\" maxlength = \"10\" class = \"input\" onKeyup = \"isValidChar (this.value, 'phone')\"/><br><br></label>" +
 		"<label>Email <input name = \"email\" id = \"email\" type = \"text\" maxlength = \"30\" class = \"input\"/><br><br></label>" +
 		"<a style = \"float:right\" href = \"javascript: updateUserInfo('updateUser');\">Apply</a><a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
+		"<br><valErr id = \"valErr\" class = \"valErr\" style = \"float:right; color:red; opacity: 0;\">---</valErr>" +
 		"</font></div>";
 
 var updatePasswordHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel
@@ -50,7 +52,7 @@ var updatePasswordHTML = //this entire string is the html content that replaces 
 		"<input id = \"changePassword2\" type = \"password\" maxlength = \"30\" class = \"input\"/><br><br>" +
 		"<a style = \"float:right\" href = \"javascript: updateUserInfo('updatePassword');\">Apply</a>" +
 		"<a style = \"float:right\" href = \"javascript: showTrvHist();\">Cancel   </a>" +
-		"<br><passErr class = \"valErr\" style = \"float:right; color:red; opacity: 0;\">Password invalid</passErr>" +
+		"<br><valErr id = \"valErr\" class = \"valErr\" style = \"float:right; color:red; opacity: 0;\">Password invalid</valErr>" +
 		"</font></div>";
 		
 var payBalanceHTML = //this entire string is the html content that replaces the content inside the userTravHistPanel
@@ -270,7 +272,9 @@ function updateUserInfo(intent)
 		{
 			if(data !== "")
 				data = data+"&";
-			data = data+"email="+document.getElementById('email').value;
+			updateUserInfoData = data+"email="+document.getElementById('email').value;
+			ajax ('xmlRespondFeedback', 'confirm.php', "verifyEmail=" + document.getElementById ('email').value);
+			return;
 		}
 	}
 	
@@ -287,7 +291,7 @@ function updateUserInfo(intent)
  *the content of of this function is simply altering the html content of the userTravHistPanel with the necessary text field items for the user to change their information
  */			
 function changeUserInfo (id)
-{									
+{
 	document.getElementById(id).innerHTML = changeUserInfoHTML; //this line modifies the the content of the userTravHistPanel
 }
 
@@ -530,9 +534,21 @@ function ajax (id, php, data)
 				document.getElementById(id).innerHTML = xmlhttp.responseText; //will need a feedback target on html document
 				
 				if (document.getElementById ('xmlRespondFeedback').innerHTML === 'email valid')
-					document.form.submit();
+				{
+					if (document.getElementById('registration'))
+					{
+						document.form.submit();
+					} else if (document.getElementById('changeUserInfo'))
+					{
+						ajax ("xmlRespondFeedback", "updateUserProfile.php", updateUserInfoData);
+					}
+					
+				}
 				else if (document.getElementById ('xmlRespondFeedback').innerHTML === 'email not valid')
+				{
 					document.getElementById ('valErr').innerHTML = "Cannot use this email";
+					document.getElementById ('valErr').style.opacity = '1';
+				}
 					
 				if (notification !== '') //part of notification handler, automatically selecting the plane for the user when they select yes
 				{

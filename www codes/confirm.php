@@ -13,13 +13,11 @@
 		$result = $link->executeQuery("select `email` from `customer_profile`", $_SERVER["SCRIPT_NAME"]);
 		print ("email"); //start by assuming the email entered is valid
 		while ($row = mysql_fetch_array($result))
-			if ($_POST['verifyEmail'] == $row['email'])
+			if ($_POST['verifyEmail'] == $row['email'] || (!filter_var($_POST['verifyEmail'], FILTER_VALIDATE_EMAIL)))
 			{
 				print (" not"); //if the entered email matches ones found in database, then mark it invalid
 				break;
 			}
-		if (!filter_var($_POST['verifyEmail'], FILTER_VALIDATE_EMAIL))
-			print (" not"); //bogus email will also be invalidated
 		print (" valid");
 	} else
 	{

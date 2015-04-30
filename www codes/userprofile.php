@@ -96,6 +96,6 @@
 	print ("</div>");
 	
 	print ("<script>saveTrvHist();</script>");
-	print ("<label id = \"xmlRespondFeedback\"></label>");
+	print ("<label id = \"xmlRespondFeedback\" style = \"visibility:hidden;\"></label>");
 	include ("tailHTML.html");
 ?>
