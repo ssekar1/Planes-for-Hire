@@ -34,6 +34,13 @@
 			$travelHistList = new SplDoublyLinkedList();
 			$link->executeQuery("UPDATE `customer_profile` SET `travelHist` = '".serialize(new SplDoublyLinkedList())."' WHERE `email` = '".$_SESSION['loginId']."'", $_SERVER["SCRIPT_NAME"]);
 		}
+		
+		if ($plane !== '')
+		{
+			$query = $link->executeQuery("select * from `planes` where `model` = '".$plane."'", $_SERVER["SCRIPT_NAME"]);
+			while ($row = mysql_fetch_array($query))
+				$returnDate = $row['returnDate'];
+		}
 	}
 	
 	print ("<div class = \"userBaseFramePanel\">");
@@ -51,11 +58,15 @@
 				print ($phone."<br>");
 				print ($_SESSION['loginId']."<br><br>");
 				if ($plane !== '')
-					print ("Plane on hold  ".$plane."<br><br>");
+				{
+					print ("Plane on hold  ".$plane."<br>");
+					print ("Return by  ".$returnDate."<br><br>");
+				}
 				print ("Balance $".$balance);
 				print ("<a style = \"float:right\" href = \"javascript: payBalance('userTrvHistPanel');\">Pay</a><br>");
 				print ("<a style = \"float:right\" href = \"javascript: updatePassword('userTrvHistPanel');\">Change password</a>");
-				print ("<a style = \"float:left\" href = \"javascript: waitingList('yes|none|removeFromList|userTrvHistPanel');\">Remove from all waiting list</a><br><br>");
+				print ("<a style = \"float:left\" href = \"javascript: waitingList('yes|none|showWaitList|userTrvHistPanel');\">Show wait list    </a>");
+				print ("<a style = \"float:left\" href = \"javascript: waitingList('yes|none|removeFromList|userTrvHistPanel');\">Clear wait list</a><br><br>");
 			print ("</div>");
 			
 			print("<div id = \"userExtenPanel\" class = \"userExtenPanel\">");

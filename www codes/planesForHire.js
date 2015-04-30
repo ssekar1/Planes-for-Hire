@@ -465,6 +465,8 @@ function waitingList(value)
 			data += "&intent=" + valueArr[2];
 		else if (valueArr[2] === "addToList")
 			data += "&intent=" + valueArr[2];
+		else if (valueArr[2] === "showWaitList")
+			data += "&intent=" + valueArr[2];
 		
 		ajax (id, "waitingList.php", data);
 	}

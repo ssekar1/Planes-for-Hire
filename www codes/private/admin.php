@@ -94,9 +94,9 @@
 		print ("</div>"); // this finishes the content pannel content
 		
 		print ("</font>");
-		print ("<label id = \"xmlRespondFeedback\" style = \"visibility:hidden\">test</label>");
 	print ("</div>"); // this finishes the base container pannel content
 	
 	print ("<script>adminContentPanelBak(); </script>"); //this function is used to back up the content of the plane rental form, so that we can alter its content to display other messages and still be able to return it back to its original states 
+	print ("<label id = \"xmlRespondFeedback\" style =\"visibility: hidden\" >---</label>");
 	include ("adminTailHTML.html");
 ?>

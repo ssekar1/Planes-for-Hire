@@ -82,6 +82,50 @@
 		}
 		
 		print ("<META http-equiv = \"REFRESH\" content = \"0; Main.php\">");
+	} else if ($intent == "showWaitList")
+	{
+		$airportResult = $link->executeQuery("select * from `airport_locations`", $_SERVER["SCRIPT_NAME"]);
+		print ("<div style = \"width:45%\"><font size = \"3\">");
+		print ("<table border='0px'>");
+		print ("<tr>");
+		print ("<td>Position </td>");
+		print ("<td>Model						</td>");
+		print ("<td>Waiting at</td>");
+		print ("</tr>");
+		while ($row = mysql_fetch_array($airportResult))
+		{	
+			$serializedPlaneWaitList = $row ['planeWaitList'];
+			$airport = $row ['airport'];
+			if (unserialize($serializedPlaneWaitList) != NULL)
+			{
+				$planeWaitList = unserialize($serializedPlaneWaitList);
+				for ($planeWaitList -> rewind(); $planeWaitList -> valid(); $planeWaitList -> next())  // perform walk over the list
+				{
+					$planeResult = $link->executeQuery("select * from `planes` WHERE `model` = '".$planeWaitList -> current()."'", $_SERVER["SCRIPT_NAME"]);
+					while ($row = mysql_fetch_array($planeResult))
+					{
+						$serializedMemberWaitList = $row ['memberWaitList'];
+						$model = $row ['model'];
+						if (unserialize($serializedMemberWaitList) != NULL)
+						{
+							$memberWaitList = unserialize($serializedMemberWaitList);
+							for ($memberWaitList -> rewind(); $memberWaitList -> valid(); $memberWaitList -> next())  // perform walk over the list
+							{
+								if ($memberWaitList -> current() == $_SESSION['loginId'])
+								{
+									preg_match('/^[^,]*/', $airport, $matches);
+									if ($matches)
+										print ("<tr><td>".($memberWaitList -> key() + 1)."</td><td>".$planeWaitList -> current()."</td><td>".$matches[0]."</td></tr>");
+									else
+										print ("<tr><td>".($memberWaitList -> key() + 1)."</td><td>".$planeWaitList -> current()."</td><td>".$airport."</td></tr>");
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		print ("</table><br><a style = \"float:right\" href = \"javascript: showTrvHist();\"> Continue</a></font></div>");
 	} else if ($intent == "removeFromList")
 	{
 		$result = $link->executeQuery("select * from `planes`", $_SERVER["SCRIPT_NAME"]);
@@ -103,7 +147,7 @@
 						break;
 					}	
 		}
-		print ("<a style = \"float:right\" href = \"javascript: showTrvHist();\">Continue</a></div></font>");
+		print ("<a style = \"float:right\" href = \"javascript: showTrvHist();\">Continue</a></font></div>");
 	} else if ($intent == "showConfirm")
 	{
 		/*
@@ -127,6 +171,8 @@
 		
 		==============================================end of test area=========================================================================
 		*/
+		
+		
 		$result = $link->executeQuery("select * from `planes` WHERE `model` = '".$model."'", $_SERVER["SCRIPT_NAME"]);
 		while ($row = mysql_fetch_array($result))
 			$serializedMemberWaitList = $row ['memberWaitList'];

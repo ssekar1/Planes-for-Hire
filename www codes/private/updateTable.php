@@ -5,6 +5,7 @@
 	$debug = false;
 	include ('../link.php');
 	$link = new Link($debug);
+	session_start();
 	
 	if (isset($_POST['email']))
 		$email = $_POST['email'];
@@ -24,6 +25,19 @@
 		$lon = $_POST['lon'];
 	if (isset($_POST['lat']))
 		$lat = $_POST['lat'];
+	if (isset($_SESSION['intent']))
+		$intent = $_SESSION['intent'];
+	if (isset($_SESSION['newVal']))
+		$newVal = $_SESSION['newVal'];
+	if (isset($_SESSION['field']))
+		$field = $_SESSION['field'];
+	if (isset($_SESSION['email']))
+		$email = $_SESSION['email'];
+	
+	unset($_SESSION['intent']);
+	unset($_SESSION['email']);
+	unset($_SESSION['field']);
+	unset($_SESSION['newVal']);
 
 	if ($intent == "addNewAirportLocation")
 	{
@@ -38,9 +52,6 @@
 				$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 			}
 		}
-	} else if ($intent == "verifyEmail") //list the airports currently in database
-	{	
-		print ("verifying email");
 	} else if ($intent == "listAirports") //list the airports currently in database
 	{	
 		print ("<br><table border='0px'>");
@@ -187,6 +198,7 @@
 		}
 		
 		print ("<META http-equiv = \"REFRESH\" content = \"0; admin.php\">");
+		exit;
 	}
 ?>
 
