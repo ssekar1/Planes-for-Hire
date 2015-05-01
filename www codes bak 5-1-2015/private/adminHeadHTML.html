@@ -1,0 +1,137 @@
+<!--Tam Tran-->
+<!--Instructor: Mr. Lupoli-->
+<!--Class: CMSC 331-->
+<!--11/21/2014-->
+<!--Project 1-->
+<!--description: This is the head.html, this is a standardize page with cascading style sheet, layout, and scripts-->
+<!--predefined for all pages in this directory-->
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Planes For Hire - Administration</title>
+		
+		<?php	
+			include ('../link.php');
+			$link = new Link($debug);
+		?>
+		
+		<style>
+			/* removes underline from links */
+			a
+			{
+				text-decoration: none;
+				color: #CC3300;
+			}
+			a:hover
+			{
+				text-decoration: none;
+				color: blue;
+			}
+			
+			body
+			{	
+    			background-color: linen;
+				font-family: Arial, Verdana;
+				margin-top: 30px;
+				margin-left: auto;
+     			margin-right: auto;
+				width: 1250px;
+			}
+			pre
+			{
+				font-family: Arial, Verdana;
+			}
+			
+			.adminBasePanel
+			{
+				//background-color: #F3C1FF;
+				margin-left: auto;
+     			margin-right: auto;
+				width: 1300px;
+			}
+			.adminHeaderPanel
+			{
+				//background-color: #FFD6D6;
+				margin-left: auto;
+     			margin-right: auto;
+				width: 1300px;
+			}
+			.adminContentPanel
+			{
+				//background-color: #C2D6FF;
+				margin-left: auto;
+     			margin-right: auto;
+				width: 1300px;
+			}
+			
+			#textBox
+			{
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 14px;
+				width: 150px;
+				height: 17px;
+				float:right;
+				vertical-align: top;
+				border: 0px solid #0076a3; 
+				border-right: solid 0px;
+				border-top-left-radius: 3px 3px;
+				border-bottom-left-radius: 3px 3px;
+			}
+			#searchButton
+			{
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				width: 50px;
+				height: 19px;
+				float: right;
+				outline: none;
+				cursor: pointer;
+				text-align: center;
+				text-decoration: none;
+				color: #ffffff;
+				vertical-align: top;
+				border: solid 0px #0076a3;
+				border-right: 0px;
+				background: #008AB8;
+				background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));
+				background: -moz-linear-gradient(top,  #00adee,  #0078a5);
+				border-top-right-radius: 3px 3px;
+				border-bottom-right-radius: 3px 3px;
+			}
+			#searchButton:hover
+			{
+				text-decoration: none;
+				background: #33A1C6;
+				background: -webkit-gradient(linear, left top, left bottom, from(#0095cc), to(#00678e));
+				background: -moz-linear-gradient(top,  #0095cc,  #00678e);
+			}
+			/* Fixes submit button height problem in Firefox */
+			#searchButton::-moz-focus-inner
+			{
+				border: 0;
+			}
+			
+			span
+			{
+				color: red;
+			}
+			.input
+			{	
+				background-color: #ffffff;
+				border: 0px #a1a1a1 solid;
+				border-radius: 4px;
+				padding: 2px;
+				float:right;
+				height: 20px;
+				width: 305px;
+				font-size: 15px;
+			}
+			
+		</style>
+		<script src="admin.js"></script>
+		
+	</head>
+	<body>
+		<pre>
