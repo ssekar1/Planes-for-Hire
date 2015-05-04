@@ -45,7 +45,6 @@
 	$sql = "UPDATE `planes` SET `status` = '1', `client` = '', `leaseFrom` = '', `currentLocation` = '".$_SESSION['currentLocation']."', `returnTo` = '', `returnDate` = '0000-00-00' WHERE `model` = '".$_SESSION['model']."'";
 	$link->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
-	print ($_SESSION['currentLocation']);
 	if ($planeWaitList != NULL)
 	{
 		for ($planeWaitList -> rewind(); $planeWaitList -> valid(); $planeWaitList -> next())  // perform walk over the list
@@ -62,17 +61,6 @@
 				}
 			}
 		}
-		
-		
-		
-		
-		/*
-		if ($memberWaitList -> offsetExists(0))
-		{
-			$nextWaitingMember = $memberWaitList -> offsetGet(0);
-			$link->executeQuery("UPDATE `customer_profile` SET `notification` = '".$_SESSION['model']."|".$_SESSION['currentLocation']."|".$long."|".$lat."' WHERE `email` = '".$nextWaitingMember."'", $_SERVER["SCRIPT_NAME"]);
-		}
-		*/
 	}
 	print ("<META http-equiv = \"REFRESH\" content = \"0; checkInResult.php\">");
 ?>
