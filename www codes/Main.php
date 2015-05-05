@@ -56,10 +56,10 @@
 			{
 				print ("<a style = \"float:right\" href=\"logout.php\">Logout    </a>");
 				if ($loginUser == "admin")
-					print ("<a style = \"float:right\" href=\"private/admin.php\">Hello ".$loginUser.".   </a>");
+					print ("<a style = \"float:right\" href=\"private/admin.php\">Hello ".$loginUser." !   </a>");
 				else
 				{
-					print ("<a style = \"float:right\" href=\"userprofile.php\">  Hello ".$loginUser.".   </a>");
+					print ("<a style = \"float:right\" href=\"userprofile.php\">  Hello ".$loginUser." !   </a>");
 					print ("<a style = \"float:right\" href=\"userprofile.php\"><img style = \"border-radius: 5px; height: 30px; float:right\" id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/".$avatar."\"></a>");
 				}	
 			} else //if they're not logged in then we provide a link for them to register and to login 

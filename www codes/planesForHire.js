@@ -369,7 +369,7 @@ function createMarker(name, long, lat, type)
 	// Generates planes and airport markers
 	if (type === "plane")
 	{
-		lat += .005; //offset the plane marker to one side to it wouldn't cover up the airport entirely
+		lat -= .0005; //offset the plane marker to one side to it wouldn't cover up the airport entirely
 		img = "resources/images/plane.png";
 	}
 	else if (type === "airport")
@@ -384,7 +384,7 @@ function createMarker(name, long, lat, type)
   	});
   	
   	if (type === "plane") //plane marker can overlap airport marker, so we want to make the plane marker clickable as well
-	  	lat -= .005; //offset value to accurately point the airport 
+	  	lat += .0005; //offset value to accurately point the airport 
   	
 	google.maps.event.addListener(marker, 'click', function() // Gives marker onclick code
 	{
