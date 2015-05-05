@@ -377,7 +377,7 @@ function createMarker(name, long, lat, type)
 	
 	var marker = new google.maps.Marker
 	({
-      	position: new google.maps.LatLng(long, lat, 0),
+      	position: new google.maps.LatLng(lat, long, 0),
      	map: map,
      	title: name,
 		icon: img
@@ -540,8 +540,8 @@ function focusMarker(value)
 		return;
 		
 	// Extracts values from delimited string
-	var lat = Number(dataArr[0]);
-	var lng = Number(dataArr[1]);
+	var lat = Number(dataArr[1]);
+	var lng = Number(dataArr[0]);
 	var latlng = new google.maps.Marker({position: new google.maps.LatLng(lat, lng, 0)});
 	var label = dataArr[2];
 	var airport = dataArr[3];
