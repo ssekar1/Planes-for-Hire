@@ -169,8 +169,26 @@
 		print ("</font>"); //closing the font setting for the base container
 	print ("</div>"); //this finishes the base container
 	print ("<script> mainFormPanelBak(); </script>"); //this function is used to back up the content of the plane rental form, so that we can alter its content to display other messages and still be able to return it back to its original states 
-	
 	print ("<label id = \"xmlRespondFeedback\"></label>");
+	
+	print("<script>");
+		print("
+				setInterval(function()
+				{
+					// Gets response from php document
+					var xmlHttp = null;
+					xmlHttp = new XMLHttpRequest();
+					xmlHttp.open('GET', 'getNotification.php', false);
+					xmlHttp.send( null );
+					var notification = xmlHttp.responseText;
+					
+					// Alerts notification if there was one
+					if(notification != '')
+						showNotification(notification);
+				}, 1000);
+			 ");
+	print("</script>");
+	
 	if (isset($notification))
 		print ("<script> showNotification('".$notification."'); </script>");
 	
