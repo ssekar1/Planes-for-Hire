@@ -41,7 +41,7 @@
 
 	if ($intent == "addNewAirportLocation")
 	{
-		if ($airport != '' && $lat != '' && $lon != '')
+		if ($airport != '' && $lon != '' && $lat != '')
 		{
 			if (is_numeric($lon) && is_numeric($lat))
 			{
