@@ -142,13 +142,13 @@ function addAirport(intent)
 	{
 		if (document.getElementById('lat').value <= -180 || document.getElementById('lon').value >= 180)
 		{
-			document.getElementById('valErr').innerHTML = "Longitude need to be between -180 and 180";
+			document.getElementById('valErr').innerHTML = "Latitude need to be between -90 and 90";
 			return; 
 		}
 		
 		if (document.getElementById('lon').value <= -90 || document.getElementById('lat').value >= 90)
 		{
-			document.getElementById('valErr').innerHTML = "Latitude need to be between -90 and 90";
+			document.getElementById('valErr').innerHTML = "Longitude need to be between -180 and 180";
 			return; 
 		}
 		
