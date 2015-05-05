@@ -53,19 +53,19 @@
 						//prints the labels for the travel history table
 						print ("<table border='0px'>");
 						print ("<tr>");
-						print ("<td>First Name	</td>");
-						print ("<td>Last Name	</td>");
-						print ("<td>Street Address	</td>");
-						print ("<td>City			</td>");
-						print ("<td>State	</td>");
-						print ("<td>Zip		</td>");
-						print ("<td>Avatar			</td>");
-						print ("<td>Email				</td>");
-						print ("<td>Phone		</td>");
-						print ("<td>Password   </td>");
-						print ("<td>Checkout </td>");
-						print ("<td>Register Date		</td>");
-						print ("<td>Modify	</td>");
+						print ("<td style= 'font-weight:bold'>First Name	</td>");
+						print ("<td style= 'font-weight:bold'>Last Name	</td>");
+						print ("<td style= 'font-weight:bold'>Street Address	</td>");
+						print ("<td style= 'font-weight:bold'>City			</td>");
+						print ("<td style= 'font-weight:bold'>State	</td>");
+						print ("<td style= 'font-weight:bold'>Zip		</td>");
+						print ("<td style= 'font-weight:bold'>Avatar			</td>");
+						print ("<td style= 'font-weight:bold'>Email				</td>");
+						print ("<td style= 'font-weight:bold'>Phone		</td>");
+						print ("<td style= 'font-weight:bold'>Password   </td>");
+						print ("<td style= 'font-weight:bold'>Checkout </td>");
+						print ("<td style= 'font-weight:bold'>Register Date		</td>");
+						print ("<td style= 'font-weight:bold'>Modify	</td>");
 						print ("</tr>");
 				
 						while ($row = mysql_fetch_array($memList))
