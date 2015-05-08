@@ -14,7 +14,7 @@ var addPlaneHtmlContent =
 
 var addAirportHtmlContent =
 	"<div style = \"width:35%\"><font size = \"3\"><br>" +
-	"Airport Name<input id = \"airport\" maxlength = \"90\" class = \"input\"/><br><br>" +
+	"Airport Name<input id = \"airport\" maxlength = \"90\" class = \"input\"/ placeholder = \"Airport name, City, State\"><br><br>" +
 	"Longitude<input id = \"lon\" maxlength = \"30\" class = \"input\"/><br><br>" +
 	"Latitude<input id = \"lat\" maxlength = \"30\" class = \"input\"/><br><br>" +
 	"<a style = \"float:right\" href = \"javascript: addAirport('apply');\">Apply</a>" +

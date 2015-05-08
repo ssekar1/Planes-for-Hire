@@ -18,7 +18,9 @@
 		
 		print ("<div class = \"adminHeaderPanel\">"); //defining the header panel, this is use to hold the application logo, and control categories for the admin page 
 			print ("<label><strong><center><font size = \"6\" color = \"#595959\">Administration</font></center></strong><br></label>");
-			print ("<input type = \"button\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
+			print("<form action=\"search.php\">"); //this is the search bar and its submit button, it is also a php form
+				print ("<input type = \"submit\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" name=\"query\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
+			print("</form>");
 			if(isset($loginUser))
 			{
 				print ("<font size = \"3\">");

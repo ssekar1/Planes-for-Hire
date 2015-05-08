@@ -74,7 +74,7 @@ function createAirportEntry($airport, $long, $lat)
 	// Includes Head.html
 	$debug = false;
 	session_start();// Starting Session
-	include("headHTML.html");
+	include("adminHeadHTML.html");
 
 	// Makes variable that keeps track
 	// of number of entries total found
@@ -195,5 +195,5 @@ function createAirportEntry($airport, $long, $lat)
 
 <!-------------- Tail code -------------->
 <?php
-	include("tailHTML.html");
+	include("adminTailHTML.html");
 ?>
