@@ -47,7 +47,7 @@
 		print ("<font size = \"3\">"); //set the default font size for the base container, all sub panel will use this specified font size
 		
 		print ("<div class = \"mainHeaderPanel\">"); //defining the header panel, this is use to hold the application logo, login, registration, and search bar items 
-			print ("<b><font style = \"float:left\" size = \"6\" color = \"#CC3300\">PLANES FOR HIRE</font></b><br>"); //this is the application logo
+			print ("<b><font style = \"float:left\" size = \"6\" color = \"#CC3300\" > PLANES FOR HIRE</font></b><br>"); //this is the application logo
 			print("<form action=\"search.php\">"); //this is the search bar and its submit button, it is also a php form
 				print ("<input type = \"submit\" value = \"Find it\" id = \"searchButton\"><input type = \"text\" name=\"query\" id = \"textBox\" maxlength = \"120\" placeholder = \"Looking for something?\">");
 			print("</form>");

@@ -50,7 +50,7 @@
 				print ("<strong><font size = \"5\"><a style = \"color:#CC3300\" href=\"main.php\">PLANES FOR HIRE</a></font></strong><br>");	
 				print ($fName." ");
 				print ($lName);
-				print ("<a style = \"float:right\" href = \"javascript: changeUserInfo('userTrvHistPanel');\">Edit</a><br>");
+				print ("<a style = \"float:right\" href = \"javascript: changeUserInfo('userTrvHistPanel');\">Edit Info</a><br>");
 				print ($street."<br>");
 				print ($city.", ");
 				print ($state." ");
@@ -75,7 +75,7 @@
                         print("</form>");
 				print ("<a style = \"float:right\" href=\"logout.php\">Logout    </a><br>");
 				print ("<a href = \"javascript: changeAvatar('userExtenPanel');\"><img id = \"userAvatar\" class = \"userAvatar\" src = \"/picsUploads/".$avatar."\"></a><br>");
-				print ("<a href = \"javascript: changeAvatar('userExtenPanel');\">Edit</a><br>");
+				print ("<a href = \"javascript: changeAvatar('userExtenPanel');\"> Choose Avatar</a><br>");
 			print ("</div>");
 			
 			print("<div id = \"userTrvHistPanel\" class = \"userTrvHistPanel\">");
@@ -87,10 +87,10 @@
 						//prints the labels for the travel history table
 						print ("<table border='0px'>");
 						print ("<tr>");
-						print ("<td>Departing Airport							</td>");
-						print ("<td>Arrival Airport								</td>");
-						print ("<td>Date Traveled  	</td>");
-						print ("<td>Leased Model							</td>");
+						print ("<td style= 'color:#CC0000; font-weight:bold'>Departing Airport							</td>");
+						print ("<td style= 'color:#CC0000; font-weight:bold'>Arrival Airport								</td>");
+						print ("<td style= 'color:#CC0000; font-weight:bold'>Date Traveled  	</td>");
+						print ("<td style= 'color:#CC0000; font-weight:bold'>Leased Model							</td>");
 						print ("</tr>");
 				
 						for ($travelHistList -> rewind(); $travelHistList -> valid(); $travelHistList -> next())
