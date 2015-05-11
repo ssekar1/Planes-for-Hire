@@ -92,9 +92,9 @@
 	{
 		print ("<br><table border='0px'>");
 		print ("<tr>");
-		print ("<td>Delete   </td>");
-		print ("<td>Model							</td>");
-		print ("<td>Current Location</td>");
+		print ("<td style= 'font-weight:bold'>Delete   </td>");
+		print ("<td style= 'font-weight:bold'>Plane Model							</td>");
+		print ("<td style= 'font-weight:bold'>Current Location</td>");
 		print ("</tr>");
 		$result = $link->executeQuery("SELECT * FROM `planes`", $_SERVER["SCRIPT_NAME"]);
 		while ($row = mysql_fetch_array($result))
